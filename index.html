@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Weekly Counter</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #111;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 28px 22px 50px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .week-info {
+      margin-top: 6px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    /* WEEK PROGRESS */
+
+    .progress-wrapper {
+      margin-top: 24px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    .progress-bg {
+      width: 100%;
+      height: 8px;
+      background: #333;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #eee;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* COUNTERS */
+
+    .counter-list {
+      margin-top: 36px;
+    }
+
+    .counter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 28px 0;
+    }
+
+    .counter-name {
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 12px;
+    }
+
+    .dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #777;
+      background: transparent;
+      cursor: pointer;
+      transition: 0.15s;
+      padding: 0;
+    }
+
+    .dot.active {
+      background: #f5f5f5;
+      border-color: #f5f5f5;
+    }
+
+    .dot:active {
+      transform: scale(0.9);
+    }
+
+    /* WEEK NAVIGATION */
+
+    .week-navigation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 44px;
+      gap: 10px;
+    }
+
+    .nav-button {
+      flex: 1;
+      padding: 12px;
+      background: transparent;
+      border: 1px solid #444;
+      color: #bbb;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .nav-button:disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
+
+    .current-button {
+      flex: 1.2;
+    }
+
+    /* READ ONLY */
+
+    .readonly-notice {
+      display: none;
+      margin-top: 24px;
+      padding: 12px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #777;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    body.readonly .readonly-notice {
+      display: block;
+    }
+
+    body.readonly .dot {
+      cursor: default;
+    }
+
+    body.readonly .dot:active {
+      transform: none;
+    }
+
+    /* RESET */
+
+    .reset {
+      margin-top: 24px;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background: transparent;
+      color: #777;
+      cursor: pointer;
+    }
+
+    body.readonly .reset {
+      display: none;
+    }
+
+    /* HISTORY */
+
+    .history-section {
+      margin-top: 52px;
+      border-top: 1px solid #292929;
+      padding-top: 22px;
+    }
+
+    .history-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #bbb;
+      padding: 8px 0;
+      cursor: pointer;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .history-arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .history-arrow.open {
+      transform: rotate(180deg);
+    }
+
+    .history-content {
+      display: none;
+      margin-top: 18px;
+    }
+
+    .history-content.open {
+      display: block;
+    }
+
+    .history-header {
+      display: grid;
+      grid-template-columns: 55px 1fr 1fr 1fr 1fr 1fr;
+      gap: 5px;
+      margin-bottom: 12px;
+
+      color: #666;
+      font-size: 9px;
+      text-align: center;
+    }
+
+    .history-header div:first-child {
+      text-align: left;
+    }
+
+    .history-row {
+      display: grid;
+      grid-template-columns: 55px 1fr 1fr 1fr 1fr 1fr;
+      gap: 5px;
+
+      align-items: center;
+      min-height: 36px;
+
+      border-bottom: 1px solid #222;
+
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .history-week {
+      text-align: left;
+      color: #aaa;
+      font-weight: bold;
+    }
+
+    .history-value {
+      letter-spacing: 2px;
+      white-space: nowrap;
+      color: #aaa;
+    }
+
+    .history-empty {
+      color: #444;
+    }
+
+    .history-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-top: 20px;
+    }
+
+    .history-page-button {
+      border: 1px solid #333;
+      background: transparent;
+      color: #888;
+      border-radius: 7px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
+
+    .history-page-button:disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
+
+    .history-page-info {
+      color: #666;
+      font-size: 11px;
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <h1 id="weekTitle">WEEK</h1>
+  <div class="week-info" id="weekDates"></div>
+
+
+  <!-- WEEK ELAPSED -->
+
+  <div class="progress-wrapper">
+
+    <div class="progress-label">
+      <span>WEEK ELAPSED</span>
+      <span id="progressPercent">0%</span>
+    </div>
+
+    <div class="progress-bg">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+  </div>
+
+
+  <!-- COUNTERS -->
+
+  <div class="counter-list">
+
+    <div class="counter-row">
+      <div class="counter-name">STRENGTH</div>
+      <div class="dots"
+           data-category="strength"
+           data-count="1">
+      </div>
+    </div>
+
+    <div class="counter-row">
+      <div class="counter-name">GOLF PRACTICE</div>
+      <div class="dots"
+           data-category="golf"
+           data-count="2">
+      </div>
+    </div>
+
+    <div class="counter-row">
+      <div class="counter-name">COURSE</div>
+      <div class="dots"
+           data-category="course"
+           data-count="1">
+      </div>
+    </div>
+
+    <div class="counter-row">
+      <div class="counter-name">CAREER</div>
+      <div class="dots"
+           data-category="career"
+           data-count="1">
+      </div>
+    </div>
+
+    <div class="counter-row">
+      <div class="counter-name">RUNNING</div>
+      <div class="dots"
+           data-category="running"
+           data-count="2">
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- READ ONLY MESSAGE -->
+
+  <div class="readonly-notice">
+    PAST WEEK · READ ONLY
+  </div>
+
+
+  <!-- WEEK NAVIGATION -->
+
+  <div class="week-navigation">
+
+    <button
+      class="nav-button"
+      onclick="moveWeek(-1)">
+      ‹ PREV
+    </button>
+
+    <button
+      class="nav-button current-button"
+      id="currentWeekButton"
+      onclick="goCurrentWeek()">
+      CURRENT
+    </button>
+
+    <button
+      class="nav-button"
+      id="nextWeekButton"
+      onclick="moveWeek(1)">
+      NEXT ›
+    </button>
+
+  </div>
+
+
+  <!-- RESET -->
+
+  <button
+    class="reset"
+    onclick="resetWeek()">
+    RESET THIS WEEK
+  </button>
+
+
+  <!-- HISTORY -->
+
+  <div class="history-section">
+
+    <button
+      class="history-toggle"
+      onclick="toggleHistory()">
+
+      <span>HISTORY</span>
+
+      <span
+        class="history-arrow"
+        id="historyArrow">
+        ▼
+      </span>
+
+    </button>
+
+
+    <div
+      class="history-content"
+      id="historyContent">
+
+      <div class="history-header">
+
+        <div>WEEK</div>
+        <div>STR</div>
+        <div>GOLF</div>
+        <div>CRS</div>
+        <div>CAR</div>
+        <div>RUN</div>
+
+      </div>
+
+
+      <div id="historyRows"></div>
+
+
+      <div class="history-pagination">
+
+        <button
+          class="history-page-button"
+          id="historyPrev"
+          onclick="changeHistoryPage(-1)">
+          ‹
+        </button>
+
+        <div
+          class="history-page-info"
+          id="historyPageInfo">
+        </div>
+
+        <button
+          class="history-page-button"
+          id="historyNext"
+          onclick="changeHistoryPage(1)">
+          ›
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<script>
+
+/* =========================
+   SETTINGS
+========================= */
+
+const categories = {
+  strength: 1,
+  golf: 2,
+  course: 1,
+  career: 1,
+  running: 2
+};
+
+const historyPerPage = 8;
+
+
+/* =========================
+   DATE FUNCTIONS
+========================= */
+
+function getMonday(date) {
+
+  const d = new Date(date);
+
+  const day = d.getDay();
+
+  const diff =
+    d.getDate()
+    - day
+    + (day === 0 ? -6 : 1);
+
+  return new Date(
+    d.getFullYear(),
+    d.getMonth(),
+    diff
+  );
+}
+
+
+function getWeekNumber(date) {
+
+  const d = new Date(Date.UTC(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  ));
+
+  const dayNum =
+    d.getUTCDay() || 7;
+
+  d.setUTCDate(
+    d.getUTCDate()
+    + 4
+    - dayNum
+  );
+
+  const yearStart =
+    new Date(Date.UTC(
+      d.getUTCFullYear(),
+      0,
+      1
+    ));
+
+  return Math.ceil(
+    (
+      (
+        (d - yearStart)
+        / 86400000
+      )
+      + 1
+    )
+    / 7
+  );
+}
+
+
+function formatDate(date) {
+
+  return (
+    `${date.getMonth() + 1}.`
+    + `${date.getDate()}`
+  );
+}
+
+
+function getWeekKeyFromDate(date) {
+
+  const monday =
+    getMonday(date);
+
+  return [
+    monday.getFullYear(),
+    monday.getMonth() + 1,
+    monday.getDate()
+  ].join("-");
+}
+
+
+function getCurrentWeekKey() {
+
+  return getWeekKeyFromDate(
+    new Date()
+  );
+}
+
+
+function dateFromWeekKey(key) {
+
+  const parts =
+    key.split("-").map(Number);
+
+  return new Date(
+    parts[0],
+    parts[1] - 1,
+    parts[2]
+  );
+}
+
+
+/* =========================
+   CURRENT VIEW WEEK
+========================= */
+
+let displayedMonday =
+  getMonday(new Date());
+
+
+function isCurrentWeek() {
+
+  return (
+    getWeekKeyFromDate(
+      displayedMonday
+    )
+    ===
+    getCurrentWeekKey()
+  );
+}
+
+
+/* =========================
+   STORAGE
+========================= */
+
+function getAllData() {
+
+  return (
+    JSON.parse(
+      localStorage.getItem(
+        "weeklyCounter"
+      )
+    ) || {}
+  );
+}
+
+
+function getWeekData(weekKey) {
+
+  const allData =
+    getAllData();
+
+  return (
+    allData[weekKey]
+    || {}
+  );
+}
+
+
+function saveWeekData(
+  weekKey,
+  data
+) {
+
+  const allData =
+    getAllData();
+
+  allData[weekKey] =
+    data;
+
+  localStorage.setItem(
+    "weeklyCounter",
+    JSON.stringify(allData)
+  );
+}
+
+
+/* =========================
+   WEEK DISPLAY
+========================= */
+
+function updateWeekInfo() {
+
+  const monday =
+    new Date(displayedMonday);
+
+  const sunday =
+    new Date(monday);
+
+  sunday.setDate(
+    monday.getDate() + 6
+  );
+
+  const weekNumber =
+    getWeekNumber(monday);
+
+  document
+    .getElementById(
+      "weekTitle"
+    )
+    .textContent =
+    `WEEK ${weekNumber}`;
+
+  document
+    .getElementById(
+      "weekDates"
+    )
+    .textContent =
+    `${formatDate(monday)} — ${formatDate(sunday)}`;
+
+
+  /* progress */
+
+  const progressBar =
+    document.getElementById(
+      "progressBar"
+    );
+
+  const progressPercent =
+    document.getElementById(
+      "progressPercent"
+    );
+
+
+  if (isCurrentWeek()) {
+
+    const now =
+      new Date();
+
+    const start =
+      new Date(monday);
+
+    start.setHours(
+      0, 0, 0, 0
+    );
+
+    const end =
+      new Date(sunday);
+
+    end.setHours(
+      23, 59, 59, 999
+    );
+
+    let percent =
+      (
+        (now - start)
+        /
+        (end - start)
+      )
+      * 100;
+
+    percent =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          percent
+        )
+      );
+
+    progressBar.style.width =
+      `${percent}%`;
+
+    progressPercent.textContent =
+      `${Math.round(percent)}%`;
+
+  } else {
+
+    progressBar.style.width =
+      "100%";
+
+    progressPercent.textContent =
+      "100%";
+
+  }
+
+
+  /* readonly */
+
+  document.body.classList.toggle(
+    "readonly",
+    !isCurrentWeek()
+  );
+
+
+  /* next week button */
+
+  document
+    .getElementById(
+      "nextWeekButton"
+    )
+    .disabled =
+    isCurrentWeek();
+
+  document
+    .getElementById(
+      "currentWeekButton"
+    )
+    .disabled =
+    isCurrentWeek();
+}
+
+
+/* =========================
+   COUNTERS
+========================= */
+
+function renderCounters() {
+
+  const weekKey =
+    getWeekKeyFromDate(
+      displayedMonday
+    );
+
+  const savedData =
+    getWeekData(
+      weekKey
+    );
+
+
+  document
+    .querySelectorAll(
+      ".dots"
+    )
+    .forEach(container => {
+
+      container.innerHTML = "";
+
+      const category =
+        container.dataset.category;
+
+      const count =
+        Number(
+          container.dataset.count
+        );
+
+      const completed =
+        savedData[category]
+        || 0;
+
+
+      for (
+        let i = 0;
+        i < count;
+        i++
+      ) {
+
+        const dot =
+          document.createElement(
+            "button"
+          );
+
+        dot.className =
+          "dot";
+
+        if (i < completed) {
+
+          dot.classList.add(
+            "active"
+          );
+
+        }
+
+
+        if (isCurrentWeek()) {
+
+          dot.addEventListener(
+            "click",
+            () => {
+
+              handleDotClick(
+                container,
+                dot,
+                category
+              );
+
+            }
+          );
+
+        }
+
+
+        container.appendChild(
+          dot
+        );
+
+      }
+
+    });
+
+}
+
+
+function handleDotClick(
+  container,
+  dot,
+  category
+) {
+
+  const dots =
+    [
+      ...container.children
+    ];
+
+  const index =
+    dots.indexOf(dot);
+
+  const currentActive =
+    dots.filter(
+      d =>
+        d.classList.contains(
+          "active"
+        )
+    ).length;
+
+
+  let newValue;
+
+
+  if (
+    index
+    < currentActive
+  ) {
+
+    newValue =
+      index;
+
+  } else {
+
+    newValue =
+      index + 1;
+
+  }
+
+
+  dots.forEach(
+    (d, idx) => {
+
+      d.classList.toggle(
+        "active",
+        idx < newValue
+      );
+
+    }
+  );
+
+
+  const weekKey =
+    getCurrentWeekKey();
+
+  const data =
+    getWeekData(
+      weekKey
+    );
+
+  data[category] =
+    newValue;
+
+  saveWeekData(
+    weekKey,
+    data
+  );
+
+
+  renderHistory();
+
+}
+
+
+/* =========================
+   WEEK NAVIGATION
+========================= */
+
+function moveWeek(offset) {
+
+  const next =
+    new Date(
+      displayedMonday
+    );
+
+  next.setDate(
+    next.getDate()
+    + offset * 7
+  );
+
+
+  const currentMonday =
+    getMonday(
+      new Date()
+    );
+
+
+  if (
+    next > currentMonday
+  ) {
+
+    return;
+
+  }
+
+
+  displayedMonday =
+    next;
+
+  renderAll();
+
+}
+
+
+function goCurrentWeek() {
+
+  displayedMonday =
+    getMonday(
+      new Date()
+    );
+
+  renderAll();
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetWeek() {
+
+  if (!isCurrentWeek()) {
+    return;
+  }
+
+
+  if (
+    confirm(
+      "이번 주 기록을 모두 초기화할까?"
+    )
+  ) {
+
+    const weekKey =
+      getCurrentWeekKey();
+
+    const allData =
+      getAllData();
+
+    delete allData[
+      weekKey
+    ];
+
+    localStorage.setItem(
+      "weeklyCounter",
+      JSON.stringify(
+        allData
+      )
+    );
+
+    renderAll();
+  }
+
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+let historyPage = 0;
+
+
+function toggleHistory() {
+
+  const content =
+    document.getElementById(
+      "historyContent"
+    );
+
+  const arrow =
+    document.getElementById(
+      "historyArrow"
+    );
+
+  const open =
+    content.classList.toggle(
+      "open"
+    );
+
+  arrow.classList.toggle(
+    "open",
+    open
+  );
+
+
+  if (open) {
+
+    renderHistory();
+
+  }
+
+}
+
+
+function createDotsText(
+  value,
+  max
+) {
+
+  let output = "";
+
+  for (
+    let i = 0;
+    i < max;
+    i++
+  ) {
+
+    output +=
+      i < value
+      ? "●"
+      : "○";
+
+  }
+
+  return output;
+}
+
+
+function generateHistoryWeeks() {
+
+  const weeks = [];
+
+  const currentMonday =
+    getMonday(
+      new Date()
+    );
+
+
+  /*
+    History currently shows
+    all weeks from current week
+    back to earliest saved week.
+
+    Minimum: 12 weeks
+  */
+
+  const allData =
+    getAllData();
+
+  const savedKeys =
+    Object.keys(allData);
+
+
+  let earliestDate =
+    new Date(
+      currentMonday
+    );
+
+  earliestDate.setDate(
+    earliestDate.getDate()
+    - 11 * 7
+  );
+
+
+  savedKeys.forEach(
+    key => {
+
+      const date =
+        dateFromWeekKey(
+          key
+        );
+
+      if (
+        date < earliestDate
+      ) {
+
+        earliestDate =
+          date;
+
+      }
+
+    }
+  );
+
+
+  let cursor =
+    new Date(
+      currentMonday
+    );
+
+
+  while (
+    cursor >= earliestDate
+  ) {
+
+    weeks.push(
+      new Date(cursor)
+    );
+
+    cursor.setDate(
+      cursor.getDate() - 7
+    );
+
+  }
+
+
+  return weeks;
+}
+
+
+function renderHistory() {
+
+  const container =
+    document.getElementById(
+      "historyRows"
+    );
+
+  if (!container) {
+    return;
+  }
+
+
+  const weeks =
+    generateHistoryWeeks();
+
+  const totalPages =
+    Math.max(
+      1,
+      Math.ceil(
+        weeks.length
+        /
+        historyPerPage
+      )
+    );
+
+
+  if (
+    historyPage
+    >= totalPages
+  ) {
+
+    historyPage =
+      totalPages - 1;
+
+  }
+
+
+  const start =
+    historyPage
+    * historyPerPage;
+
+  const pageWeeks =
+    weeks.slice(
+      start,
+      start
+      + historyPerPage
+    );
+
+
+  container.innerHTML = "";
+
+
+  pageWeeks.forEach(
+    monday => {
+
+      const weekKey =
+        getWeekKeyFromDate(
+          monday
+        );
+
+      const data =
+        getWeekData(
+          weekKey
+        );
+
+      const weekNumber =
+        getWeekNumber(
+          monday
+        );
+
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+      row.className =
+        "history-row";
+
+
+      const values = [
+
+        `W${weekNumber}`,
+
+        createDotsText(
+          data.strength || 0,
+          categories.strength
+        ),
+
+        createDotsText(
+          data.golf || 0,
+          categories.golf
+        ),
+
+        createDotsText(
+          data.course || 0,
+          categories.course
+        ),
+
+        createDotsText(
+          data.career || 0,
+          categories.career
+        ),
+
+        createDotsText(
+          data.running || 0,
+          categories.running
+        )
+
+      ];
+
+
+      values.forEach(
+        (value, index) => {
+
+          const cell =
+            document.createElement(
+              "div"
+            );
+
+          if (index === 0) {
+
+            cell.className =
+              "history-week";
+
+          } else {
+
+            cell.className =
+              "history-value";
+
+          }
+
+          cell.textContent =
+            value;
+
+          row.appendChild(
+            cell
+          );
+
+        }
+      );
+
+
+      /*
+        Clicking a week
+        jumps to that week
+      */
+
+      row.style.cursor =
+        "pointer";
+
+      row.addEventListener(
+        "click",
+        () => {
+
+          displayedMonday =
+            new Date(monday);
+
+          renderAll();
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+
+        }
+      );
+
+
+      container.appendChild(
+        row
+      );
+
+    }
+  );
+
+
+  document
+    .getElementById(
+      "historyPageInfo"
+    )
+    .textContent =
+    `${historyPage + 1} / ${totalPages}`;
+
+
+  document
+    .getElementById(
+      "historyPrev"
+    )
+    .disabled =
+    historyPage === 0;
+
+
+  document
+    .getElementById(
+      "historyNext"
+    )
+    .disabled =
+    historyPage
+    >= totalPages - 1;
+
+}
+
+
+function changeHistoryPage(
+  direction
+) {
+
+  historyPage +=
+    direction;
+
+  renderHistory();
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderAll() {
+
+  updateWeekInfo();
+
+  renderCounters();
+
+  renderHistory();
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+renderAll();
+
+</script>
+
+</body>
+</html>
