@@ -35,7 +35,9 @@
       font-size: 14px;
     }
 
-    /* WEEK PROGRESS */
+    /* =========================
+       WEEK PROGRESS
+    ========================= */
 
     .progress-wrapper {
       margin-top: 24px;
@@ -64,7 +66,9 @@
       transition: width 0.3s ease;
     }
 
-    /* COUNTERS */
+    /* =========================
+       COUNTERS
+    ========================= */
 
     .counter-list {
       margin-top: 36px;
@@ -108,7 +112,36 @@
       transform: scale(0.9);
     }
 
-    /* WEEK NAVIGATION */
+    /* =========================
+       PAST WEEK
+    ========================= */
+
+    .readonly-notice {
+      display: none;
+      margin-top: 24px;
+      padding: 12px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #777;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    body.readonly .readonly-notice {
+      display: block;
+    }
+
+    body.readonly .dot {
+      cursor: default;
+    }
+
+    body.readonly .dot:active {
+      transform: none;
+    }
+
+    /* =========================
+       WEEK NAVIGATION
+    ========================= */
 
     .week-navigation {
       display: flex;
@@ -137,32 +170,9 @@
       flex: 1.2;
     }
 
-    /* READ ONLY */
-
-    .readonly-notice {
-      display: none;
-      margin-top: 24px;
-      padding: 12px;
-      border: 1px solid #333;
-      border-radius: 8px;
-      color: #777;
-      font-size: 12px;
-      text-align: center;
-    }
-
-    body.readonly .readonly-notice {
-      display: block;
-    }
-
-    body.readonly .dot {
-      cursor: default;
-    }
-
-    body.readonly .dot:active {
-      transform: none;
-    }
-
-    /* RESET */
+    /* =========================
+       RESET
+    ========================= */
 
     .reset {
       margin-top: 24px;
@@ -179,7 +189,9 @@
       display: none;
     }
 
-    /* HISTORY */
+    /* =========================
+       HISTORY
+    ========================= */
 
     .history-section {
       margin-top: 52px;
@@ -248,6 +260,7 @@
 
       font-size: 11px;
       text-align: center;
+      cursor: pointer;
     }
 
     .history-week {
@@ -262,15 +275,10 @@
       color: #aaa;
     }
 
-    .history-empty {
-      color: #444;
-    }
-
     .history-pagination {
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       margin-top: 20px;
     }
 
@@ -293,6 +301,42 @@
       font-size: 11px;
     }
 
+    /* =========================
+       BACKUP
+    ========================= */
+
+    .data-section {
+      margin-top: 38px;
+      padding-top: 20px;
+      border-top: 1px solid #222;
+    }
+
+    .data-title {
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .backup-section {
+      display: flex;
+      gap: 10px;
+    }
+
+    .backup-button {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: transparent;
+      color: #777;
+      cursor: pointer;
+    }
+
+    .backup-button:active {
+      background: #1b1b1b;
+    }
+
   </style>
 </head>
 
@@ -301,8 +345,14 @@
 
 <div class="container">
 
+  <!-- CURRENT WEEK -->
+
   <h1 id="weekTitle">WEEK</h1>
-  <div class="week-info" id="weekDates"></div>
+
+  <div
+    class="week-info"
+    id="weekDates">
+  </div>
 
 
   <!-- WEEK ELAPSED -->
@@ -310,12 +360,22 @@
   <div class="progress-wrapper">
 
     <div class="progress-label">
+
       <span>WEEK ELAPSED</span>
-      <span id="progressPercent">0%</span>
+
+      <span id="progressPercent">
+        0%
+      </span>
+
     </div>
 
     <div class="progress-bg">
-      <div class="progress-bar" id="progressBar"></div>
+
+      <div
+        class="progress-bar"
+        id="progressBar">
+      </div>
+
     </div>
 
   </div>
@@ -326,56 +386,90 @@
   <div class="counter-list">
 
     <div class="counter-row">
-      <div class="counter-name">STRENGTH</div>
-      <div class="dots"
-           data-category="strength"
-           data-count="1">
+
+      <div class="counter-name">
+        STRENGTH
       </div>
+
+      <div
+        class="dots"
+        data-category="strength"
+        data-count="1">
+      </div>
+
     </div>
 
-    <div class="counter-row">
-      <div class="counter-name">GOLF PRACTICE</div>
-      <div class="dots"
-           data-category="golf"
-           data-count="2">
-      </div>
-    </div>
 
     <div class="counter-row">
-      <div class="counter-name">COURSE</div>
-      <div class="dots"
-           data-category="course"
-           data-count="1">
+
+      <div class="counter-name">
+        GOLF PRACTICE
       </div>
+
+      <div
+        class="dots"
+        data-category="golf"
+        data-count="2">
+      </div>
+
     </div>
 
-    <div class="counter-row">
-      <div class="counter-name">CAREER</div>
-      <div class="dots"
-           data-category="career"
-           data-count="1">
-      </div>
-    </div>
 
     <div class="counter-row">
-      <div class="counter-name">RUNNING</div>
-      <div class="dots"
-           data-category="running"
-           data-count="2">
+
+      <div class="counter-name">
+        COURSE
       </div>
+
+      <div
+        class="dots"
+        data-category="course"
+        data-count="1">
+      </div>
+
+    </div>
+
+
+    <div class="counter-row">
+
+      <div class="counter-name">
+        CAREER
+      </div>
+
+      <div
+        class="dots"
+        data-category="career"
+        data-count="1">
+      </div>
+
+    </div>
+
+
+    <div class="counter-row">
+
+      <div class="counter-name">
+        RUNNING
+      </div>
+
+      <div
+        class="dots"
+        data-category="running"
+        data-count="2">
+      </div>
+
     </div>
 
   </div>
 
 
-  <!-- READ ONLY MESSAGE -->
+  <!-- READ ONLY -->
 
   <div class="readonly-notice">
     PAST WEEK · READ ONLY
   </div>
 
 
-  <!-- WEEK NAVIGATION -->
+  <!-- NAVIGATION -->
 
   <div class="week-navigation">
 
@@ -419,7 +513,9 @@
       class="history-toggle"
       onclick="toggleHistory()">
 
-      <span>HISTORY</span>
+      <span>
+        HISTORY
+      </span>
 
       <span
         class="history-arrow"
@@ -477,14 +573,49 @@
   </div>
 
 
+  <!-- DATA BACKUP -->
+
+  <div class="data-section">
+
+    <div class="data-title">
+      DATA
+    </div>
+
+    <div class="backup-section">
+
+      <button
+        class="backup-button"
+        onclick="backupData()">
+        BACKUP
+      </button>
+
+      <button
+        class="backup-button"
+        onclick="openRestoreFile()">
+        RESTORE
+      </button>
+
+    </div>
+
+
+    <input
+      type="file"
+      id="restoreFile"
+      accept=".json,application/json"
+      style="display:none"
+      onchange="restoreData(event)">
+
+  </div>
+
 </div>
+
 
 
 <script>
 
-/* =========================
+/* =========================================================
    SETTINGS
-========================= */
+========================================================= */
 
 const categories = {
   strength: 1,
@@ -497,15 +628,17 @@ const categories = {
 const historyPerPage = 8;
 
 
-/* =========================
+/* =========================================================
    DATE FUNCTIONS
-========================= */
+========================================================= */
 
 function getMonday(date) {
 
-  const d = new Date(date);
+  const d =
+    new Date(date);
 
-  const day = d.getDay();
+  const day =
+    d.getDay();
 
   const diff =
     d.getDate()
@@ -517,16 +650,20 @@ function getMonday(date) {
     d.getMonth(),
     diff
   );
+
 }
 
 
 function getWeekNumber(date) {
 
-  const d = new Date(Date.UTC(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate()
-  ));
+  const d =
+    new Date(
+      Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+      )
+    );
 
   const dayNum =
     d.getUTCDay() || 7;
@@ -538,11 +675,13 @@ function getWeekNumber(date) {
   );
 
   const yearStart =
-    new Date(Date.UTC(
-      d.getUTCFullYear(),
-      0,
-      1
-    ));
+    new Date(
+      Date.UTC(
+        d.getUTCFullYear(),
+        0,
+        1
+      )
+    );
 
   return Math.ceil(
     (
@@ -554,6 +693,7 @@ function getWeekNumber(date) {
     )
     / 7
   );
+
 }
 
 
@@ -561,8 +701,10 @@ function formatDate(date) {
 
   return (
     `${date.getMonth() + 1}.`
-    + `${date.getDate()}`
+    +
+    `${date.getDate()}`
   );
+
 }
 
 
@@ -576,6 +718,7 @@ function getWeekKeyFromDate(date) {
     monday.getMonth() + 1,
     monday.getDate()
   ].join("-");
+
 }
 
 
@@ -584,6 +727,7 @@ function getCurrentWeekKey() {
   return getWeekKeyFromDate(
     new Date()
   );
+
 }
 
 
@@ -597,12 +741,13 @@ function dateFromWeekKey(key) {
     parts[1] - 1,
     parts[2]
   );
+
 }
 
 
-/* =========================
-   CURRENT VIEW WEEK
-========================= */
+/* =========================================================
+   CURRENT DISPLAYED WEEK
+========================================================= */
 
 let displayedMonday =
   getMonday(new Date());
@@ -617,22 +762,33 @@ function isCurrentWeek() {
     ===
     getCurrentWeekKey()
   );
+
 }
 
 
-/* =========================
+/* =========================================================
    STORAGE
-========================= */
+========================================================= */
 
 function getAllData() {
 
-  return (
-    JSON.parse(
-      localStorage.getItem(
-        "weeklyCounter"
+  try {
+
+    return (
+      JSON.parse(
+        localStorage.getItem(
+          "weeklyCounter"
+        )
       )
-    ) || {}
-  );
+      || {}
+    );
+
+  } catch {
+
+    return {};
+
+  }
+
 }
 
 
@@ -645,6 +801,7 @@ function getWeekData(weekKey) {
     allData[weekKey]
     || {}
   );
+
 }
 
 
@@ -663,17 +820,20 @@ function saveWeekData(
     "weeklyCounter",
     JSON.stringify(allData)
   );
+
 }
 
 
-/* =========================
+/* =========================================================
    WEEK DISPLAY
-========================= */
+========================================================= */
 
 function updateWeekInfo() {
 
   const monday =
-    new Date(displayedMonday);
+    new Date(
+      displayedMonday
+    );
 
   const sunday =
     new Date(monday);
@@ -682,8 +842,10 @@ function updateWeekInfo() {
     monday.getDate() + 6
   );
 
+
   const weekNumber =
     getWeekNumber(monday);
+
 
   document
     .getElementById(
@@ -692,6 +854,7 @@ function updateWeekInfo() {
     .textContent =
     `WEEK ${weekNumber}`;
 
+
   document
     .getElementById(
       "weekDates"
@@ -699,8 +862,6 @@ function updateWeekInfo() {
     .textContent =
     `${formatDate(monday)} — ${formatDate(sunday)}`;
 
-
-  /* progress */
 
   const progressBar =
     document.getElementById(
@@ -722,15 +883,23 @@ function updateWeekInfo() {
       new Date(monday);
 
     start.setHours(
-      0, 0, 0, 0
+      0,
+      0,
+      0,
+      0
     );
+
 
     const end =
       new Date(sunday);
 
     end.setHours(
-      23, 59, 59, 999
+      23,
+      59,
+      59,
+      999
     );
+
 
     let percent =
       (
@@ -739,6 +908,7 @@ function updateWeekInfo() {
         (end - start)
       )
       * 100;
+
 
     percent =
       Math.max(
@@ -749,13 +919,17 @@ function updateWeekInfo() {
         )
       );
 
+
     progressBar.style.width =
       `${percent}%`;
+
 
     progressPercent.textContent =
       `${Math.round(percent)}%`;
 
-  } else {
+  }
+
+  else {
 
     progressBar.style.width =
       "100%";
@@ -766,15 +940,11 @@ function updateWeekInfo() {
   }
 
 
-  /* readonly */
-
   document.body.classList.toggle(
     "readonly",
     !isCurrentWeek()
   );
 
-
-  /* next week button */
 
   document
     .getElementById(
@@ -783,18 +953,20 @@ function updateWeekInfo() {
     .disabled =
     isCurrentWeek();
 
+
   document
     .getElementById(
       "currentWeekButton"
     )
     .disabled =
     isCurrentWeek();
+
 }
 
 
-/* =========================
+/* =========================================================
    COUNTERS
-========================= */
+========================================================= */
 
 function renderCounters() {
 
@@ -813,71 +985,76 @@ function renderCounters() {
     .querySelectorAll(
       ".dots"
     )
-    .forEach(container => {
+    .forEach(
+      container => {
 
-      container.innerHTML = "";
-
-      const category =
-        container.dataset.category;
-
-      const count =
-        Number(
-          container.dataset.count
-        );
-
-      const completed =
-        savedData[category]
-        || 0;
+        container.innerHTML =
+          "";
 
 
-      for (
-        let i = 0;
-        i < count;
-        i++
-      ) {
+        const category =
+          container.dataset.category;
 
-        const dot =
-          document.createElement(
-            "button"
+        const count =
+          Number(
+            container.dataset.count
           );
 
-        dot.className =
-          "dot";
+        const completed =
+          savedData[category]
+          || 0;
 
-        if (i < completed) {
 
-          dot.classList.add(
-            "active"
+        for (
+          let i = 0;
+          i < count;
+          i++
+        ) {
+
+          const dot =
+            document.createElement(
+              "button"
+            );
+
+          dot.className =
+            "dot";
+
+
+          if (i < completed) {
+
+            dot.classList.add(
+              "active"
+            );
+
+          }
+
+
+          if (isCurrentWeek()) {
+
+            dot.addEventListener(
+              "click",
+              () => {
+
+                handleDotClick(
+                  container,
+                  dot,
+                  category
+                );
+
+              }
+            );
+
+          }
+
+
+          container.appendChild(
+            dot
           );
 
         }
-
-
-        if (isCurrentWeek()) {
-
-          dot.addEventListener(
-            "click",
-            () => {
-
-              handleDotClick(
-                container,
-                dot,
-                category
-              );
-
-            }
-          );
-
-        }
-
-
-        container.appendChild(
-          dot
-        );
 
       }
-
-    });
+    );
 
 }
 
@@ -893,8 +1070,10 @@ function handleDotClick(
       ...container.children
     ];
 
+
   const index =
     dots.indexOf(dot);
+
 
   const currentActive =
     dots.filter(
@@ -916,7 +1095,9 @@ function handleDotClick(
     newValue =
       index;
 
-  } else {
+  }
+
+  else {
 
     newValue =
       index + 1;
@@ -944,8 +1125,10 @@ function handleDotClick(
       weekKey
     );
 
+
   data[category] =
     newValue;
+
 
   saveWeekData(
     weekKey,
@@ -958,9 +1141,9 @@ function handleDotClick(
 }
 
 
-/* =========================
+/* =========================================================
    WEEK NAVIGATION
-========================= */
+========================================================= */
 
 function moveWeek(offset) {
 
@@ -1010,9 +1193,9 @@ function goCurrentWeek() {
 }
 
 
-/* =========================
+/* =========================================================
    RESET
-========================= */
+========================================================= */
 
 function resetWeek() {
 
@@ -1021,38 +1204,45 @@ function resetWeek() {
   }
 
 
-  if (
+  const confirmed =
     confirm(
       "이번 주 기록을 모두 초기화할까?"
-    )
-  ) {
-
-    const weekKey =
-      getCurrentWeekKey();
-
-    const allData =
-      getAllData();
-
-    delete allData[
-      weekKey
-    ];
-
-    localStorage.setItem(
-      "weeklyCounter",
-      JSON.stringify(
-        allData
-      )
     );
 
-    renderAll();
+
+  if (!confirmed) {
+    return;
   }
+
+
+  const weekKey =
+    getCurrentWeekKey();
+
+  const allData =
+    getAllData();
+
+
+  delete allData[
+    weekKey
+  ];
+
+
+  localStorage.setItem(
+    "weeklyCounter",
+    JSON.stringify(
+      allData
+    )
+  );
+
+
+  renderAll();
 
 }
 
 
-/* =========================
+/* =========================================================
    HISTORY
-========================= */
+========================================================= */
 
 let historyPage = 0;
 
@@ -1069,10 +1259,12 @@ function toggleHistory() {
       "historyArrow"
     );
 
+
   const open =
     content.classList.toggle(
       "open"
     );
+
 
   arrow.classList.toggle(
     "open",
@@ -1094,7 +1286,9 @@ function createDotsText(
   max
 ) {
 
-  let output = "";
+  let output =
+    "";
+
 
   for (
     let i = 0;
@@ -1104,18 +1298,22 @@ function createDotsText(
 
     output +=
       i < value
-      ? "●"
-      : "○";
+        ? "●"
+        : "○";
 
   }
 
+
   return output;
+
 }
 
 
 function generateHistoryWeeks() {
 
-  const weeks = [];
+  const weeks =
+    [];
+
 
   const currentMonday =
     getMonday(
@@ -1123,25 +1321,27 @@ function generateHistoryWeeks() {
     );
 
 
-  /*
-    History currently shows
-    all weeks from current week
-    back to earliest saved week.
-
-    Minimum: 12 weeks
-  */
-
   const allData =
     getAllData();
 
-  const savedKeys =
-    Object.keys(allData);
 
+  const savedKeys =
+    Object.keys(
+      allData
+    );
+
+
+  /*
+    기본적으로 최근 12주 표시.
+    더 오래된 저장 데이터가 있으면
+    자동으로 그 시점까지 확장.
+  */
 
   let earliestDate =
     new Date(
       currentMonday
     );
+
 
   earliestDate.setDate(
     earliestDate.getDate()
@@ -1156,6 +1356,7 @@ function generateHistoryWeeks() {
         dateFromWeekKey(
           key
         );
+
 
       if (
         date < earliestDate
@@ -1184,14 +1385,17 @@ function generateHistoryWeeks() {
       new Date(cursor)
     );
 
+
     cursor.setDate(
-      cursor.getDate() - 7
+      cursor.getDate()
+      - 7
     );
 
   }
 
 
   return weeks;
+
 }
 
 
@@ -1202,6 +1406,7 @@ function renderHistory() {
       "historyRows"
     );
 
+
   if (!container) {
     return;
   }
@@ -1209,6 +1414,7 @@ function renderHistory() {
 
   const weeks =
     generateHistoryWeeks();
+
 
   const totalPages =
     Math.max(
@@ -1232,9 +1438,20 @@ function renderHistory() {
   }
 
 
+  if (
+    historyPage < 0
+  ) {
+
+    historyPage =
+      0;
+
+  }
+
+
   const start =
     historyPage
     * historyPerPage;
+
 
   const pageWeeks =
     weeks.slice(
@@ -1244,7 +1461,8 @@ function renderHistory() {
     );
 
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
 
   pageWeeks.forEach(
@@ -1255,10 +1473,12 @@ function renderHistory() {
           monday
         );
 
+
       const data =
         getWeekData(
           weekKey
         );
+
 
       const weekNumber =
         getWeekNumber(
@@ -1271,40 +1491,42 @@ function renderHistory() {
           "div"
         );
 
+
       row.className =
         "history-row";
 
 
-      const values = [
+      const values =
+        [
 
-        `W${weekNumber}`,
+          `W${weekNumber}`,
 
-        createDotsText(
-          data.strength || 0,
-          categories.strength
-        ),
+          createDotsText(
+            data.strength || 0,
+            categories.strength
+          ),
 
-        createDotsText(
-          data.golf || 0,
-          categories.golf
-        ),
+          createDotsText(
+            data.golf || 0,
+            categories.golf
+          ),
 
-        createDotsText(
-          data.course || 0,
-          categories.course
-        ),
+          createDotsText(
+            data.course || 0,
+            categories.course
+          ),
 
-        createDotsText(
-          data.career || 0,
-          categories.career
-        ),
+          createDotsText(
+            data.career || 0,
+            categories.career
+          ),
 
-        createDotsText(
-          data.running || 0,
-          categories.running
-        )
+          createDotsText(
+            data.running || 0,
+            categories.running
+          )
 
-      ];
+        ];
 
 
       values.forEach(
@@ -1315,20 +1537,27 @@ function renderHistory() {
               "div"
             );
 
-          if (index === 0) {
+
+          if (
+            index === 0
+          ) {
 
             cell.className =
               "history-week";
 
-          } else {
+          }
+
+          else {
 
             cell.className =
               "history-value";
 
           }
 
+
           cell.textContent =
             value;
+
 
           row.appendChild(
             cell
@@ -1338,14 +1567,6 @@ function renderHistory() {
       );
 
 
-      /*
-        Clicking a week
-        jumps to that week
-      */
-
-      row.style.cursor =
-        "pointer";
-
       row.addEventListener(
         "click",
         () => {
@@ -1353,7 +1574,9 @@ function renderHistory() {
           displayedMonday =
             new Date(monday);
 
+
           renderAll();
+
 
           window.scrollTo({
             top: 0,
@@ -1406,14 +1629,284 @@ function changeHistoryPage(
   historyPage +=
     direction;
 
+
   renderHistory();
 
 }
 
 
-/* =========================
+/* =========================================================
+   BACKUP
+========================================================= */
+
+function backupData() {
+
+  const allData =
+    getAllData();
+
+
+  const backup = {
+
+    app:
+      "weekly-counter",
+
+    version:
+      1,
+
+    createdAt:
+      new Date()
+        .toISOString(),
+
+    data:
+      allData
+
+  };
+
+
+  const json =
+    JSON.stringify(
+      backup,
+      null,
+      2
+    );
+
+
+  const blob =
+    new Blob(
+      [json],
+      {
+        type:
+          "application/json"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const link =
+    document.createElement(
+      "a"
+    );
+
+
+  const today =
+    new Date()
+      .toISOString()
+      .slice(
+        0,
+        10
+      );
+
+
+  link.href =
+    url;
+
+
+  link.download =
+    `weekly-counter-backup-${today}.json`;
+
+
+  document.body.appendChild(
+    link
+  );
+
+
+  link.click();
+
+
+  document.body.removeChild(
+    link
+  );
+
+
+  /*
+    Safari 등에서 다운로드 요청이
+    처리될 시간을 약간 확보.
+  */
+
+  setTimeout(
+    () => {
+
+      URL.revokeObjectURL(
+        url
+      );
+
+    },
+    1000
+  );
+
+}
+
+
+/* =========================================================
+   RESTORE
+========================================================= */
+
+function openRestoreFile() {
+
+  document
+    .getElementById(
+      "restoreFile"
+    )
+    .click();
+
+}
+
+
+function restoreData(event) {
+
+  const file =
+    event.target.files[0];
+
+
+  if (!file) {
+    return;
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    function(e) {
+
+      try {
+
+        const backup =
+          JSON.parse(
+            e.target.result
+          );
+
+
+        /*
+          앱 형식 확인
+        */
+
+        if (
+          backup.app
+          !==
+          "weekly-counter"
+        ) {
+
+          alert(
+            "Weekly Counter 백업 파일이 아니야."
+          );
+
+          event.target.value =
+            "";
+
+          return;
+
+        }
+
+
+        /*
+          데이터 구조 확인
+        */
+
+        if (
+          !backup.data
+          ||
+          typeof backup.data
+          !==
+          "object"
+          ||
+          Array.isArray(
+            backup.data
+          )
+        ) {
+
+          alert(
+            "백업 데이터 형식이 올바르지 않아."
+          );
+
+          event.target.value =
+            "";
+
+          return;
+
+        }
+
+
+        const confirmed =
+          confirm(
+            "현재 기록을 백업 파일의 기록으로 교체할까?"
+          );
+
+
+        if (!confirmed) {
+
+          event.target.value =
+            "";
+
+          return;
+
+        }
+
+
+        localStorage.setItem(
+          "weeklyCounter",
+          JSON.stringify(
+            backup.data
+          )
+        );
+
+
+        historyPage =
+          0;
+
+
+        displayedMonday =
+          getMonday(
+            new Date()
+          );
+
+
+        renderAll();
+
+
+        alert(
+          "RESTORE 완료."
+        );
+
+      }
+
+
+      catch (error) {
+
+        alert(
+          "백업 파일을 읽을 수 없어."
+        );
+
+      }
+
+
+      /*
+        동일한 파일을
+        다시 선택할 수 있도록 초기화
+      */
+
+      event.target.value =
+        "";
+
+    };
+
+
+  reader.readAsText(
+    file
+  );
+
+}
+
+
+/* =========================================================
    RENDER
-========================= */
+========================================================= */
 
 function renderAll() {
 
@@ -1426,9 +1919,9 @@ function renderAll() {
 }
 
 
-/* =========================
+/* =========================================================
    START
-========================= */
+========================================================= */
 
 renderAll();
 
