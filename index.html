@@ -18,10 +18,15 @@
       font-family: Arial, sans-serif;
     }
 
+    input,
+    button {
+      font-family: inherit;
+    }
+
     .container {
       max-width: 430px;
       margin: 0 auto;
-      padding: 28px 22px 50px;
+      padding: 28px 22px 60px;
     }
 
     h1 {
@@ -67,24 +72,40 @@
     }
 
     /* =========================
-       COUNTERS
+       WEEKLY GROUPS
     ========================= */
 
-    .counter-list {
-      margin-top: 36px;
+    .weekly-section {
+      margin-top: 38px;
+    }
+
+    .group {
+      margin-top: 34px;
+    }
+
+    .group:first-child {
+      margin-top: 0;
+    }
+
+    .group-title {
+      color: #666;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
     }
 
     .counter-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 28px 0;
+      min-height: 58px;
     }
 
     .counter-name {
       font-size: 16px;
       font-weight: bold;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
     }
 
     .dots {
@@ -113,12 +134,12 @@
     }
 
     /* =========================
-       PAST WEEK
+       READ ONLY
     ========================= */
 
     .readonly-notice {
       display: none;
-      margin-top: 24px;
+      margin-top: 28px;
       padding: 12px;
       border: 1px solid #333;
       border-radius: 8px;
@@ -145,10 +166,8 @@
 
     .week-navigation {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 44px;
       gap: 10px;
+      margin-top: 38px;
     }
 
     .nav-button {
@@ -175,14 +194,15 @@
     ========================= */
 
     .reset {
-      margin-top: 24px;
+      margin-top: 16px;
       width: 100%;
-      padding: 12px;
-      border: 1px solid #444;
+      padding: 11px;
+      border: 1px solid #333;
       border-radius: 8px;
       background: transparent;
-      color: #777;
+      color: #666;
       cursor: pointer;
+      font-size: 11px;
     }
 
     body.readonly .reset {
@@ -193,55 +213,60 @@
        HISTORY
     ========================= */
 
-    .history-section {
-      margin-top: 52px;
+    .history-section,
+    .monthly-section,
+    .data-section {
+      margin-top: 46px;
       border-top: 1px solid #292929;
-      padding-top: 22px;
+      padding-top: 20px;
     }
 
-    .history-toggle {
+    .section-toggle {
       width: 100%;
-      background: none;
-      border: none;
-      color: #bbb;
       padding: 8px 0;
+      border: none;
+      background: none;
+      color: #bbb;
       cursor: pointer;
 
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
 
       font-size: 14px;
       font-weight: bold;
       letter-spacing: 1px;
     }
 
-    .history-arrow {
+    .toggle-arrow {
       transition: transform 0.2s ease;
     }
 
-    .history-arrow.open {
+    .toggle-arrow.open {
       transform: rotate(180deg);
     }
 
-    .history-content {
+    .collapsible {
       display: none;
       margin-top: 18px;
     }
 
-    .history-content.open {
+    .collapsible.open {
       display: block;
     }
 
-    .history-header {
+    .history-header,
+    .history-row {
       display: grid;
       grid-template-columns: 55px 1fr 1fr 1fr 1fr 1fr;
       gap: 5px;
-      margin-bottom: 12px;
+      text-align: center;
+    }
 
+    .history-header {
+      margin-bottom: 10px;
       color: #666;
       font-size: 9px;
-      text-align: center;
     }
 
     .history-header div:first-child {
@@ -249,17 +274,10 @@
     }
 
     .history-row {
-      display: grid;
-      grid-template-columns: 55px 1fr 1fr 1fr 1fr 1fr;
-      gap: 5px;
-
       align-items: center;
-      min-height: 36px;
-
+      min-height: 38px;
       border-bottom: 1px solid #222;
-
       font-size: 11px;
-      text-align: center;
       cursor: pointer;
     }
 
@@ -270,9 +288,9 @@
     }
 
     .history-value {
+      color: #aaa;
       letter-spacing: 2px;
       white-space: nowrap;
-      color: #aaa;
     }
 
     .history-pagination {
@@ -302,19 +320,107 @@
     }
 
     /* =========================
-       BACKUP
+       MONTHLY
     ========================= */
 
-    .data-section {
-      margin-top: 38px;
-      padding-top: 20px;
-      border-top: 1px solid #222;
+    .month-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
     }
 
+    .month-name {
+      color: #aaa;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .month-nav {
+      background: transparent;
+      color: #777;
+      border: none;
+      font-size: 18px;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+
+    .month-nav:disabled {
+      opacity: 0.2;
+    }
+
+    .monthly-row {
+      display: grid;
+      grid-template-columns: 105px 1fr;
+      align-items: center;
+      min-height: 52px;
+      border-bottom: 1px solid #222;
+    }
+
+    .monthly-label {
+      color: #888;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .monthly-input-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 7px;
+    }
+
+    .monthly-input {
+      width: 110px;
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 7px;
+      color: #eee;
+      padding: 9px 10px;
+      text-align: right;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .monthly-input:focus {
+      border-color: #666;
+    }
+
+    .monthly-input.culture {
+      width: 100%;
+      text-align: left;
+    }
+
+    .monthly-unit {
+      color: #666;
+      font-size: 12px;
+      min-width: 18px;
+    }
+
+    .monthly-readonly .monthly-input {
+      pointer-events: none;
+      color: #999;
+      background: transparent;
+      border-color: transparent;
+    }
+
+    .monthly-note {
+      margin-top: 14px;
+      color: #555;
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       DATA
+    ========================= */
+
     .data-title {
+      color: #555;
       font-size: 10px;
       letter-spacing: 1px;
-      color: #555;
       margin-bottom: 12px;
     }
 
@@ -340,12 +446,11 @@
   </style>
 </head>
 
-
 <body>
 
 <div class="container">
 
-  <!-- CURRENT WEEK -->
+  <!-- WEEK HEADER -->
 
   <h1 id="weekTitle">WEEK</h1>
 
@@ -381,95 +486,123 @@
   </div>
 
 
-  <!-- COUNTERS -->
+  <!-- WEEKLY -->
 
-  <div class="counter-list">
+  <div class="weekly-section">
 
-    <div class="counter-row">
+    <!-- BODY -->
 
-      <div class="counter-name">
-        STRENGTH
+    <div class="group">
+
+      <div class="group-title">
+        BODY
       </div>
 
-      <div
-        class="dots"
-        data-category="strength"
-        data-count="1">
+      <div class="counter-row">
+
+        <div class="counter-name">
+          STRENGTH
+        </div>
+
+        <div
+          class="dots"
+          data-category="strength"
+          data-count="1">
+        </div>
+
       </div>
 
-    </div>
 
+      <div class="counter-row">
 
-    <div class="counter-row">
+        <div class="counter-name">
+          RUNNING
+        </div>
 
-      <div class="counter-name">
-        GOLF PRACTICE
-      </div>
+        <div
+          class="dots"
+          data-category="running"
+          data-count="2">
+        </div>
 
-      <div
-        class="dots"
-        data-category="golf"
-        data-count="2">
-      </div>
-
-    </div>
-
-
-    <div class="counter-row">
-
-      <div class="counter-name">
-        COURSE
-      </div>
-
-      <div
-        class="dots"
-        data-category="course"
-        data-count="1">
       </div>
 
     </div>
 
 
-    <div class="counter-row">
+    <!-- GOLF -->
 
-      <div class="counter-name">
+    <div class="group">
+
+      <div class="group-title">
+        GOLF
+      </div>
+
+      <div class="counter-row">
+
+        <div class="counter-name">
+          PRACTICE
+        </div>
+
+        <div
+          class="dots"
+          data-category="golf"
+          data-count="2">
+        </div>
+
+      </div>
+
+
+      <div class="counter-row">
+
+        <div class="counter-name">
+          COURSE
+        </div>
+
+        <div
+          class="dots"
+          data-category="course"
+          data-count="1">
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- CAREER -->
+
+    <div class="group">
+
+      <div class="group-title">
         CAREER
       </div>
 
-      <div
-        class="dots"
-        data-category="career"
-        data-count="1">
-      </div>
+      <div class="counter-row">
 
-    </div>
+        <div class="counter-name">
+          TRANSITION
+        </div>
 
+        <div
+          class="dots"
+          data-category="career"
+          data-count="1">
+        </div>
 
-    <div class="counter-row">
-
-      <div class="counter-name">
-        RUNNING
-      </div>
-
-      <div
-        class="dots"
-        data-category="running"
-        data-count="2">
       </div>
 
     </div>
 
   </div>
 
-
-  <!-- READ ONLY -->
 
   <div class="readonly-notice">
     PAST WEEK · READ ONLY
   </div>
 
 
-  <!-- NAVIGATION -->
+  <!-- WEEK NAVIGATION -->
 
   <div class="week-navigation">
 
@@ -496,8 +629,6 @@
   </div>
 
 
-  <!-- RESET -->
-
   <button
     class="reset"
     onclick="resetWeek()">
@@ -510,15 +641,13 @@
   <div class="history-section">
 
     <button
-      class="history-toggle"
-      onclick="toggleHistory()">
+      class="section-toggle"
+      onclick="toggleSection('historyContent', 'historyArrow')">
 
-      <span>
-        HISTORY
-      </span>
+      <span>HISTORY</span>
 
       <span
-        class="history-arrow"
+        class="toggle-arrow"
         id="historyArrow">
         ▼
       </span>
@@ -527,23 +656,21 @@
 
 
     <div
-      class="history-content"
+      class="collapsible"
       id="historyContent">
 
       <div class="history-header">
 
         <div>WEEK</div>
         <div>STR</div>
-        <div>GOLF</div>
+        <div>RUN</div>
+        <div>PRC</div>
         <div>CRS</div>
         <div>CAR</div>
-        <div>RUN</div>
 
       </div>
 
-
       <div id="historyRows"></div>
-
 
       <div class="history-pagination">
 
@@ -573,7 +700,139 @@
   </div>
 
 
-  <!-- DATA BACKUP -->
+  <!-- MONTHLY -->
+
+  <div class="monthly-section">
+
+    <button
+      class="section-toggle"
+      onclick="toggleSection('monthlyContent', 'monthlyArrow')">
+
+      <span>MONTHLY</span>
+
+      <span
+        class="toggle-arrow"
+        id="monthlyArrow">
+        ▼
+      </span>
+
+    </button>
+
+
+    <div
+      class="collapsible"
+      id="monthlyContent">
+
+      <div class="month-header">
+
+        <button
+          class="month-nav"
+          onclick="moveMonth(-1)">
+          ‹
+        </button>
+
+        <div
+          class="month-name"
+          id="monthName">
+        </div>
+
+        <button
+          class="month-nav"
+          id="nextMonthButton"
+          onclick="moveMonth(1)">
+          ›
+        </button>
+
+      </div>
+
+
+      <div
+        id="monthlyFields">
+
+        <div class="monthly-row">
+
+          <div class="monthly-label">
+            WEIGHT
+          </div>
+
+          <div class="monthly-input-wrap">
+
+            <input
+              type="number"
+              inputmode="decimal"
+              step="0.1"
+              class="monthly-input"
+              id="weightInput"
+              placeholder="—"
+              onchange="saveMonthly()">
+
+            <span class="monthly-unit">
+              kg
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="monthly-row">
+
+          <div class="monthly-label">
+            LONG RUN
+          </div>
+
+          <div class="monthly-input-wrap">
+
+            <input
+              type="number"
+              inputmode="decimal"
+              step="0.1"
+              class="monthly-input"
+              id="longRunInput"
+              placeholder="—"
+              onchange="saveMonthly()">
+
+            <span class="monthly-unit">
+              km
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="monthly-row">
+
+          <div class="monthly-label">
+            CULTURE
+          </div>
+
+          <div class="monthly-input-wrap">
+
+            <input
+              type="text"
+              class="monthly-input culture"
+              id="cultureInput"
+              placeholder="예: 김애란 2/3"
+              onchange="saveMonthly()">
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="monthly-note">
+        현재 월만 수정 가능. 과거 월은 기록 확인용.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- DATA -->
 
   <div class="data-section">
 
@@ -597,7 +856,6 @@
 
     </div>
 
-
     <input
       type="file"
       id="restoreFile"
@@ -610,7 +868,6 @@
 </div>
 
 
-
 <script>
 
 /* =========================================================
@@ -619,17 +876,17 @@
 
 const categories = {
   strength: 1,
+  running: 2,
   golf: 2,
   course: 1,
-  career: 1,
-  running: 2
+  career: 1
 };
 
 const historyPerPage = 8;
 
 
 /* =========================================================
-   DATE FUNCTIONS
+   DATE
 ========================================================= */
 
 function getMonday(date) {
@@ -746,7 +1003,7 @@ function dateFromWeekKey(key) {
 
 
 /* =========================================================
-   CURRENT DISPLAYED WEEK
+   WEEK VIEW
 ========================================================= */
 
 let displayedMonday =
@@ -767,7 +1024,7 @@ function isCurrentWeek() {
 
 
 /* =========================================================
-   STORAGE
+   WEEKLY STORAGE
 ========================================================= */
 
 function getAllData() {
@@ -783,7 +1040,9 @@ function getAllData() {
       || {}
     );
 
-  } catch {
+  }
+
+  catch {
 
     return {};
 
@@ -794,11 +1053,8 @@ function getAllData() {
 
 function getWeekData(weekKey) {
 
-  const allData =
-    getAllData();
-
   return (
-    allData[weekKey]
+    getAllData()[weekKey]
     || {}
   );
 
@@ -825,7 +1081,7 @@ function saveWeekData(
 
 
 /* =========================================================
-   WEEK DISPLAY
+   WEEK INFO
 ========================================================= */
 
 function updateWeekInfo() {
@@ -843,16 +1099,12 @@ function updateWeekInfo() {
   );
 
 
-  const weekNumber =
-    getWeekNumber(monday);
-
-
   document
     .getElementById(
       "weekTitle"
     )
     .textContent =
-    `WEEK ${weekNumber}`;
+    `WEEK ${getWeekNumber(monday)}`;
 
 
   document
@@ -883,23 +1135,15 @@ function updateWeekInfo() {
       new Date(monday);
 
     start.setHours(
-      0,
-      0,
-      0,
-      0
+      0, 0, 0, 0
     );
-
 
     const end =
       new Date(sunday);
 
     end.setHours(
-      23,
-      59,
-      59,
-      999
+      23, 59, 59, 999
     );
-
 
     let percent =
       (
@@ -908,7 +1152,6 @@ function updateWeekInfo() {
         (end - start)
       )
       * 100;
-
 
     percent =
       Math.max(
@@ -919,10 +1162,8 @@ function updateWeekInfo() {
         )
       );
 
-
     progressBar.style.width =
       `${percent}%`;
-
 
     progressPercent.textContent =
       `${Math.round(percent)}%`;
@@ -990,7 +1231,6 @@ function renderCounters() {
 
         container.innerHTML =
           "";
-
 
         const category =
           container.dataset.category;
@@ -1066,14 +1306,10 @@ function handleDotClick(
 ) {
 
   const dots =
-    [
-      ...container.children
-    ];
-
+    [...container.children];
 
   const index =
     dots.indexOf(dot);
-
 
   const currentActive =
     dots.filter(
@@ -1084,25 +1320,10 @@ function handleDotClick(
     ).length;
 
 
-  let newValue;
-
-
-  if (
-    index
-    < currentActive
-  ) {
-
-    newValue =
-      index;
-
-  }
-
-  else {
-
-    newValue =
-      index + 1;
-
-  }
+  const newValue =
+    index < currentActive
+      ? index
+      : index + 1;
 
 
   dots.forEach(
@@ -1125,10 +1346,8 @@ function handleDotClick(
       weekKey
     );
 
-
   data[category] =
     newValue;
-
 
   saveWeekData(
     weekKey,
@@ -1167,9 +1386,7 @@ function moveWeek(offset) {
   if (
     next > currentMonday
   ) {
-
     return;
-
   }
 
 
@@ -1194,7 +1411,7 @@ function goCurrentWeek() {
 
 
 /* =========================================================
-   RESET
+   RESET WEEK
 ========================================================= */
 
 function resetWeek() {
@@ -1204,13 +1421,11 @@ function resetWeek() {
   }
 
 
-  const confirmed =
-    confirm(
+  if (
+    !confirm(
       "이번 주 기록을 모두 초기화할까?"
-    );
-
-
-  if (!confirmed) {
+    )
+  ) {
     return;
   }
 
@@ -1220,7 +1435,6 @@ function resetWeek() {
 
   const allData =
     getAllData();
-
 
   delete allData[
     weekKey
@@ -1241,22 +1455,22 @@ function resetWeek() {
 
 
 /* =========================================================
-   HISTORY
+   COLLAPSIBLE
 ========================================================= */
 
-let historyPage = 0;
-
-
-function toggleHistory() {
+function toggleSection(
+  contentId,
+  arrowId
+) {
 
   const content =
     document.getElementById(
-      "historyContent"
+      contentId
     );
 
   const arrow =
     document.getElementById(
-      "historyArrow"
+      arrowId
     );
 
 
@@ -1272,13 +1486,33 @@ function toggleHistory() {
   );
 
 
-  if (open) {
+  if (
+    contentId ===
+    "historyContent"
+  ) {
 
     renderHistory();
 
   }
 
+
+  if (
+    contentId ===
+    "monthlyContent"
+  ) {
+
+    renderMonthly();
+
+  }
+
 }
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+let historyPage = 0;
 
 
 function createDotsText(
@@ -1288,7 +1522,6 @@ function createDotsText(
 
   let output =
     "";
-
 
   for (
     let i = 0;
@@ -1303,7 +1536,6 @@ function createDotsText(
 
   }
 
-
   return output;
 
 }
@@ -1314,16 +1546,13 @@ function generateHistoryWeeks() {
   const weeks =
     [];
 
-
   const currentMonday =
     getMonday(
       new Date()
     );
 
-
   const allData =
     getAllData();
-
 
   const savedKeys =
     Object.keys(
@@ -1331,17 +1560,10 @@ function generateHistoryWeeks() {
     );
 
 
-  /*
-    기본적으로 최근 12주 표시.
-    더 오래된 저장 데이터가 있으면
-    자동으로 그 시점까지 확장.
-  */
-
   let earliestDate =
     new Date(
       currentMonday
     );
-
 
   earliestDate.setDate(
     earliestDate.getDate()
@@ -1356,7 +1578,6 @@ function generateHistoryWeeks() {
         dateFromWeekKey(
           key
         );
-
 
       if (
         date < earliestDate
@@ -1385,10 +1606,8 @@ function generateHistoryWeeks() {
       new Date(cursor)
     );
 
-
     cursor.setDate(
-      cursor.getDate()
-      - 7
+      cursor.getDate() - 7
     );
 
   }
@@ -1407,11 +1626,6 @@ function renderHistory() {
     );
 
 
-  if (!container) {
-    return;
-  }
-
-
   const weeks =
     generateHistoryWeeks();
 
@@ -1427,25 +1641,14 @@ function renderHistory() {
     );
 
 
-  if (
-    historyPage
-    >= totalPages
-  ) {
-
-    historyPage =
-      totalPages - 1;
-
-  }
-
-
-  if (
-    historyPage < 0
-  ) {
-
-    historyPage =
-      0;
-
-  }
+  historyPage =
+    Math.max(
+      0,
+      Math.min(
+        historyPage,
+        totalPages - 1
+      )
+    );
 
 
   const start =
@@ -1468,21 +1671,14 @@ function renderHistory() {
   pageWeeks.forEach(
     monday => {
 
-      const weekKey =
+      const key =
         getWeekKeyFromDate(
           monday
         );
 
-
       const data =
         getWeekData(
-          weekKey
-        );
-
-
-      const weekNumber =
-        getWeekNumber(
-          monday
+          key
         );
 
 
@@ -1491,42 +1687,40 @@ function renderHistory() {
           "div"
         );
 
-
       row.className =
         "history-row";
 
 
-      const values =
-        [
+      const values = [
 
-          `W${weekNumber}`,
+        `W${getWeekNumber(monday)}`,
 
-          createDotsText(
-            data.strength || 0,
-            categories.strength
-          ),
+        createDotsText(
+          data.strength || 0,
+          1
+        ),
 
-          createDotsText(
-            data.golf || 0,
-            categories.golf
-          ),
+        createDotsText(
+          data.running || 0,
+          2
+        ),
 
-          createDotsText(
-            data.course || 0,
-            categories.course
-          ),
+        createDotsText(
+          data.golf || 0,
+          2
+        ),
 
-          createDotsText(
-            data.career || 0,
-            categories.career
-          ),
+        createDotsText(
+          data.course || 0,
+          1
+        ),
 
-          createDotsText(
-            data.running || 0,
-            categories.running
-          )
+        createDotsText(
+          data.career || 0,
+          1
+        )
 
-        ];
+      ];
 
 
       values.forEach(
@@ -1537,27 +1731,13 @@ function renderHistory() {
               "div"
             );
 
-
-          if (
+          cell.className =
             index === 0
-          ) {
-
-            cell.className =
-              "history-week";
-
-          }
-
-          else {
-
-            cell.className =
-              "history-value";
-
-          }
-
+              ? "history-week"
+              : "history-value";
 
           cell.textContent =
             value;
-
 
           row.appendChild(
             cell
@@ -1574,9 +1754,7 @@ function renderHistory() {
           displayedMonday =
             new Date(monday);
 
-
           renderAll();
-
 
           window.scrollTo({
             top: 0,
@@ -1629,8 +1807,235 @@ function changeHistoryPage(
   historyPage +=
     direction;
 
-
   renderHistory();
+
+}
+
+
+/* =========================================================
+   MONTHLY STORAGE
+========================================================= */
+
+function getAllMonthlyData() {
+
+  try {
+
+    return (
+      JSON.parse(
+        localStorage.getItem(
+          "monthlyCounter"
+        )
+      )
+      || {}
+    );
+
+  }
+
+  catch {
+
+    return {};
+
+  }
+
+}
+
+
+function getMonthKey(date) {
+
+  return (
+    date.getFullYear()
+    +
+    "-"
+    +
+    String(
+      date.getMonth() + 1
+    ).padStart(
+      2,
+      "0"
+    )
+  );
+
+}
+
+
+let displayedMonth =
+  new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    1
+  );
+
+
+function isCurrentMonth() {
+
+  return (
+    getMonthKey(
+      displayedMonth
+    )
+    ===
+    getMonthKey(
+      new Date()
+    )
+  );
+
+}
+
+
+function renderMonthly() {
+
+  const key =
+    getMonthKey(
+      displayedMonth
+    );
+
+  const allData =
+    getAllMonthlyData();
+
+  const data =
+    allData[key]
+    || {};
+
+
+  document
+    .getElementById(
+      "monthName"
+    )
+    .textContent =
+    `${displayedMonth.getFullYear()} · ${String(
+      displayedMonth.getMonth() + 1
+    ).padStart(2, "0")}`;
+
+
+  document
+    .getElementById(
+      "weightInput"
+    )
+    .value =
+    data.weight ?? "";
+
+
+  document
+    .getElementById(
+      "longRunInput"
+    )
+    .value =
+    data.longRun ?? "";
+
+
+  document
+    .getElementById(
+      "cultureInput"
+    )
+    .value =
+    data.culture ?? "";
+
+
+  document
+    .getElementById(
+      "monthlyFields"
+    )
+    .classList.toggle(
+      "monthly-readonly",
+      !isCurrentMonth()
+    );
+
+
+  document
+    .getElementById(
+      "nextMonthButton"
+    )
+    .disabled =
+    isCurrentMonth();
+
+}
+
+
+function saveMonthly() {
+
+  if (
+    !isCurrentMonth()
+  ) {
+    return;
+  }
+
+
+  const key =
+    getMonthKey(
+      displayedMonth
+    );
+
+  const allData =
+    getAllMonthlyData();
+
+
+  allData[key] = {
+
+    weight:
+      document
+        .getElementById(
+          "weightInput"
+        )
+        .value,
+
+    longRun:
+      document
+        .getElementById(
+          "longRunInput"
+        )
+        .value,
+
+    culture:
+      document
+        .getElementById(
+          "cultureInput"
+        )
+        .value.trim()
+
+  };
+
+
+  localStorage.setItem(
+    "monthlyCounter",
+    JSON.stringify(
+      allData
+    )
+  );
+
+}
+
+
+function moveMonth(offset) {
+
+  const next =
+    new Date(
+      displayedMonth
+    );
+
+  next.setMonth(
+    next.getMonth()
+    + offset
+  );
+
+
+  const current =
+    new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1
+    );
+
+
+  if (
+    next > current
+  ) {
+    return;
+  }
+
+
+  displayedMonth =
+    next;
+
+  renderMonthly();
 
 }
 
@@ -1641,24 +2046,23 @@ function changeHistoryPage(
 
 function backupData() {
 
-  const allData =
-    getAllData();
-
-
   const backup = {
 
     app:
       "weekly-counter",
 
     version:
-      1,
+      2,
 
     createdAt:
       new Date()
         .toISOString(),
 
-    data:
-      allData
+    weekly:
+      getAllData(),
+
+    monthly:
+      getAllMonthlyData()
 
   };
 
@@ -1723,11 +2127,6 @@ function backupData() {
   );
 
 
-  /*
-    Safari 등에서 다운로드 요청이
-    처리될 시간을 약간 확보.
-  */
-
   setTimeout(
     () => {
 
@@ -1783,10 +2182,6 @@ function restoreData(event) {
           );
 
 
-        /*
-          앱 형식 확인
-        */
-
         if (
           backup.app
           !==
@@ -1805,26 +2200,12 @@ function restoreData(event) {
         }
 
 
-        /*
-          데이터 구조 확인
-        */
-
         if (
-          !backup.data
-          ||
-          typeof backup.data
-          !==
-          "object"
-          ||
-          Array.isArray(
-            backup.data
+          !confirm(
+            "현재 기록을 백업 파일의 기록으로 교체할까?"
           )
         ) {
 
-          alert(
-            "백업 데이터 형식이 올바르지 않아."
-          );
-
           event.target.value =
             "";
 
@@ -1833,28 +2214,45 @@ function restoreData(event) {
         }
 
 
-        const confirmed =
-          confirm(
-            "현재 기록을 백업 파일의 기록으로 교체할까?"
+        /*
+          VERSION 1 백업 호환
+        */
+
+        if (
+          backup.version === 1
+          &&
+          backup.data
+        ) {
+
+          localStorage.setItem(
+            "weeklyCounter",
+            JSON.stringify(
+              backup.data
+            )
           );
-
-
-        if (!confirmed) {
-
-          event.target.value =
-            "";
-
-          return;
 
         }
 
+        else {
 
-        localStorage.setItem(
-          "weeklyCounter",
-          JSON.stringify(
-            backup.data
-          )
-        );
+          localStorage.setItem(
+            "weeklyCounter",
+            JSON.stringify(
+              backup.weekly
+              || {}
+            )
+          );
+
+
+          localStorage.setItem(
+            "monthlyCounter",
+            JSON.stringify(
+              backup.monthly
+              || {}
+            )
+          );
+
+        }
 
 
         historyPage =
@@ -1867,6 +2265,14 @@ function restoreData(event) {
           );
 
 
+        displayedMonth =
+          new Date(
+            new Date().getFullYear(),
+            new Date().getMonth(),
+            1
+          );
+
+
         renderAll();
 
 
@@ -1876,8 +2282,7 @@ function restoreData(event) {
 
       }
 
-
-      catch (error) {
+      catch {
 
         alert(
           "백업 파일을 읽을 수 없어."
@@ -1885,11 +2290,6 @@ function restoreData(event) {
 
       }
 
-
-      /*
-        동일한 파일을
-        다시 선택할 수 있도록 초기화
-      */
 
       event.target.value =
         "";
@@ -1915,6 +2315,8 @@ function renderAll() {
   renderCounters();
 
   renderHistory();
+
+  renderMonthly();
 
 }
 
