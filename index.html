@@ -18,9 +18,13 @@
       font-family: Arial, sans-serif;
     }
 
-    input,
-    button {
+    button,
+    input {
       font-family: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
     }
 
     .container {
@@ -39,6 +43,7 @@
       color: #999;
       font-size: 14px;
     }
+
 
     /* =========================
        WEEK PROGRESS
@@ -70,6 +75,7 @@
       width: 0%;
       transition: width 0.3s ease;
     }
+
 
     /* =========================
        WEEKLY GROUPS
@@ -108,6 +114,19 @@
       letter-spacing: 0.4px;
     }
 
+    .counter-name.workout-link {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .workout-arrow {
+      color: #555;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
     .dots {
       display: flex;
       gap: 12px;
@@ -132,6 +151,7 @@
     .dot:active {
       transform: scale(0.9);
     }
+
 
     /* =========================
        READ ONLY
@@ -159,6 +179,7 @@
     body.readonly .dot:active {
       transform: none;
     }
+
 
     /* =========================
        WEEK NAVIGATION
@@ -189,6 +210,7 @@
       flex: 1.2;
     }
 
+
     /* =========================
        RESET
     ========================= */
@@ -209,8 +231,9 @@
       display: none;
     }
 
+
     /* =========================
-       HISTORY
+       HISTORY / MONTHLY
     ========================= */
 
     .history-section,
@@ -228,11 +251,9 @@
       background: none;
       color: #bbb;
       cursor: pointer;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       font-size: 14px;
       font-weight: bold;
       letter-spacing: 1px;
@@ -254,6 +275,11 @@
     .collapsible.open {
       display: block;
     }
+
+
+    /* =========================
+       HISTORY
+    ========================= */
 
     .history-header,
     .history-row {
@@ -318,6 +344,7 @@
       color: #666;
       font-size: 11px;
     }
+
 
     /* =========================
        MONTHLY
@@ -413,8 +440,9 @@
       line-height: 1.5;
     }
 
+
     /* =========================
-       DATA
+       BACKUP
     ========================= */
 
     .data-title {
@@ -439,25 +467,227 @@
       cursor: pointer;
     }
 
-    .backup-button:active {
-      background: #1b1b1b;
+
+    /* =========================================================
+       WORKOUT SCREEN
+    ========================================================= */
+
+    #workoutScreen {
+      display: none;
+    }
+
+    #workoutScreen.open {
+      display: block;
+    }
+
+    #mainScreen.hidden {
+      display: none;
+    }
+
+    .workout-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .back-button {
+      background: none;
+      border: none;
+      color: #999;
+      font-size: 28px;
+      padding: 0 14px 0 0;
+      cursor: pointer;
+    }
+
+    .workout-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .workout-subtitle {
+      margin-top: 7px;
+      color: #666;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .workout-progress {
+      margin-top: 28px;
+    }
+
+    .workout-progress-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 9px;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .exercise-list {
+      margin-top: 38px;
+    }
+
+    .exercise {
+      border-bottom: 1px solid #222;
+      padding: 20px 0 22px;
+    }
+
+    .exercise:first-child {
+      padding-top: 0;
+    }
+
+    .exercise-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .exercise-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .exercise-name {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .exercise-reps {
+      margin-top: 6px;
+      color: #666;
+      font-size: 12px;
+    }
+
+    .previous-weight {
+      margin-top: 6px;
+      color: #555;
+      font-size: 10px;
+      letter-spacing: 0.4px;
+    }
+
+    .weight-wrap {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    .weight-input {
+      width: 74px;
+      background: #181818;
+      color: #eee;
+      border: 1px solid #333;
+      border-radius: 7px;
+      padding: 8px 8px;
+      font-size: 15px;
+      text-align: right;
+      outline: none;
+    }
+
+    .weight-input:focus {
+      border-color: #666;
+    }
+
+    .weight-unit {
+      color: #666;
+      font-size: 11px;
+    }
+
+    .exercise-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .set-dots {
+      display: flex;
+      gap: 10px;
+    }
+
+    .set-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #666;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .set-dot.active {
+      background: #f5f5f5;
+      border-color: #f5f5f5;
+    }
+
+    .set-dot:active {
+      transform: scale(0.9);
+    }
+
+    .finish-button {
+      margin-top: 36px;
+      width: 100%;
+      padding: 16px;
+      border-radius: 9px;
+      border: none;
+      background: #eee;
+      color: #111;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .finish-button:disabled {
+      background: #292929;
+      color: #666;
+      cursor: default;
+    }
+
+    .workout-reset {
+      width: 100%;
+      margin-top: 13px;
+      padding: 12px;
+      background: transparent;
+      color: #555;
+      border: 1px solid #292929;
+      border-radius: 8px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .workout-finished {
+      margin-top: 22px;
+      padding: 13px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #aaa;
+      text-align: center;
+      font-size: 12px;
+      display: none;
+    }
+
+    .workout-finished.show {
+      display: block;
     }
 
   </style>
 </head>
 
+
 <body>
 
-<div class="container">
+<!-- =========================================================
+     MAIN SCREEN
+========================================================= -->
 
-  <!-- WEEK HEADER -->
+<div class="container" id="mainScreen">
 
-  <h1 id="weekTitle">WEEK</h1>
+  <h1 id="weekTitle">
+    WEEK
+  </h1>
 
-  <div
-    class="week-info"
-    id="weekDates">
-  </div>
+  <div class="week-info" id="weekDates"></div>
 
 
   <!-- WEEK ELAPSED -->
@@ -465,22 +695,12 @@
   <div class="progress-wrapper">
 
     <div class="progress-label">
-
       <span>WEEK ELAPSED</span>
-
-      <span id="progressPercent">
-        0%
-      </span>
-
+      <span id="progressPercent">0%</span>
     </div>
 
     <div class="progress-bg">
-
-      <div
-        class="progress-bar"
-        id="progressBar">
-      </div>
-
+      <div class="progress-bar" id="progressBar"></div>
     </div>
 
   </div>
@@ -500,8 +720,13 @@
 
       <div class="counter-row">
 
-        <div class="counter-name">
-          STRENGTH
+        <div
+          class="counter-name workout-link"
+          onclick="openWorkout()">
+
+          <span>STRENGTH</span>
+          <span class="workout-arrow">›</span>
+
         </div>
 
         <div
@@ -645,29 +870,20 @@
       onclick="toggleSection('historyContent', 'historyArrow')">
 
       <span>HISTORY</span>
-
-      <span
-        class="toggle-arrow"
-        id="historyArrow">
-        ▼
-      </span>
+      <span class="toggle-arrow" id="historyArrow">▼</span>
 
     </button>
 
 
-    <div
-      class="collapsible"
-      id="historyContent">
+    <div class="collapsible" id="historyContent">
 
       <div class="history-header">
-
         <div>WEEK</div>
         <div>STR</div>
         <div>RUN</div>
         <div>PRC</div>
         <div>CRS</div>
         <div>CAR</div>
-
       </div>
 
       <div id="historyRows"></div>
@@ -709,19 +925,12 @@
       onclick="toggleSection('monthlyContent', 'monthlyArrow')">
 
       <span>MONTHLY</span>
-
-      <span
-        class="toggle-arrow"
-        id="monthlyArrow">
-        ▼
-      </span>
+      <span class="toggle-arrow" id="monthlyArrow">▼</span>
 
     </button>
 
 
-    <div
-      class="collapsible"
-      id="monthlyContent">
+    <div class="collapsible" id="monthlyContent">
 
       <div class="month-header">
 
@@ -731,10 +940,7 @@
           ‹
         </button>
 
-        <div
-          class="month-name"
-          id="monthName">
-        </div>
+        <div class="month-name" id="monthName"></div>
 
         <button
           class="month-nav"
@@ -746,8 +952,7 @@
       </div>
 
 
-      <div
-        id="monthlyFields">
+      <div id="monthlyFields">
 
         <div class="monthly-row">
 
@@ -856,6 +1061,7 @@
 
     </div>
 
+
     <input
       type="file"
       id="restoreFile"
@@ -866,6 +1072,95 @@
   </div>
 
 </div>
+
+
+
+<!-- =========================================================
+     WORKOUT SCREEN
+========================================================= -->
+
+<div class="container" id="workoutScreen">
+
+
+  <div class="workout-header">
+
+    <button
+      class="back-button"
+      onclick="closeWorkout()">
+      ‹
+    </button>
+
+    <div class="workout-title">
+      STRENGTH
+    </div>
+
+  </div>
+
+
+  <div class="workout-subtitle">
+    ROUTINE B · FULL BODY
+  </div>
+
+
+  <!-- WORKOUT PROGRESS -->
+
+  <div class="workout-progress">
+
+    <div class="workout-progress-info">
+
+      <span id="workoutSetText">
+        0 / 15 SETS
+      </span>
+
+      <span id="workoutPercent">
+        0%
+      </span>
+
+    </div>
+
+    <div class="progress-bg">
+
+      <div
+        class="progress-bar"
+        id="workoutProgressBar">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- EXERCISES -->
+
+  <div
+    class="exercise-list"
+    id="exerciseList">
+  </div>
+
+
+  <div
+    class="workout-finished"
+    id="workoutFinished">
+    WORKOUT COMPLETE
+  </div>
+
+
+  <button
+    class="finish-button"
+    id="finishWorkoutButton"
+    onclick="finishWorkout()">
+    FINISH WORKOUT
+  </button>
+
+
+  <button
+    class="workout-reset"
+    onclick="resetWorkout()">
+    RESET WORKOUT
+  </button>
+
+</div>
+
 
 
 <script>
@@ -883,6 +1178,58 @@ const categories = {
 };
 
 const historyPerPage = 8;
+
+
+/* =========================================================
+   ROUTINE B
+========================================================= */
+
+const workoutExercises = [
+
+  {
+    id: "squat",
+    name: "SQUAT",
+    reps: 8,
+    sets: 3
+  },
+
+  {
+    id: "legcurl",
+    name: "LEG CURL",
+    reps: 12,
+    sets: 3
+  },
+
+  {
+    id: "seatedrow",
+    name: "SEATED ROW",
+    reps: 12,
+    sets: 3
+  },
+
+  {
+    id: "inclinepress",
+    name: "INCLINE PRESS",
+    reps: 10,
+    sets: 3
+  },
+
+  {
+    id: "reardelt",
+    name: "REAR DELT FLY",
+    reps: 20,
+    sets: 3
+  }
+
+];
+
+
+const totalWorkoutSets =
+  workoutExercises.reduce(
+    (sum, exercise) =>
+      sum + exercise.sets,
+    0
+  );
 
 
 /* =========================================================
@@ -1024,7 +1371,7 @@ function isCurrentWeek() {
 
 
 /* =========================================================
-   WEEKLY STORAGE
+   WEEK STORAGE
 ========================================================= */
 
 function getAllData() {
@@ -1072,6 +1419,7 @@ function saveWeekData(
   allData[weekKey] =
     data;
 
+
   localStorage.setItem(
     "weeklyCounter",
     JSON.stringify(allData)
@@ -1081,7 +1429,7 @@ function saveWeekData(
 
 
 /* =========================================================
-   WEEK INFO
+   WEEK DISPLAY
 ========================================================= */
 
 function updateWeekInfo() {
@@ -1145,6 +1493,7 @@ function updateWeekInfo() {
       23, 59, 59, 999
     );
 
+
     let percent =
       (
         (now - start)
@@ -1152,6 +1501,7 @@ function updateWeekInfo() {
         (end - start)
       )
       * 100;
+
 
     percent =
       Math.max(
@@ -1162,8 +1512,10 @@ function updateWeekInfo() {
         )
       );
 
+
     progressBar.style.width =
       `${percent}%`;
+
 
     progressPercent.textContent =
       `${Math.round(percent)}%`;
@@ -1206,7 +1558,7 @@ function updateWeekInfo() {
 
 
 /* =========================================================
-   COUNTERS
+   WEEK COUNTERS
 ========================================================= */
 
 function renderCounters() {
@@ -1232,13 +1584,16 @@ function renderCounters() {
         container.innerHTML =
           "";
 
+
         const category =
           container.dataset.category;
+
 
         const count =
           Number(
             container.dataset.count
           );
+
 
         const completed =
           savedData[category]
@@ -1256,11 +1611,14 @@ function renderCounters() {
               "button"
             );
 
+
           dot.className =
             "dot";
 
 
-          if (i < completed) {
+          if (
+            i < completed
+          ) {
 
             dot.classList.add(
               "active"
@@ -1269,7 +1627,9 @@ function renderCounters() {
           }
 
 
-          if (isCurrentWeek()) {
+          if (
+            isCurrentWeek()
+          ) {
 
             dot.addEventListener(
               "click",
@@ -1308,8 +1668,10 @@ function handleDotClick(
   const dots =
     [...container.children];
 
+
   const index =
     dots.indexOf(dot);
+
 
   const currentActive =
     dots.filter(
@@ -1341,13 +1703,16 @@ function handleDotClick(
   const weekKey =
     getCurrentWeekKey();
 
+
   const data =
     getWeekData(
       weekKey
     );
 
+
   data[category] =
     newValue;
+
 
   saveWeekData(
     weekKey,
@@ -1371,6 +1736,7 @@ function moveWeek(offset) {
       displayedMonday
     );
 
+
   next.setDate(
     next.getDate()
     + offset * 7
@@ -1393,6 +1759,7 @@ function moveWeek(offset) {
   displayedMonday =
     next;
 
+
   renderAll();
 
 }
@@ -1405,6 +1772,7 @@ function goCurrentWeek() {
       new Date()
     );
 
+
   renderAll();
 
 }
@@ -1416,7 +1784,9 @@ function goCurrentWeek() {
 
 function resetWeek() {
 
-  if (!isCurrentWeek()) {
+  if (
+    !isCurrentWeek()
+  ) {
     return;
   }
 
@@ -1433,8 +1803,10 @@ function resetWeek() {
   const weekKey =
     getCurrentWeekKey();
 
+
   const allData =
     getAllData();
+
 
   delete allData[
     weekKey
@@ -1467,6 +1839,7 @@ function toggleSection(
     document.getElementById(
       contentId
     );
+
 
   const arrow =
     document.getElementById(
@@ -1523,6 +1896,7 @@ function createDotsText(
   let output =
     "";
 
+
   for (
     let i = 0;
     i < max;
@@ -1536,6 +1910,7 @@ function createDotsText(
 
   }
 
+
   return output;
 
 }
@@ -1546,13 +1921,16 @@ function generateHistoryWeeks() {
   const weeks =
     [];
 
+
   const currentMonday =
     getMonday(
       new Date()
     );
 
+
   const allData =
     getAllData();
+
 
   const savedKeys =
     Object.keys(
@@ -1564,6 +1942,7 @@ function generateHistoryWeeks() {
     new Date(
       currentMonday
     );
+
 
   earliestDate.setDate(
     earliestDate.getDate()
@@ -1578,6 +1957,7 @@ function generateHistoryWeeks() {
         dateFromWeekKey(
           key
         );
+
 
       if (
         date < earliestDate
@@ -1606,8 +1986,10 @@ function generateHistoryWeeks() {
       new Date(cursor)
     );
 
+
     cursor.setDate(
-      cursor.getDate() - 7
+      cursor.getDate()
+      - 7
     );
 
   }
@@ -1676,6 +2058,7 @@ function renderHistory() {
           monday
         );
 
+
       const data =
         getWeekData(
           key
@@ -1686,6 +2069,7 @@ function renderHistory() {
         document.createElement(
           "div"
         );
+
 
       row.className =
         "history-row";
@@ -1731,13 +2115,16 @@ function renderHistory() {
               "div"
             );
 
+
           cell.className =
             index === 0
               ? "history-week"
               : "history-value";
 
+
           cell.textContent =
             value;
+
 
           row.appendChild(
             cell
@@ -1754,7 +2141,9 @@ function renderHistory() {
           displayedMonday =
             new Date(monday);
 
+
           renderAll();
+
 
           window.scrollTo({
             top: 0,
@@ -1807,13 +2196,14 @@ function changeHistoryPage(
   historyPage +=
     direction;
 
+
   renderHistory();
 
 }
 
 
 /* =========================================================
-   MONTHLY STORAGE
+   MONTHLY
 ========================================================= */
 
 function getAllMonthlyData() {
@@ -1888,8 +2278,10 @@ function renderMonthly() {
       displayedMonth
     );
 
+
   const allData =
     getAllMonthlyData();
+
 
   const data =
     allData[key]
@@ -1964,6 +2356,7 @@ function saveMonthly() {
       displayedMonth
     );
 
+
   const allData =
     getAllMonthlyData();
 
@@ -2011,6 +2404,7 @@ function moveMonth(offset) {
       displayedMonth
     );
 
+
   next.setMonth(
     next.getMonth()
     + offset
@@ -2035,7 +2429,1007 @@ function moveMonth(offset) {
   displayedMonth =
     next;
 
+
   renderMonthly();
+
+}
+
+
+/* =========================================================
+   WORKOUT STORAGE
+========================================================= */
+
+function getAllWorkoutData() {
+
+  try {
+
+    return (
+      JSON.parse(
+        localStorage.getItem(
+          "workoutCounter"
+        )
+      )
+      || {}
+    );
+
+  }
+
+  catch {
+
+    return {};
+
+  }
+
+}
+
+
+function createDefaultWorkoutData() {
+
+  const exercises = {};
+
+
+  workoutExercises.forEach(
+    exercise => {
+
+      exercises[
+        exercise.id
+      ] = {
+        sets: 0,
+        weight: ""
+      };
+
+    }
+  );
+
+
+  return {
+    completed: false,
+    exercises: exercises
+  };
+
+}
+
+
+function normalizeWorkoutData(data) {
+
+  if (
+    !data
+    ||
+    typeof data !== "object"
+  ) {
+
+    data =
+      createDefaultWorkoutData();
+
+  }
+
+
+  if (
+    !data.exercises
+  ) {
+
+    data.exercises =
+      {};
+
+  }
+
+
+  workoutExercises.forEach(
+    exercise => {
+
+      const current =
+        data.exercises[
+          exercise.id
+        ];
+
+
+      /*
+        이전 버전:
+        exercise 값이 숫자였던 구조 호환
+      */
+
+      if (
+        typeof current ===
+        "number"
+      ) {
+
+        data.exercises[
+          exercise.id
+        ] = {
+          sets: current,
+          weight: ""
+        };
+
+      }
+
+      else if (
+        !current
+        ||
+        typeof current !==
+        "object"
+      ) {
+
+        data.exercises[
+          exercise.id
+        ] = {
+          sets: 0,
+          weight: ""
+        };
+
+      }
+
+      else {
+
+        if (
+          current.sets ===
+          undefined
+        ) {
+
+          current.sets =
+            0;
+
+        }
+
+
+        if (
+          current.weight ===
+          undefined
+        ) {
+
+          current.weight =
+            "";
+
+        }
+
+      }
+
+    }
+  );
+
+
+  if (
+    data.completed ===
+    undefined
+  ) {
+
+    data.completed =
+      false;
+
+  }
+
+
+  return data;
+
+}
+
+
+function getWorkoutData() {
+
+  const weekKey =
+    getCurrentWeekKey();
+
+
+  const allData =
+    getAllWorkoutData();
+
+
+  if (
+    !allData[weekKey]
+  ) {
+
+    allData[weekKey] =
+      createDefaultWorkoutData();
+
+  }
+
+
+  allData[weekKey] =
+    normalizeWorkoutData(
+      allData[weekKey]
+    );
+
+
+  return allData[
+    weekKey
+  ];
+
+}
+
+
+function saveWorkoutData(
+  workoutData
+) {
+
+  const weekKey =
+    getCurrentWeekKey();
+
+
+  const allData =
+    getAllWorkoutData();
+
+
+  allData[weekKey] =
+    normalizeWorkoutData(
+      workoutData
+    );
+
+
+  localStorage.setItem(
+    "workoutCounter",
+    JSON.stringify(
+      allData
+    )
+  );
+
+}
+
+
+/* =========================================================
+   PREVIOUS WORKOUT
+========================================================= */
+
+function getPreviousWorkoutWeight(
+  exerciseId
+) {
+
+  const allData =
+    getAllWorkoutData();
+
+
+  const currentMonday =
+    getMonday(
+      new Date()
+    );
+
+
+  const keys =
+    Object.keys(
+      allData
+    )
+    .filter(
+      key => {
+
+        const date =
+          dateFromWeekKey(
+            key
+          );
+
+        return (
+          date < currentMonday
+        );
+
+      }
+    )
+    .sort(
+      (a, b) => {
+
+        return (
+          dateFromWeekKey(b)
+          -
+          dateFromWeekKey(a)
+        );
+
+      }
+    );
+
+
+  for (
+    const key of keys
+  ) {
+
+    const workout =
+      normalizeWorkoutData(
+        allData[key]
+      );
+
+
+    const exercise =
+      workout.exercises[
+        exerciseId
+      ];
+
+
+    if (
+      exercise
+      &&
+      exercise.weight !== ""
+      &&
+      exercise.weight !== null
+      &&
+      exercise.weight !== undefined
+    ) {
+
+      return exercise.weight;
+
+    }
+
+  }
+
+
+  return "";
+
+}
+
+
+/* =========================================================
+   WORKOUT SCREEN
+========================================================= */
+
+function openWorkout() {
+
+  if (
+    !isCurrentWeek()
+  ) {
+
+    alert(
+      "운동 기록은 현재 주에서만 입력할 수 있어."
+    );
+
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "mainScreen"
+    )
+    .classList.add(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "workoutScreen"
+    )
+    .classList.add(
+      "open"
+    );
+
+
+  renderWorkout();
+
+
+  window.scrollTo(
+    0,
+    0
+  );
+
+}
+
+
+function closeWorkout() {
+
+  document
+    .getElementById(
+      "workoutScreen"
+    )
+    .classList.remove(
+      "open"
+    );
+
+
+  document
+    .getElementById(
+      "mainScreen"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+
+  renderAll();
+
+
+  window.scrollTo(
+    0,
+    0
+  );
+
+}
+
+
+function renderWorkout() {
+
+  const data =
+    getWorkoutData();
+
+
+  const exerciseList =
+    document.getElementById(
+      "exerciseList"
+    );
+
+
+  exerciseList.innerHTML =
+    "";
+
+
+  workoutExercises.forEach(
+    exercise => {
+
+      const exerciseData =
+        data.exercises[
+          exercise.id
+        ];
+
+
+      const completedSets =
+        exerciseData.sets
+        || 0;
+
+
+      const previousWeight =
+        getPreviousWorkoutWeight(
+          exercise.id
+        );
+
+
+      const exerciseElement =
+        document.createElement(
+          "div"
+        );
+
+
+      exerciseElement.className =
+        "exercise";
+
+
+      const main =
+        document.createElement(
+          "div"
+        );
+
+
+      main.className =
+        "exercise-main";
+
+
+      /* LEFT */
+
+      const info =
+        document.createElement(
+          "div"
+        );
+
+
+      info.className =
+        "exercise-info";
+
+
+      const name =
+        document.createElement(
+          "div"
+        );
+
+
+      name.className =
+        "exercise-name";
+
+
+      name.textContent =
+        exercise.name;
+
+
+      const reps =
+        document.createElement(
+          "div"
+        );
+
+
+      reps.className =
+        "exercise-reps";
+
+
+      reps.textContent =
+        `${exercise.reps} REPS`;
+
+
+      const last =
+        document.createElement(
+          "div"
+        );
+
+
+      last.className =
+        "previous-weight";
+
+
+      last.textContent =
+        previousWeight !== ""
+          ? `LAST ${previousWeight} kg`
+          : "LAST —";
+
+
+      info.appendChild(
+        name
+      );
+
+
+      info.appendChild(
+        reps
+      );
+
+
+      info.appendChild(
+        last
+      );
+
+
+      /* RIGHT */
+
+      const right =
+        document.createElement(
+          "div"
+        );
+
+
+      right.className =
+        "exercise-right";
+
+
+      const weightWrap =
+        document.createElement(
+          "div"
+        );
+
+
+      weightWrap.className =
+        "weight-wrap";
+
+
+      const weightInput =
+        document.createElement(
+          "input"
+        );
+
+
+      weightInput.type =
+        "number";
+
+
+      weightInput.inputMode =
+        "decimal";
+
+
+      weightInput.step =
+        "0.5";
+
+
+      weightInput.placeholder =
+        "—";
+
+
+      weightInput.className =
+        "weight-input";
+
+
+      weightInput.value =
+        exerciseData.weight
+        ?? "";
+
+
+      weightInput.addEventListener(
+        "change",
+        () => {
+
+          saveExerciseWeight(
+            exercise.id,
+            weightInput.value
+          );
+
+        }
+      );
+
+
+      const unit =
+        document.createElement(
+          "span"
+        );
+
+
+      unit.className =
+        "weight-unit";
+
+
+      unit.textContent =
+        "kg";
+
+
+      weightWrap.appendChild(
+        weightInput
+      );
+
+
+      weightWrap.appendChild(
+        unit
+      );
+
+
+      const dots =
+        document.createElement(
+          "div"
+        );
+
+
+      dots.className =
+        "set-dots";
+
+
+      for (
+        let i = 0;
+        i < exercise.sets;
+        i++
+      ) {
+
+        const dot =
+          document.createElement(
+            "button"
+          );
+
+
+        dot.className =
+          "set-dot";
+
+
+        if (
+          i < completedSets
+        ) {
+
+          dot.classList.add(
+            "active"
+          );
+
+        }
+
+
+        dot.addEventListener(
+          "click",
+          () => {
+
+            updateWorkoutSet(
+              exercise.id,
+              i
+            );
+
+          }
+        );
+
+
+        dots.appendChild(
+          dot
+        );
+
+      }
+
+
+      right.appendChild(
+        weightWrap
+      );
+
+
+      right.appendChild(
+        dots
+      );
+
+
+      main.appendChild(
+        info
+      );
+
+
+      main.appendChild(
+        right
+      );
+
+
+      exerciseElement.appendChild(
+        main
+      );
+
+
+      exerciseList.appendChild(
+        exerciseElement
+      );
+
+    }
+  );
+
+
+  updateWorkoutProgress();
+
+}
+
+
+/* =========================================================
+   WORKOUT WEIGHT
+========================================================= */
+
+function saveExerciseWeight(
+  exerciseId,
+  weight
+) {
+
+  const data =
+    getWorkoutData();
+
+
+  data.exercises[
+    exerciseId
+  ].weight =
+    weight;
+
+
+  saveWorkoutData(
+    data
+  );
+
+}
+
+
+/* =========================================================
+   WORKOUT SETS
+========================================================= */
+
+function updateWorkoutSet(
+  exerciseId,
+  index
+) {
+
+  const data =
+    getWorkoutData();
+
+
+  const current =
+    data.exercises[
+      exerciseId
+    ].sets
+    || 0;
+
+
+  const newValue =
+    index < current
+      ? index
+      : index + 1;
+
+
+  data.exercises[
+    exerciseId
+  ].sets =
+    newValue;
+
+
+  data.completed =
+    false;
+
+
+  saveWorkoutData(
+    data
+  );
+
+
+  renderWorkout();
+
+}
+
+
+function getCompletedWorkoutSets() {
+
+  const data =
+    getWorkoutData();
+
+
+  return workoutExercises.reduce(
+    (sum, exercise) => {
+
+      return (
+        sum
+        +
+        (
+          data.exercises[
+            exercise.id
+          ].sets
+          || 0
+        )
+      );
+
+    },
+    0
+  );
+
+}
+
+
+function updateWorkoutProgress() {
+
+  const completed =
+    getCompletedWorkoutSets();
+
+
+  const percent =
+    Math.round(
+      (
+        completed
+        /
+        totalWorkoutSets
+      )
+      * 100
+    );
+
+
+  document
+    .getElementById(
+      "workoutSetText"
+    )
+    .textContent =
+    `${completed} / ${totalWorkoutSets} SETS`;
+
+
+  document
+    .getElementById(
+      "workoutPercent"
+    )
+    .textContent =
+    `${percent}%`;
+
+
+  document
+    .getElementById(
+      "workoutProgressBar"
+    )
+    .style.width =
+    `${percent}%`;
+
+
+  const finishButton =
+    document.getElementById(
+      "finishWorkoutButton"
+    );
+
+
+  finishButton.disabled =
+    completed
+    !==
+    totalWorkoutSets;
+
+
+  const data =
+    getWorkoutData();
+
+
+  document
+    .getElementById(
+      "workoutFinished"
+    )
+    .classList.toggle(
+      "show",
+      data.completed
+    );
+
+}
+
+
+/* =========================================================
+   FINISH WORKOUT
+========================================================= */
+
+function finishWorkout() {
+
+  const completed =
+    getCompletedWorkoutSets();
+
+
+  if (
+    completed
+    !==
+    totalWorkoutSets
+  ) {
+    return;
+  }
+
+
+  const workoutData =
+    getWorkoutData();
+
+
+  workoutData.completed =
+    true;
+
+
+  saveWorkoutData(
+    workoutData
+  );
+
+
+  const weekKey =
+    getCurrentWeekKey();
+
+
+  const weekData =
+    getWeekData(
+      weekKey
+    );
+
+
+  weekData.strength =
+    1;
+
+
+  saveWeekData(
+    weekKey,
+    weekData
+  );
+
+
+  renderWorkout();
+
+
+  setTimeout(
+    () => {
+
+      closeWorkout();
+
+    },
+    500
+  );
+
+}
+
+
+/* =========================================================
+   RESET WORKOUT
+========================================================= */
+
+function resetWorkout() {
+
+  if (
+    !confirm(
+      "이번 주 운동 세트 기록을 초기화할까?\n중량 입력도 초기화돼."
+    )
+  ) {
+    return;
+  }
+
+
+  const weekKey =
+    getCurrentWeekKey();
+
+
+  const allWorkout =
+    getAllWorkoutData();
+
+
+  delete allWorkout[
+    weekKey
+  ];
+
+
+  localStorage.setItem(
+    "workoutCounter",
+    JSON.stringify(
+      allWorkout
+    )
+  );
+
+
+  const weekData =
+    getWeekData(
+      weekKey
+    );
+
+
+  weekData.strength =
+    0;
+
+
+  saveWeekData(
+    weekKey,
+    weekData
+  );
+
+
+  renderWorkout();
 
 }
 
@@ -2052,7 +3446,7 @@ function backupData() {
       "weekly-counter",
 
     version:
-      2,
+      4,
 
     createdAt:
       new Date()
@@ -2062,7 +3456,10 @@ function backupData() {
       getAllData(),
 
     monthly:
-      getAllMonthlyData()
+      getAllMonthlyData(),
+
+    workout:
+      getAllWorkoutData()
 
   };
 
@@ -2162,7 +3559,9 @@ function restoreData(event) {
     event.target.files[0];
 
 
-  if (!file) {
+  if (
+    !file
+  ) {
     return;
   }
 
@@ -2192,8 +3591,10 @@ function restoreData(event) {
             "Weekly Counter 백업 파일이 아니야."
           );
 
+
           event.target.value =
             "";
+
 
           return;
 
@@ -2215,7 +3616,7 @@ function restoreData(event) {
 
 
         /*
-          VERSION 1 백업 호환
+          VERSION 1
         */
 
         if (
@@ -2248,6 +3649,15 @@ function restoreData(event) {
             "monthlyCounter",
             JSON.stringify(
               backup.monthly
+              || {}
+            )
+          );
+
+
+          localStorage.setItem(
+            "workoutCounter",
+            JSON.stringify(
+              backup.workout
               || {}
             )
           );
