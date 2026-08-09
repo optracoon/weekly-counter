@@ -1,699 +1,824 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Weekly Counter</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: #111;
-      color: #f5f5f5;
-      font-family: Arial, sans-serif;
-    }
-
-    button,
-    input {
-      font-family: inherit;
-    }
-
-    button {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .container {
-      max-width: 430px;
-      margin: 0 auto;
-      padding: 28px 22px 60px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    .week-info {
-      margin-top: 6px;
-      color: #999;
-      font-size: 14px;
-    }
-
-
-    /* =========================
-       WEEK PROGRESS
-    ========================= */
-
-    .progress-wrapper {
-      margin-top: 24px;
-    }
-
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 13px;
-      color: #aaa;
-    }
-
-    .progress-bg {
-      width: 100%;
-      height: 8px;
-      background: #333;
-      border-radius: 20px;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background: #eee;
-      width: 0%;
-      transition: width 0.3s ease;
-    }
-
-
-    /* =========================
-       WEEKLY GROUPS
-    ========================= */
-
-    .weekly-section {
-      margin-top: 38px;
-    }
-
-    .group {
-      margin-top: 34px;
-    }
-
-    .group:first-child {
-      margin-top: 0;
-    }
-
-    .group-title {
-      color: #666;
-      font-size: 11px;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-      margin-bottom: 4px;
-    }
-
-    .counter-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 58px;
-    }
-
-    .counter-name {
-      font-size: 16px;
-      font-weight: bold;
-      letter-spacing: 0.4px;
-    }
-
-    .counter-name.workout-link {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .workout-arrow {
-      color: #555;
-      font-size: 16px;
-      font-weight: normal;
-    }
-
-    .dots {
-      display: flex;
-      gap: 12px;
-    }
-
-    .dot {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 2px solid #777;
-      background: transparent;
-      cursor: pointer;
-      transition: 0.15s;
-      padding: 0;
-    }
-
-    .dot.active {
-      background: #f5f5f5;
-      border-color: #f5f5f5;
-    }
-
-    .dot:active {
-      transform: scale(0.9);
-    }
-
-
-    /* =========================
-       READ ONLY
-    ========================= */
-
-    .readonly-notice {
-      display: none;
-      margin-top: 28px;
-      padding: 12px;
-      border: 1px solid #333;
-      border-radius: 8px;
-      color: #777;
-      font-size: 12px;
-      text-align: center;
-    }
-
-    body.readonly .readonly-notice {
-      display: block;
-    }
-
-    body.readonly .dot {
-      cursor: default;
-    }
-
-    body.readonly .dot:active {
-      transform: none;
-    }
-
-
-    /* =========================
-       WEEK NAVIGATION
-    ========================= */
-
-    .week-navigation {
-      display: flex;
-      gap: 10px;
-      margin-top: 38px;
-    }
-
-    .nav-button {
-      flex: 1;
-      padding: 12px;
-      background: transparent;
-      border: 1px solid #444;
-      color: #bbb;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .nav-button:disabled {
-      opacity: 0.25;
-      cursor: default;
-    }
-
-    .current-button {
-      flex: 1.2;
-    }
-
-
-    /* =========================
-       RESET
-    ========================= */
-
-    .reset {
-      margin-top: 16px;
-      width: 100%;
-      padding: 11px;
-      border: 1px solid #333;
-      border-radius: 8px;
-      background: transparent;
-      color: #666;
-      cursor: pointer;
-      font-size: 11px;
-    }
-
-    body.readonly .reset {
-      display: none;
-    }
-
-
-    /* =========================
-       HISTORY / MONTHLY
-    ========================= */
-
-    .history-section,
-    .monthly-section,
-    .data-section {
-      margin-top: 46px;
-      border-top: 1px solid #292929;
-      padding-top: 20px;
-    }
-
-    .section-toggle {
-      width: 100%;
-      padding: 8px 0;
-      border: none;
-      background: none;
-      color: #bbb;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 14px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .toggle-arrow {
-      transition: transform 0.2s ease;
-    }
-
-    .toggle-arrow.open {
-      transform: rotate(180deg);
-    }
-
-    .collapsible {
-      display: none;
-      margin-top: 18px;
-    }
-
-    .collapsible.open {
-      display: block;
-    }
-
-
-    /* =========================
-       HISTORY
-    ========================= */
-
-    .history-header,
-    .history-row {
-      display: grid;
-      grid-template-columns: 55px 1fr 1fr 1fr 1fr 1fr;
-      gap: 5px;
-      text-align: center;
-    }
-
-    .history-header {
-      margin-bottom: 10px;
-      color: #666;
-      font-size: 9px;
-    }
-
-    .history-header div:first-child {
-      text-align: left;
-    }
-
-    .history-row {
-      align-items: center;
-      min-height: 38px;
-      border-bottom: 1px solid #222;
-      font-size: 11px;
-      cursor: pointer;
-    }
-
-    .history-week {
-      text-align: left;
-      color: #aaa;
-      font-weight: bold;
-    }
-
-    .history-value {
-      color: #aaa;
-      letter-spacing: 2px;
-      white-space: nowrap;
-    }
-
-    .history-pagination {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    .history-page-button {
-      border: 1px solid #333;
-      background: transparent;
-      color: #888;
-      border-radius: 7px;
-      padding: 8px 14px;
-      cursor: pointer;
-    }
-
-    .history-page-button:disabled {
-      opacity: 0.25;
-      cursor: default;
-    }
-
-    .history-page-info {
-      color: #666;
-      font-size: 11px;
-    }
-
-
-    /* =========================
-       MONTHLY
-    ========================= */
-
-    .month-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 22px;
-    }
-
-    .month-name {
-      color: #aaa;
-      font-size: 13px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .month-nav {
-      background: transparent;
-      color: #777;
-      border: none;
-      font-size: 18px;
-      padding: 4px 10px;
-      cursor: pointer;
-    }
-
-    .month-nav:disabled {
-      opacity: 0.2;
-    }
-
-    .monthly-row {
-      display: grid;
-      grid-template-columns: 105px 1fr;
-      align-items: center;
-      min-height: 52px;
-      border-bottom: 1px solid #222;
-    }
-
-    .monthly-label {
-      color: #888;
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-    }
-
-    .monthly-input-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 7px;
-    }
-
-    .monthly-input {
-      width: 110px;
-      background: #181818;
-      border: 1px solid #333;
-      border-radius: 7px;
-      color: #eee;
-      padding: 9px 10px;
-      text-align: right;
-      outline: none;
-      font-size: 14px;
-    }
-
-    .monthly-input:focus {
-      border-color: #666;
-    }
-
-    .monthly-input.culture {
-      width: 100%;
-      text-align: left;
-    }
-
-    .monthly-unit {
-      color: #666;
-      font-size: 12px;
-      min-width: 18px;
-    }
-
-    .monthly-readonly .monthly-input {
-      pointer-events: none;
-      color: #999;
-      background: transparent;
-      border-color: transparent;
-    }
-
-    .monthly-note {
-      margin-top: 14px;
-      color: #555;
-      font-size: 10px;
-      line-height: 1.5;
-    }
-
-
-    /* =========================
-       BACKUP
-    ========================= */
-
-    .data-title {
-      color: #555;
-      font-size: 10px;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-    }
-
-    .backup-section {
-      display: flex;
-      gap: 10px;
-    }
-
-    .backup-button {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid #333;
-      border-radius: 8px;
-      background: transparent;
-      color: #777;
-      cursor: pointer;
-    }
-
-
-    /* =========================================================
-       WORKOUT SCREEN
-    ========================================================= */
-
-    #workoutScreen {
-      display: none;
-    }
-
-    #workoutScreen.open {
-      display: block;
-    }
-
-    #mainScreen.hidden {
-      display: none;
-    }
-
-    .workout-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .back-button {
-      background: none;
-      border: none;
-      color: #999;
-      font-size: 28px;
-      padding: 0 14px 0 0;
-      cursor: pointer;
-    }
-
-    .workout-title {
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .workout-subtitle {
-      margin-top: 7px;
-      color: #666;
-      font-size: 12px;
-      letter-spacing: 1px;
-    }
-
-    .workout-progress {
-      margin-top: 28px;
-    }
-
-    .workout-progress-info {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 9px;
-      color: #999;
-      font-size: 12px;
-    }
-
-    .exercise-list {
-      margin-top: 38px;
-    }
-
-    .exercise {
-      border-bottom: 1px solid #222;
-      padding: 20px 0 22px;
-    }
-
-    .exercise:first-child {
-      padding-top: 0;
-    }
-
-    .exercise-main {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .exercise-info {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .exercise-name {
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .exercise-reps {
-      margin-top: 6px;
-      color: #666;
-      font-size: 12px;
-    }
-
-    .previous-weight {
-      margin-top: 6px;
-      color: #555;
-      font-size: 10px;
-      letter-spacing: 0.4px;
-    }
-
-    .weight-wrap {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 14px;
-    }
-
-    .weight-input {
-      width: 74px;
-      background: #181818;
-      color: #eee;
-      border: 1px solid #333;
-      border-radius: 7px;
-      padding: 8px 8px;
-      font-size: 15px;
-      text-align: right;
-      outline: none;
-    }
-
-    .weight-input:focus {
-      border-color: #666;
-    }
-
-    .weight-unit {
-      color: #666;
-      font-size: 11px;
-    }
-
-    .exercise-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
-
-    .set-dots {
-      display: flex;
-      gap: 10px;
-    }
-
-    .set-dot {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 2px solid #666;
-      background: transparent;
-      padding: 0;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-
-    .set-dot.active {
-      background: #f5f5f5;
-      border-color: #f5f5f5;
-    }
-
-    .set-dot:active {
-      transform: scale(0.9);
-    }
-
-    .finish-button {
-      margin-top: 36px;
-      width: 100%;
-      padding: 16px;
-      border-radius: 9px;
-      border: none;
-      background: #eee;
-      color: #111;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .finish-button:disabled {
-      background: #292929;
-      color: #666;
-      cursor: default;
-    }
-
-    .workout-reset {
-      width: 100%;
-      margin-top: 13px;
-      padding: 12px;
-      background: transparent;
-      color: #555;
-      border: 1px solid #292929;
-      border-radius: 8px;
-      font-size: 11px;
-      cursor: pointer;
-    }
-
-    .workout-finished {
-      margin-top: 22px;
-      padding: 13px;
-      border: 1px solid #333;
-      border-radius: 8px;
-      color: #aaa;
-      text-align: center;
-      font-size: 12px;
-      display: none;
-    }
-
-    .workout-finished.show {
-      display: block;
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Weekly Counter</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #111;
+  color: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.container {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 28px 22px 60px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.week-info {
+  margin-top: 6px;
+  color: #999;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+.progress-wrapper {
+  margin-top: 24px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.progress-bg {
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+  background: #333;
+  border-radius: 20px;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: #eee;
+  transition: width 0.25s ease;
+}
+
+
+/* =========================================================
+   MAIN WEEKLY SCREEN
+========================================================= */
+
+.weekly-section {
+  margin-top: 38px;
+}
+
+.group {
+  margin-top: 34px;
+}
+
+.group:first-child {
+  margin-top: 0;
+}
+
+.group-title {
+  margin-bottom: 4px;
+  color: #666;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+
+.counter-row {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.counter-name {
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+}
+
+.feature-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.feature-arrow {
+  color: #555;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.dots {
+  display: flex;
+  gap: 12px;
+}
+
+.dot {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 2px solid #777;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.dot.active {
+  border-color: #f5f5f5;
+  background: #f5f5f5;
+}
+
+.dot:active {
+  transform: scale(0.9);
+}
+
+
+/* =========================================================
+   READ ONLY
+========================================================= */
+
+.readonly-notice {
+  display: none;
+  margin-top: 28px;
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #777;
+  font-size: 12px;
+  text-align: center;
+}
+
+body.readonly .readonly-notice {
+  display: block;
+}
+
+body.readonly .dot {
+  cursor: default;
+}
+
+body.readonly .dot:active {
+  transform: none;
+}
+
+
+/* =========================================================
+   WEEK NAVIGATION
+========================================================= */
+
+.week-navigation {
+  display: flex;
+  gap: 10px;
+  margin-top: 38px;
+}
+
+.nav-button {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background: transparent;
+  color: #bbb;
+  cursor: pointer;
+}
+
+.nav-button:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.current-button {
+  flex: 1.2;
+}
+
+.reset {
+  width: 100%;
+  margin-top: 16px;
+  padding: 11px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: transparent;
+  color: #666;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+body.readonly .reset {
+  display: none;
+}
+
+
+/* =========================================================
+   COLLAPSIBLE SECTIONS
+========================================================= */
+
+.history-section,
+.monthly-section,
+.data-section {
+  margin-top: 46px;
+  padding-top: 20px;
+  border-top: 1px solid #292929;
+}
+
+.section-toggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border: none;
+  background: none;
+  color: #bbb;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.toggle-arrow {
+  transition: transform 0.2s ease;
+}
+
+.toggle-arrow.open {
+  transform: rotate(180deg);
+}
+
+.collapsible {
+  display: none;
+  margin-top: 18px;
+}
+
+.collapsible.open {
+  display: block;
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+.history-header,
+.history-row {
+  display: grid;
+  grid-template-columns: 55px 1fr 1fr 1fr 1fr 1fr;
+  gap: 5px;
+  text-align: center;
+}
+
+.history-header {
+  margin-bottom: 10px;
+  color: #666;
+  font-size: 9px;
+}
+
+.history-header div:first-child {
+  text-align: left;
+}
+
+.history-row {
+  min-height: 38px;
+  align-items: center;
+  border-bottom: 1px solid #222;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.history-week {
+  color: #aaa;
+  font-weight: bold;
+  text-align: left;
+}
+
+.history-value {
+  color: #aaa;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.history-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.history-page-button {
+  padding: 8px 14px;
+  border: 1px solid #333;
+  border-radius: 7px;
+  background: transparent;
+  color: #888;
+  cursor: pointer;
+}
+
+.history-page-button:disabled {
+  opacity: 0.25;
+}
+
+.history-page-info {
+  color: #666;
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   MONTHLY
+========================================================= */
+
+.month-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.month-name {
+  color: #aaa;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.month-nav {
+  padding: 4px 10px;
+  border: none;
+  background: transparent;
+  color: #777;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.month-nav:disabled {
+  opacity: 0.2;
+}
+
+.monthly-row {
+  display: grid;
+  grid-template-columns: 105px 1fr;
+  min-height: 52px;
+  align-items: center;
+  border-bottom: 1px solid #222;
+}
+
+.monthly-label {
+  color: #888;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.monthly-input-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.monthly-input {
+  width: 110px;
+  padding: 9px 10px;
+  border: 1px solid #333;
+  border-radius: 7px;
+  outline: none;
+  background: #181818;
+  color: #eee;
+  font-size: 14px;
+  text-align: right;
+}
+
+.monthly-input.culture {
+  width: 100%;
+  text-align: left;
+}
+
+.monthly-unit {
+  min-width: 18px;
+  color: #666;
+  font-size: 12px;
+}
+
+.monthly-readonly .monthly-input {
+  border-color: transparent;
+  background: transparent;
+  color: #999;
+  pointer-events: none;
+}
+
+.monthly-note {
+  margin-top: 14px;
+  color: #555;
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   DATA
+========================================================= */
+
+.data-title {
+  margin-bottom: 12px;
+  color: #555;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.backup-section {
+  display: flex;
+  gap: 10px;
+}
+
+.backup-button {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: transparent;
+  color: #777;
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   SUB SCREENS
+========================================================= */
+
+#workoutScreen,
+#golfScreen {
+  display: none;
+}
+
+#workoutScreen.open,
+#golfScreen.open {
+  display: block;
+}
+
+#mainScreen.hidden {
+  display: none;
+}
+
+.sub-header {
+  display: flex;
+  align-items: center;
+}
+
+.back-button {
+  padding: 0 14px 0 0;
+  border: none;
+  background: none;
+  color: #999;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.sub-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.sub-subtitle {
+  margin-top: 7px;
+  color: #666;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.sub-progress {
+  margin-top: 28px;
+}
+
+.sub-progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 9px;
+  color: #999;
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   WORKOUT
+========================================================= */
+
+.exercise-list {
+  margin-top: 38px;
+}
+
+.exercise {
+  padding: 20px 0 22px;
+  border-bottom: 1px solid #222;
+}
+
+.exercise:first-child {
+  padding-top: 0;
+}
+
+.exercise-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.exercise-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.exercise-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.exercise-reps {
+  margin-top: 6px;
+  color: #666;
+  font-size: 12px;
+}
+
+.previous-weight {
+  margin-top: 6px;
+  color: #555;
+  font-size: 10px;
+}
+
+.exercise-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.weight-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.weight-input {
+  width: 74px;
+  padding: 8px;
+  border: 1px solid #333;
+  border-radius: 7px;
+  outline: none;
+  background: #181818;
+  color: #eee;
+  font-size: 15px;
+  text-align: right;
+}
+
+.weight-unit {
+  color: #666;
+  font-size: 11px;
+}
+
+.set-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.set-dot,
+.practice-dot {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 2px solid #666;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.set-dot.active,
+.practice-dot.active {
+  border-color: #f5f5f5;
+  background: #f5f5f5;
+}
+
+
+/* =========================================================
+   GOLF PRACTICE
+========================================================= */
+
+.practice-session-switch {
+  display: flex;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.session-button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: transparent;
+  color: #666;
+  font-size: 11px;
+}
+
+.session-button.active {
+  border-color: #777;
+  color: #eee;
+}
+
+.session-button.complete {
+  color: #aaa;
+}
+
+.practice-list {
+  margin-top: 34px;
+}
+
+.practice-block {
+  padding: 20px 0;
+  border-bottom: 1px solid #222;
+}
+
+.practice-number {
+  margin-bottom: 5px;
+  color: #555;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.practice-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.practice-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.practice-time {
+  color: #666;
+  font-size: 11px;
+}
+
+.practice-cue {
+  margin-top: 7px;
+  color: #777;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.practice-subtext {
+  margin-top: 5px;
+  color: #555;
+  font-size: 10px;
+}
+
+.practice-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.practice-check-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.practice-check-label {
+  color: #666;
+  font-size: 9px;
+}
+
+.random-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px 8px;
+  margin-top: 16px;
+}
+
+.random-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.random-button {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 2px solid #555;
+  border-radius: 50%;
+  background: transparent;
+  color: #777;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.random-button.success {
+  border-color: #eee;
+  background: #eee;
+  color: #111;
+}
+
+.random-button.fail {
+  border-color: #555;
+  color: #999;
+}
+
+.random-label {
+  color: #555;
+  font-size: 9px;
+}
+
+.random-score {
+  margin-top: 14px;
+  color: #888;
+  font-size: 11px;
+  text-align: right;
+}
+
+
+/* =========================================================
+   FINISH / RESET
+========================================================= */
+
+.finish-button {
+  width: 100%;
+  margin-top: 36px;
+  padding: 16px;
+  border: none;
+  border-radius: 9px;
+  background: #eee;
+  color: #111;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.finish-button:disabled {
+  background: #292929;
+  color: #666;
+}
+
+.sub-reset {
+  width: 100%;
+  margin-top: 13px;
+  padding: 12px;
+  border: 1px solid #292929;
+  border-radius: 8px;
+  background: transparent;
+  color: #555;
+  font-size: 11px;
+}
+
+.complete-notice {
+  display: none;
+  margin-top: 22px;
+  padding: 13px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #aaa;
+  font-size: 12px;
+  text-align: center;
+}
+
+.complete-notice.show {
+  display: block;
+}
+</style>
 </head>
 
 
 <body>
 
 <!-- =========================================================
-     MAIN SCREEN
+     MAIN
 ========================================================= -->
 
 <div class="container" id="mainScreen">
 
-  <h1 id="weekTitle">
-    WEEK
-  </h1>
-
+  <h1 id="weekTitle">WEEK</h1>
   <div class="week-info" id="weekDates"></div>
 
 
-  <!-- WEEK ELAPSED -->
-
   <div class="progress-wrapper">
-
     <div class="progress-label">
       <span>WEEK ELAPSED</span>
       <span id="progressPercent">0%</span>
@@ -702,31 +827,20 @@
     <div class="progress-bg">
       <div class="progress-bar" id="progressBar"></div>
     </div>
-
   </div>
 
-
-  <!-- WEEKLY -->
 
   <div class="weekly-section">
 
     <!-- BODY -->
 
     <div class="group">
-
-      <div class="group-title">
-        BODY
-      </div>
+      <div class="group-title">BODY</div>
 
       <div class="counter-row">
-
-        <div
-          class="counter-name workout-link"
-          onclick="openWorkout()">
-
+        <div class="counter-name feature-link" onclick="openWorkout()">
           <span>STRENGTH</span>
-          <span class="workout-arrow">›</span>
-
+          <span class="feature-arrow">›</span>
         </div>
 
         <div
@@ -734,39 +848,30 @@
           data-category="strength"
           data-count="1">
         </div>
-
       </div>
 
 
       <div class="counter-row">
-
-        <div class="counter-name">
-          RUNNING
-        </div>
+        <div class="counter-name">RUNNING</div>
 
         <div
           class="dots"
           data-category="running"
           data-count="2">
         </div>
-
       </div>
-
     </div>
 
 
     <!-- GOLF -->
 
     <div class="group">
-
-      <div class="group-title">
-        GOLF
-      </div>
+      <div class="group-title">GOLF</div>
 
       <div class="counter-row">
-
-        <div class="counter-name">
-          PRACTICE
+        <div class="counter-name feature-link" onclick="openGolfPractice()">
+          <span>PRACTICE</span>
+          <span class="feature-arrow">›</span>
         </div>
 
         <div
@@ -774,49 +879,35 @@
           data-category="golf"
           data-count="2">
         </div>
-
       </div>
 
 
       <div class="counter-row">
-
-        <div class="counter-name">
-          COURSE
-        </div>
+        <div class="counter-name">COURSE</div>
 
         <div
           class="dots"
           data-category="course"
           data-count="1">
         </div>
-
       </div>
-
     </div>
 
 
     <!-- CAREER -->
 
     <div class="group">
-
-      <div class="group-title">
-        CAREER
-      </div>
+      <div class="group-title">CAREER</div>
 
       <div class="counter-row">
-
-        <div class="counter-name">
-          TRANSITION
-        </div>
+        <div class="counter-name">TRANSITION</div>
 
         <div
           class="dots"
           data-category="career"
           data-count="1">
         </div>
-
       </div>
-
     </div>
 
   </div>
@@ -827,13 +918,8 @@
   </div>
 
 
-  <!-- WEEK NAVIGATION -->
-
   <div class="week-navigation">
-
-    <button
-      class="nav-button"
-      onclick="moveWeek(-1)">
+    <button class="nav-button" onclick="moveWeek(-1)">
       ‹ PREV
     </button>
 
@@ -850,13 +936,10 @@
       onclick="moveWeek(1)">
       NEXT ›
     </button>
-
   </div>
 
 
-  <button
-    class="reset"
-    onclick="resetWeek()">
+  <button class="reset" onclick="resetWeek()">
     RESET THIS WEEK
   </button>
 
@@ -867,13 +950,10 @@
 
     <button
       class="section-toggle"
-      onclick="toggleSection('historyContent', 'historyArrow')">
-
+      onclick="toggleSection('historyContent','historyArrow')">
       <span>HISTORY</span>
       <span class="toggle-arrow" id="historyArrow">▼</span>
-
     </button>
-
 
     <div class="collapsible" id="historyContent">
 
@@ -889,7 +969,6 @@
       <div id="historyRows"></div>
 
       <div class="history-pagination">
-
         <button
           class="history-page-button"
           id="historyPrev"
@@ -908,7 +987,6 @@
           onclick="changeHistoryPage(1)">
           ›
         </button>
-
       </div>
 
     </div>
@@ -922,46 +1000,31 @@
 
     <button
       class="section-toggle"
-      onclick="toggleSection('monthlyContent', 'monthlyArrow')">
-
+      onclick="toggleSection('monthlyContent','monthlyArrow')">
       <span>MONTHLY</span>
       <span class="toggle-arrow" id="monthlyArrow">▼</span>
-
     </button>
-
 
     <div class="collapsible" id="monthlyContent">
 
       <div class="month-header">
-
-        <button
-          class="month-nav"
-          onclick="moveMonth(-1)">
-          ‹
-        </button>
-
+        <button class="month-nav" onclick="moveMonth(-1)">‹</button>
         <div class="month-name" id="monthName"></div>
-
         <button
           class="month-nav"
           id="nextMonthButton"
           onclick="moveMonth(1)">
           ›
         </button>
-
       </div>
 
 
       <div id="monthlyFields">
 
         <div class="monthly-row">
-
-          <div class="monthly-label">
-            WEIGHT
-          </div>
+          <div class="monthly-label">WEIGHT</div>
 
           <div class="monthly-input-wrap">
-
             <input
               type="number"
               inputmode="decimal"
@@ -971,23 +1034,15 @@
               placeholder="—"
               onchange="saveMonthly()">
 
-            <span class="monthly-unit">
-              kg
-            </span>
-
+            <span class="monthly-unit">kg</span>
           </div>
-
         </div>
 
 
         <div class="monthly-row">
-
-          <div class="monthly-label">
-            LONG RUN
-          </div>
+          <div class="monthly-label">LONG RUN</div>
 
           <div class="monthly-input-wrap">
-
             <input
               type="number"
               inputmode="decimal"
@@ -997,36 +1052,25 @@
               placeholder="—"
               onchange="saveMonthly()">
 
-            <span class="monthly-unit">
-              km
-            </span>
-
+            <span class="monthly-unit">km</span>
           </div>
-
         </div>
 
 
         <div class="monthly-row">
-
-          <div class="monthly-label">
-            CULTURE
-          </div>
+          <div class="monthly-label">CULTURE</div>
 
           <div class="monthly-input-wrap">
-
             <input
               type="text"
               class="monthly-input culture"
               id="cultureInput"
               placeholder="예: 김애란 2/3"
               onchange="saveMonthly()">
-
           </div>
-
         </div>
 
       </div>
-
 
       <div class="monthly-note">
         현재 월만 수정 가능. 과거 월은 기록 확인용.
@@ -1041,26 +1085,17 @@
 
   <div class="data-section">
 
-    <div class="data-title">
-      DATA
-    </div>
+    <div class="data-title">DATA</div>
 
     <div class="backup-section">
-
-      <button
-        class="backup-button"
-        onclick="backupData()">
+      <button class="backup-button" onclick="backupData()">
         BACKUP
       </button>
 
-      <button
-        class="backup-button"
-        onclick="openRestoreFile()">
+      <button class="backup-button" onclick="openRestoreFile()">
         RESTORE
       </button>
-
     </div>
-
 
     <input
       type="file"
@@ -1076,71 +1111,42 @@
 
 
 <!-- =========================================================
-     WORKOUT SCREEN
+     STRENGTH SCREEN
 ========================================================= -->
 
 <div class="container" id="workoutScreen">
 
-
-  <div class="workout-header">
-
-    <button
-      class="back-button"
-      onclick="closeWorkout()">
-      ‹
-    </button>
-
-    <div class="workout-title">
-      STRENGTH
-    </div>
-
+  <div class="sub-header">
+    <button class="back-button" onclick="closeWorkout()">‹</button>
+    <div class="sub-title">STRENGTH</div>
   </div>
 
-
-  <div class="workout-subtitle">
+  <div class="sub-subtitle">
     ROUTINE B · FULL BODY
   </div>
 
 
-  <!-- WORKOUT PROGRESS -->
+  <div class="sub-progress">
 
-  <div class="workout-progress">
-
-    <div class="workout-progress-info">
-
-      <span id="workoutSetText">
-        0 / 15 SETS
-      </span>
-
-      <span id="workoutPercent">
-        0%
-      </span>
-
+    <div class="sub-progress-info">
+      <span id="workoutSetText">0 / 15 SETS</span>
+      <span id="workoutPercent">0%</span>
     </div>
 
     <div class="progress-bg">
-
       <div
         class="progress-bar"
         id="workoutProgressBar">
       </div>
-
     </div>
 
   </div>
 
 
-  <!-- EXERCISES -->
-
-  <div
-    class="exercise-list"
-    id="exerciseList">
-  </div>
+  <div class="exercise-list" id="exerciseList"></div>
 
 
-  <div
-    class="workout-finished"
-    id="workoutFinished">
+  <div class="complete-notice" id="workoutFinished">
     WORKOUT COMPLETE
   </div>
 
@@ -1153,10 +1159,86 @@
   </button>
 
 
-  <button
-    class="workout-reset"
-    onclick="resetWorkout()">
+  <button class="sub-reset" onclick="resetWorkout()">
     RESET WORKOUT
+  </button>
+
+</div>
+
+
+
+<!-- =========================================================
+     GOLF PRACTICE SCREEN
+========================================================= -->
+
+<div class="container" id="golfScreen">
+
+  <div class="sub-header">
+    <button class="back-button" onclick="closeGolfPractice()">‹</button>
+    <div class="sub-title">GOLF PRACTICE</div>
+  </div>
+
+  <div class="sub-subtitle">
+    QED · 60 MIN ROUTINE
+  </div>
+
+
+  <div class="practice-session-switch">
+
+    <button
+      class="session-button"
+      id="golfSession1Button"
+      onclick="selectGolfSession(1)">
+      SESSION 1
+    </button>
+
+    <button
+      class="session-button"
+      id="golfSession2Button"
+      onclick="selectGolfSession(2)">
+      SESSION 2
+    </button>
+
+  </div>
+
+
+  <div class="sub-progress">
+
+    <div class="sub-progress-info">
+      <span id="golfCheckText">0 / 28 CHECKS</span>
+      <span id="golfPercent">0%</span>
+    </div>
+
+    <div class="progress-bg">
+      <div
+        class="progress-bar"
+        id="golfProgressBar">
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="practice-list" id="golfPracticeList"></div>
+
+
+  <div class="complete-notice" id="golfFinished">
+    PRACTICE COMPLETE
+  </div>
+
+
+  <button
+    class="finish-button"
+    id="finishGolfButton"
+    onclick="finishGolfPractice()">
+    FINISH PRACTICE
+  </button>
+
+
+  <button
+    class="sub-reset"
+    onclick="resetGolfSession()">
+    RESET THIS SESSION
   </button>
 
 </div>
@@ -1181,55 +1263,85 @@ const historyPerPage = 8;
 
 
 /* =========================================================
-   ROUTINE B
+   STRENGTH ROUTINE B
 ========================================================= */
 
 const workoutExercises = [
-
   {
     id: "squat",
     name: "SQUAT",
     reps: 8,
     sets: 3
   },
-
   {
     id: "legcurl",
     name: "LEG CURL",
     reps: 12,
     sets: 3
   },
-
   {
     id: "seatedrow",
     name: "SEATED ROW",
     reps: 12,
     sets: 3
   },
-
   {
     id: "inclinepress",
     name: "INCLINE PRESS",
     reps: 10,
     sets: 3
   },
-
   {
     id: "reardelt",
     name: "REAR DELT FLY",
     reps: 20,
     sets: 3
   }
-
 ];
-
 
 const totalWorkoutSets =
   workoutExercises.reduce(
-    (sum, exercise) =>
-      sum + exercise.sets,
+    (sum, exercise) => sum + exercise.sets,
     0
   );
+
+
+/* =========================================================
+   GOLF ROUTINE
+========================================================= */
+
+const golfSessionClubs = {
+  1: [
+    "54°",
+    "PW",
+    "8 IRON"
+  ],
+
+  2: [
+    "54°",
+    "9 IRON",
+    "7 IRON"
+  ]
+};
+
+
+/*
+Golf checks:
+
+Warm up              1
+Backswing             3
+Hit & Stop            4
+Head + Left           3
+Club distance         3
+54 distance           4
+Random test          10
+-----------------------
+Total                28
+*/
+
+const totalGolfChecks = 28;
+
+let selectedGolfSession = 1;
 
 
 /* =========================================================
@@ -1238,11 +1350,9 @@ const totalWorkoutSets =
 
 function getMonday(date) {
 
-  const d =
-    new Date(date);
+  const d = new Date(date);
 
-  const day =
-    d.getDay();
+  const day = d.getDay();
 
   const diff =
     d.getDate()
@@ -1254,7 +1364,6 @@ function getMonday(date) {
     d.getMonth(),
     diff
   );
-
 }
 
 
@@ -1297,41 +1406,28 @@ function getWeekNumber(date) {
     )
     / 7
   );
-
 }
 
 
 function formatDate(date) {
-
-  return (
-    `${date.getMonth() + 1}.`
-    +
-    `${date.getDate()}`
-  );
-
+  return `${date.getMonth() + 1}.${date.getDate()}`;
 }
 
 
 function getWeekKeyFromDate(date) {
 
-  const monday =
-    getMonday(date);
+  const monday = getMonday(date);
 
   return [
     monday.getFullYear(),
     monday.getMonth() + 1,
     monday.getDate()
   ].join("-");
-
 }
 
 
 function getCurrentWeekKey() {
-
-  return getWeekKeyFromDate(
-    new Date()
-  );
-
+  return getWeekKeyFromDate(new Date());
 }
 
 
@@ -1345,7 +1441,6 @@ function dateFromWeekKey(key) {
     parts[1] - 1,
     parts[2]
   );
-
 }
 
 
@@ -1360,13 +1455,10 @@ let displayedMonday =
 function isCurrentWeek() {
 
   return (
-    getWeekKeyFromDate(
-      displayedMonday
-    )
+    getWeekKeyFromDate(displayedMonday)
     ===
     getCurrentWeekKey()
   );
-
 }
 
 
@@ -1387,14 +1479,11 @@ function getAllData() {
       || {}
     );
 
-  }
-
-  catch {
+  } catch {
 
     return {};
 
   }
-
 }
 
 
@@ -1404,7 +1493,6 @@ function getWeekData(weekKey) {
     getAllData()[weekKey]
     || {}
   );
-
 }
 
 
@@ -1419,12 +1507,10 @@ function saveWeekData(
   allData[weekKey] =
     data;
 
-
   localStorage.setItem(
     "weeklyCounter",
     JSON.stringify(allData)
   );
-
 }
 
 
@@ -1435,9 +1521,7 @@ function saveWeekData(
 function updateWeekInfo() {
 
   const monday =
-    new Date(
-      displayedMonday
-    );
+    new Date(displayedMonday);
 
   const sunday =
     new Date(monday);
@@ -1448,17 +1532,13 @@ function updateWeekInfo() {
 
 
   document
-    .getElementById(
-      "weekTitle"
-    )
+    .getElementById("weekTitle")
     .textContent =
     `WEEK ${getWeekNumber(monday)}`;
 
 
   document
-    .getElementById(
-      "weekDates"
-    )
+    .getElementById("weekDates")
     .textContent =
     `${formatDate(monday)} — ${formatDate(sunday)}`;
 
@@ -1485,6 +1565,7 @@ function updateWeekInfo() {
     start.setHours(
       0, 0, 0, 0
     );
+
 
     const end =
       new Date(sunday);
@@ -1516,20 +1597,16 @@ function updateWeekInfo() {
     progressBar.style.width =
       `${percent}%`;
 
-
     progressPercent.textContent =
       `${Math.round(percent)}%`;
 
-  }
-
-  else {
+  } else {
 
     progressBar.style.width =
       "100%";
 
     progressPercent.textContent =
       "100%";
-
   }
 
 
@@ -1553,12 +1630,11 @@ function updateWeekInfo() {
     )
     .disabled =
     isCurrentWeek();
-
 }
 
 
 /* =========================================================
-   WEEK COUNTERS
+   MAIN COUNTERS
 ========================================================= */
 
 function renderCounters() {
@@ -1569,15 +1645,11 @@ function renderCounters() {
     );
 
   const savedData =
-    getWeekData(
-      weekKey
-    );
+    getWeekData(weekKey);
 
 
   document
-    .querySelectorAll(
-      ".dots"
-    )
+    .querySelectorAll(".dots")
     .forEach(
       container => {
 
@@ -1588,12 +1660,10 @@ function renderCounters() {
         const category =
           container.dataset.category;
 
-
         const count =
           Number(
             container.dataset.count
           );
-
 
         const completed =
           savedData[category]
@@ -1611,25 +1681,18 @@ function renderCounters() {
               "button"
             );
 
-
           dot.className =
             "dot";
 
 
-          if (
-            i < completed
-          ) {
-
+          if (i < completed) {
             dot.classList.add(
               "active"
             );
-
           }
 
 
-          if (
-            isCurrentWeek()
-          ) {
+          if (isCurrentWeek()) {
 
             dot.addEventListener(
               "click",
@@ -1647,15 +1710,11 @@ function renderCounters() {
           }
 
 
-          container.appendChild(
-            dot
-          );
-
+          container.appendChild(dot);
         }
 
       }
     );
-
 }
 
 
@@ -1668,17 +1727,14 @@ function handleDotClick(
   const dots =
     [...container.children];
 
-
   const index =
     dots.indexOf(dot);
 
-
   const currentActive =
     dots.filter(
-      d =>
-        d.classList.contains(
-          "active"
-        )
+      d => d.classList.contains(
+        "active"
+      )
     ).length;
 
 
@@ -1703,16 +1759,11 @@ function handleDotClick(
   const weekKey =
     getCurrentWeekKey();
 
-
   const data =
-    getWeekData(
-      weekKey
-    );
-
+    getWeekData(weekKey);
 
   data[category] =
     newValue;
-
 
   saveWeekData(
     weekKey,
@@ -1721,7 +1772,6 @@ function handleDotClick(
 
 
   renderHistory();
-
 }
 
 
@@ -1732,10 +1782,7 @@ function handleDotClick(
 function moveWeek(offset) {
 
   const next =
-    new Date(
-      displayedMonday
-    );
-
+    new Date(displayedMonday);
 
   next.setDate(
     next.getDate()
@@ -1744,14 +1791,10 @@ function moveWeek(offset) {
 
 
   const currentMonday =
-    getMonday(
-      new Date()
-    );
+    getMonday(new Date());
 
 
-  if (
-    next > currentMonday
-  ) {
+  if (next > currentMonday) {
     return;
   }
 
@@ -1759,22 +1802,16 @@ function moveWeek(offset) {
   displayedMonday =
     next;
 
-
   renderAll();
-
 }
 
 
 function goCurrentWeek() {
 
   displayedMonday =
-    getMonday(
-      new Date()
-    );
-
+    getMonday(new Date());
 
   renderAll();
-
 }
 
 
@@ -1784,16 +1821,14 @@ function goCurrentWeek() {
 
 function resetWeek() {
 
-  if (
-    !isCurrentWeek()
-  ) {
+  if (!isCurrentWeek()) {
     return;
   }
 
 
   if (
     !confirm(
-      "이번 주 기록을 모두 초기화할까?"
+      "이번 주 메인 기록을 모두 초기화할까?\n운동/골프 세부 기록은 유지돼."
     )
   ) {
     return;
@@ -1803,26 +1838,19 @@ function resetWeek() {
   const weekKey =
     getCurrentWeekKey();
 
-
   const allData =
     getAllData();
 
-
-  delete allData[
-    weekKey
-  ];
+  delete allData[weekKey];
 
 
   localStorage.setItem(
     "weeklyCounter",
-    JSON.stringify(
-      allData
-    )
+    JSON.stringify(allData)
   );
 
 
   renderAll();
-
 }
 
 
@@ -1839,7 +1867,6 @@ function toggleSection(
     document.getElementById(
       contentId
     );
-
 
   const arrow =
     document.getElementById(
@@ -1863,9 +1890,7 @@ function toggleSection(
     contentId ===
     "historyContent"
   ) {
-
     renderHistory();
-
   }
 
 
@@ -1873,11 +1898,8 @@ function toggleSection(
     contentId ===
     "monthlyContent"
   ) {
-
     renderMonthly();
-
   }
-
 }
 
 
@@ -1893,9 +1915,7 @@ function createDotsText(
   max
 ) {
 
-  let output =
-    "";
-
+  let output = "";
 
   for (
     let i = 0;
@@ -1907,42 +1927,27 @@ function createDotsText(
       i < value
         ? "●"
         : "○";
-
   }
 
-
   return output;
-
 }
 
 
 function generateHistoryWeeks() {
 
-  const weeks =
-    [];
-
+  const weeks = [];
 
   const currentMonday =
-    getMonday(
-      new Date()
-    );
-
-
-  const allData =
-    getAllData();
-
+    getMonday(new Date());
 
   const savedKeys =
     Object.keys(
-      allData
+      getAllData()
     );
 
 
   let earliestDate =
-    new Date(
-      currentMonday
-    );
-
+    new Date(currentMonday);
 
   earliestDate.setDate(
     earliestDate.getDate()
@@ -1954,18 +1959,10 @@ function generateHistoryWeeks() {
     key => {
 
       const date =
-        dateFromWeekKey(
-          key
-        );
+        dateFromWeekKey(key);
 
-
-      if (
-        date < earliestDate
-      ) {
-
-        earliestDate =
-          date;
-
+      if (date < earliestDate) {
+        earliestDate = date;
       }
 
     }
@@ -1973,9 +1970,7 @@ function generateHistoryWeeks() {
 
 
   let cursor =
-    new Date(
-      currentMonday
-    );
+    new Date(currentMonday);
 
 
   while (
@@ -1986,17 +1981,13 @@ function generateHistoryWeeks() {
       new Date(cursor)
     );
 
-
     cursor.setDate(
-      cursor.getDate()
-      - 7
+      cursor.getDate() - 7
     );
-
   }
 
 
   return weeks;
-
 }
 
 
@@ -2006,7 +1997,6 @@ function renderHistory() {
     document.getElementById(
       "historyRows"
     );
-
 
   const weeks =
     generateHistoryWeeks();
@@ -2046,8 +2036,7 @@ function renderHistory() {
     );
 
 
-  container.innerHTML =
-    "";
+  container.innerHTML = "";
 
 
   pageWeeks.forEach(
@@ -2058,18 +2047,14 @@ function renderHistory() {
           monday
         );
 
-
       const data =
-        getWeekData(
-          key
-        );
+        getWeekData(key);
 
 
       const row =
         document.createElement(
           "div"
         );
-
 
       row.className =
         "history-row";
@@ -2115,20 +2100,15 @@ function renderHistory() {
               "div"
             );
 
-
           cell.className =
             index === 0
               ? "history-week"
               : "history-value";
 
-
           cell.textContent =
             value;
 
-
-          row.appendChild(
-            cell
-          );
+          row.appendChild(cell);
 
         }
       );
@@ -2141,9 +2121,7 @@ function renderHistory() {
           displayedMonday =
             new Date(monday);
 
-
           renderAll();
-
 
           window.scrollTo({
             top: 0,
@@ -2154,9 +2132,7 @@ function renderHistory() {
       );
 
 
-      container.appendChild(
-        row
-      );
+      container.appendChild(row);
 
     }
   );
@@ -2185,20 +2161,14 @@ function renderHistory() {
     .disabled =
     historyPage
     >= totalPages - 1;
-
 }
 
 
-function changeHistoryPage(
-  direction
-) {
+function changeHistoryPage(direction) {
 
-  historyPage +=
-    direction;
-
+  historyPage += direction;
 
   renderHistory();
-
 }
 
 
@@ -2219,14 +2189,11 @@ function getAllMonthlyData() {
       || {}
     );
 
-  }
-
-  catch {
+  } catch {
 
     return {};
 
   }
-
 }
 
 
@@ -2234,17 +2201,14 @@ function getMonthKey(date) {
 
   return (
     date.getFullYear()
-    +
-    "-"
-    +
-    String(
+    + "-"
+    + String(
       date.getMonth() + 1
     ).padStart(
       2,
       "0"
     )
   );
-
 }
 
 
@@ -2259,32 +2223,20 @@ let displayedMonth =
 function isCurrentMonth() {
 
   return (
-    getMonthKey(
-      displayedMonth
-    )
+    getMonthKey(displayedMonth)
     ===
-    getMonthKey(
-      new Date()
-    )
+    getMonthKey(new Date())
   );
-
 }
 
 
 function renderMonthly() {
 
   const key =
-    getMonthKey(
-      displayedMonth
-    );
-
-
-  const allData =
-    getAllMonthlyData();
-
+    getMonthKey(displayedMonth);
 
   const data =
-    allData[key]
+    getAllMonthlyData()[key]
     || {};
 
 
@@ -2338,24 +2290,18 @@ function renderMonthly() {
     )
     .disabled =
     isCurrentMonth();
-
 }
 
 
 function saveMonthly() {
 
-  if (
-    !isCurrentMonth()
-  ) {
+  if (!isCurrentMonth()) {
     return;
   }
 
 
   const key =
-    getMonthKey(
-      displayedMonth
-    );
-
+    getMonthKey(displayedMonth);
 
   const allData =
     getAllMonthlyData();
@@ -2389,21 +2335,15 @@ function saveMonthly() {
 
   localStorage.setItem(
     "monthlyCounter",
-    JSON.stringify(
-      allData
-    )
+    JSON.stringify(allData)
   );
-
 }
 
 
 function moveMonth(offset) {
 
   const next =
-    new Date(
-      displayedMonth
-    );
-
+    new Date(displayedMonth);
 
   next.setMonth(
     next.getMonth()
@@ -2419,9 +2359,7 @@ function moveMonth(offset) {
     );
 
 
-  if (
-    next > current
-  ) {
+  if (next > current) {
     return;
   }
 
@@ -2429,9 +2367,7 @@ function moveMonth(offset) {
   displayedMonth =
     next;
 
-
   renderMonthly();
-
 }
 
 
@@ -2452,14 +2388,11 @@ function getAllWorkoutData() {
       || {}
     );
 
-  }
-
-  catch {
+  } catch {
 
     return {};
 
   }
-
 }
 
 
@@ -2467,13 +2400,10 @@ function createDefaultWorkoutData() {
 
   const exercises = {};
 
-
   workoutExercises.forEach(
     exercise => {
 
-      exercises[
-        exercise.id
-      ] = {
+      exercises[exercise.id] = {
         sets: 0,
         weight: ""
       };
@@ -2486,7 +2416,6 @@ function createDefaultWorkoutData() {
     completed: false,
     exercises: exercises
   };
-
 }
 
 
@@ -2497,20 +2426,13 @@ function normalizeWorkoutData(data) {
     ||
     typeof data !== "object"
   ) {
-
     data =
       createDefaultWorkoutData();
-
   }
 
 
-  if (
-    !data.exercises
-  ) {
-
-    data.exercises =
-      {};
-
+  if (!data.exercises) {
+    data.exercises = {};
   }
 
 
@@ -2522,11 +2444,6 @@ function normalizeWorkoutData(data) {
           exercise.id
         ];
 
-
-      /*
-        이전 버전:
-        exercise 값이 숫자였던 구조 호환
-      */
 
       if (
         typeof current ===
@@ -2540,13 +2457,10 @@ function normalizeWorkoutData(data) {
           weight: ""
         };
 
-      }
-
-      else if (
+      } else if (
         !current
         ||
-        typeof current !==
-        "object"
+        typeof current !== "object"
       ) {
 
         data.exercises[
@@ -2556,31 +2470,21 @@ function normalizeWorkoutData(data) {
           weight: ""
         };
 
-      }
-
-      else {
+      } else {
 
         if (
           current.sets ===
           undefined
         ) {
-
-          current.sets =
-            0;
-
+          current.sets = 0;
         }
-
 
         if (
           current.weight ===
           undefined
         ) {
-
-          current.weight =
-            "";
-
+          current.weight = "";
         }
-
       }
 
     }
@@ -2591,15 +2495,11 @@ function normalizeWorkoutData(data) {
     data.completed ===
     undefined
   ) {
-
-    data.completed =
-      false;
-
+    data.completed = false;
   }
 
 
   return data;
-
 }
 
 
@@ -2608,14 +2508,11 @@ function getWorkoutData() {
   const weekKey =
     getCurrentWeekKey();
 
-
   const allData =
     getAllWorkoutData();
 
 
-  if (
-    !allData[weekKey]
-  ) {
+  if (!allData[weekKey]) {
 
     allData[weekKey] =
       createDefaultWorkoutData();
@@ -2629,10 +2526,7 @@ function getWorkoutData() {
     );
 
 
-  return allData[
-    weekKey
-  ];
-
+  return allData[weekKey];
 }
 
 
@@ -2642,7 +2536,6 @@ function saveWorkoutData(
 
   const weekKey =
     getCurrentWeekKey();
-
 
   const allData =
     getAllWorkoutData();
@@ -2656,16 +2549,13 @@ function saveWorkoutData(
 
   localStorage.setItem(
     "workoutCounter",
-    JSON.stringify(
-      allData
-    )
+    JSON.stringify(allData)
   );
-
 }
 
 
 /* =========================================================
-   PREVIOUS WORKOUT
+   PREVIOUS WORKOUT WEIGHT
 ========================================================= */
 
 function getPreviousWorkoutWeight(
@@ -2675,41 +2565,23 @@ function getPreviousWorkoutWeight(
   const allData =
     getAllWorkoutData();
 
-
   const currentMonday =
-    getMonday(
-      new Date()
-    );
+    getMonday(new Date());
 
 
   const keys =
-    Object.keys(
-      allData
-    )
+    Object.keys(allData)
     .filter(
-      key => {
-
-        const date =
-          dateFromWeekKey(
-            key
-          );
-
-        return (
-          date < currentMonday
-        );
-
-      }
+      key =>
+        dateFromWeekKey(key)
+        <
+        currentMonday
     )
     .sort(
-      (a, b) => {
-
-        return (
-          dateFromWeekKey(b)
-          -
-          dateFromWeekKey(a)
-        );
-
-      }
+      (a, b) =>
+        dateFromWeekKey(b)
+        -
+        dateFromWeekKey(a)
     );
 
 
@@ -2721,7 +2593,6 @@ function getPreviousWorkoutWeight(
       normalizeWorkoutData(
         allData[key]
       );
-
 
     const exercise =
       workout.exercises[
@@ -2740,14 +2611,11 @@ function getPreviousWorkoutWeight(
     ) {
 
       return exercise.weight;
-
     }
-
   }
 
 
   return "";
-
 }
 
 
@@ -2757,45 +2625,28 @@ function getPreviousWorkoutWeight(
 
 function openWorkout() {
 
-  if (
-    !isCurrentWeek()
-  ) {
+  if (!isCurrentWeek()) {
 
     alert(
       "운동 기록은 현재 주에서만 입력할 수 있어."
     );
 
     return;
-
   }
 
 
-  document
-    .getElementById(
-      "mainScreen"
-    )
-    .classList.add(
-      "hidden"
-    );
-
+  hideMain();
 
   document
     .getElementById(
       "workoutScreen"
     )
-    .classList.add(
-      "open"
-    );
+    .classList.add("open");
 
 
   renderWorkout();
 
-
-  window.scrollTo(
-    0,
-    0
-  );
-
+  window.scrollTo(0, 0);
 }
 
 
@@ -2805,28 +2656,9 @@ function closeWorkout() {
     .getElementById(
       "workoutScreen"
     )
-    .classList.remove(
-      "open"
-    );
+    .classList.remove("open");
 
-
-  document
-    .getElementById(
-      "mainScreen"
-    )
-    .classList.remove(
-      "hidden"
-    );
-
-
-  renderAll();
-
-
-  window.scrollTo(
-    0,
-    0
-  );
-
+  showMain();
 }
 
 
@@ -2835,15 +2667,12 @@ function renderWorkout() {
   const data =
     getWorkoutData();
 
-
-  const exerciseList =
+  const list =
     document.getElementById(
       "exerciseList"
     );
 
-
-  exerciseList.innerHTML =
-    "";
+  list.innerHTML = "";
 
 
   workoutExercises.forEach(
@@ -2854,25 +2683,18 @@ function renderWorkout() {
           exercise.id
         ];
 
-
-      const completedSets =
-        exerciseData.sets
-        || 0;
-
-
       const previousWeight =
         getPreviousWorkoutWeight(
           exercise.id
         );
 
 
-      const exerciseElement =
+      const item =
         document.createElement(
           "div"
         );
 
-
-      exerciseElement.className =
+      item.className =
         "exercise";
 
 
@@ -2881,18 +2703,14 @@ function renderWorkout() {
           "div"
         );
 
-
       main.className =
         "exercise-main";
 
-
-      /* LEFT */
 
       const info =
         document.createElement(
           "div"
         );
-
 
       info.className =
         "exercise-info";
@@ -2903,10 +2721,8 @@ function renderWorkout() {
           "div"
         );
 
-
       name.className =
         "exercise-name";
-
 
       name.textContent =
         exercise.name;
@@ -2917,10 +2733,8 @@ function renderWorkout() {
           "div"
         );
 
-
       reps.className =
         "exercise-reps";
-
 
       reps.textContent =
         `${exercise.reps} REPS`;
@@ -2931,10 +2745,8 @@ function renderWorkout() {
           "div"
         );
 
-
       last.className =
         "previous-weight";
-
 
       last.textContent =
         previousWeight !== ""
@@ -2942,28 +2754,15 @@ function renderWorkout() {
           : "LAST —";
 
 
-      info.appendChild(
-        name
-      );
+      info.appendChild(name);
+      info.appendChild(reps);
+      info.appendChild(last);
 
-
-      info.appendChild(
-        reps
-      );
-
-
-      info.appendChild(
-        last
-      );
-
-
-      /* RIGHT */
 
       const right =
         document.createElement(
           "div"
         );
-
 
       right.className =
         "exercise-right";
@@ -2974,49 +2773,42 @@ function renderWorkout() {
           "div"
         );
 
-
       weightWrap.className =
         "weight-wrap";
 
 
-      const weightInput =
+      const input =
         document.createElement(
           "input"
         );
 
-
-      weightInput.type =
+      input.type =
         "number";
 
-
-      weightInput.inputMode =
+      input.inputMode =
         "decimal";
 
-
-      weightInput.step =
+      input.step =
         "0.5";
 
-
-      weightInput.placeholder =
+      input.placeholder =
         "—";
 
-
-      weightInput.className =
+      input.className =
         "weight-input";
 
-
-      weightInput.value =
+      input.value =
         exerciseData.weight
         ?? "";
 
 
-      weightInput.addEventListener(
+      input.addEventListener(
         "change",
         () => {
 
           saveExerciseWeight(
             exercise.id,
-            weightInput.value
+            input.value
           );
 
         }
@@ -3028,30 +2820,21 @@ function renderWorkout() {
           "span"
         );
 
-
       unit.className =
         "weight-unit";
-
 
       unit.textContent =
         "kg";
 
 
-      weightWrap.appendChild(
-        weightInput
-      );
-
-
-      weightWrap.appendChild(
-        unit
-      );
+      weightWrap.appendChild(input);
+      weightWrap.appendChild(unit);
 
 
       const dots =
         document.createElement(
           "div"
         );
-
 
       dots.className =
         "set-dots";
@@ -3068,19 +2851,18 @@ function renderWorkout() {
             "button"
           );
 
-
         dot.className =
           "set-dot";
 
 
         if (
-          i < completedSets
+          i
+          <
+          exerciseData.sets
         ) {
-
           dot.classList.add(
             "active"
           );
-
         }
 
 
@@ -3097,10 +2879,7 @@ function renderWorkout() {
         );
 
 
-        dots.appendChild(
-          dot
-        );
-
+        dots.appendChild(dot);
       }
 
 
@@ -3108,43 +2887,25 @@ function renderWorkout() {
         weightWrap
       );
 
-
       right.appendChild(
         dots
       );
 
 
-      main.appendChild(
-        info
-      );
+      main.appendChild(info);
+      main.appendChild(right);
 
+      item.appendChild(main);
 
-      main.appendChild(
-        right
-      );
-
-
-      exerciseElement.appendChild(
-        main
-      );
-
-
-      exerciseList.appendChild(
-        exerciseElement
-      );
+      list.appendChild(item);
 
     }
   );
 
 
   updateWorkoutProgress();
-
 }
 
-
-/* =========================================================
-   WORKOUT WEIGHT
-========================================================= */
 
 function saveExerciseWeight(
   exerciseId,
@@ -3154,23 +2915,14 @@ function saveExerciseWeight(
   const data =
     getWorkoutData();
 
-
   data.exercises[
     exerciseId
   ].weight =
     weight;
 
-
-  saveWorkoutData(
-    data
-  );
-
+  saveWorkoutData(data);
 }
 
-
-/* =========================================================
-   WORKOUT SETS
-========================================================= */
 
 function updateWorkoutSet(
   exerciseId,
@@ -3180,7 +2932,6 @@ function updateWorkoutSet(
   const data =
     getWorkoutData();
 
-
   const current =
     data.exercises[
       exerciseId
@@ -3188,29 +2939,21 @@ function updateWorkoutSet(
     || 0;
 
 
-  const newValue =
-    index < current
-      ? index
-      : index + 1;
-
-
   data.exercises[
     exerciseId
   ].sets =
-    newValue;
+    index < current
+      ? index
+      : index + 1;
 
 
   data.completed =
     false;
 
 
-  saveWorkoutData(
-    data
-  );
-
+  saveWorkoutData(data);
 
   renderWorkout();
-
 }
 
 
@@ -3221,23 +2964,17 @@ function getCompletedWorkoutSets() {
 
 
   return workoutExercises.reduce(
-    (sum, exercise) => {
-
-      return (
-        sum
-        +
-        (
-          data.exercises[
-            exercise.id
-          ].sets
-          || 0
-        )
-      );
-
-    },
+    (sum, exercise) =>
+      sum
+      +
+      (
+        data.exercises[
+          exercise.id
+        ].sets
+        || 0
+      ),
     0
   );
-
 }
 
 
@@ -3246,15 +2983,13 @@ function updateWorkoutProgress() {
   const completed =
     getCompletedWorkoutSets();
 
-
   const percent =
     Math.round(
-      (
-        completed
-        /
-        totalWorkoutSets
-      )
-      * 100
+      completed
+      /
+      totalWorkoutSets
+      *
+      100
     );
 
 
@@ -3282,20 +3017,14 @@ function updateWorkoutProgress() {
     `${percent}%`;
 
 
-  const finishButton =
-    document.getElementById(
+  document
+    .getElementById(
       "finishWorkoutButton"
-    );
-
-
-  finishButton.disabled =
+    )
+    .disabled =
     completed
     !==
     totalWorkoutSets;
-
-
-  const data =
-    getWorkoutData();
 
 
   document
@@ -3304,24 +3033,15 @@ function updateWorkoutProgress() {
     )
     .classList.toggle(
       "show",
-      data.completed
+      getWorkoutData().completed
     );
-
 }
 
 
-/* =========================================================
-   FINISH WORKOUT
-========================================================= */
-
 function finishWorkout() {
 
-  const completed =
-    getCompletedWorkoutSets();
-
-
   if (
-    completed
+    getCompletedWorkoutSets()
     !==
     totalWorkoutSets
   ) {
@@ -3332,10 +3052,8 @@ function finishWorkout() {
   const workoutData =
     getWorkoutData();
 
-
   workoutData.completed =
     true;
-
 
   saveWorkoutData(
     workoutData
@@ -3345,16 +3063,11 @@ function finishWorkout() {
   const weekKey =
     getCurrentWeekKey();
 
-
   const weekData =
-    getWeekData(
-      weekKey
-    );
-
+    getWeekData(weekKey);
 
   weekData.strength =
     1;
-
 
   saveWeekData(
     weekKey,
@@ -3366,26 +3079,17 @@ function finishWorkout() {
 
 
   setTimeout(
-    () => {
-
-      closeWorkout();
-
-    },
-    500
+    closeWorkout,
+    400
   );
-
 }
 
-
-/* =========================================================
-   RESET WORKOUT
-========================================================= */
 
 function resetWorkout() {
 
   if (
     !confirm(
-      "이번 주 운동 세트 기록을 초기화할까?\n중량 입력도 초기화돼."
+      "이번 주 운동 기록을 초기화할까?\n세트와 중량 입력이 모두 초기화돼."
     )
   ) {
     return;
@@ -3395,14 +3099,10 @@ function resetWorkout() {
   const weekKey =
     getCurrentWeekKey();
 
-
   const allWorkout =
     getAllWorkoutData();
 
-
-  delete allWorkout[
-    weekKey
-  ];
+  delete allWorkout[weekKey];
 
 
   localStorage.setItem(
@@ -3414,14 +3114,9 @@ function resetWorkout() {
 
 
   const weekData =
-    getWeekData(
-      weekKey
-    );
+    getWeekData(weekKey);
 
-
-  weekData.strength =
-    0;
-
+  weekData.strength = 0;
 
   saveWeekData(
     weekKey,
@@ -3430,7 +3125,1426 @@ function resetWorkout() {
 
 
   renderWorkout();
+}
 
+
+/* =========================================================
+   GOLF STORAGE
+========================================================= */
+
+function getAllGolfData() {
+
+  try {
+
+    return (
+      JSON.parse(
+        localStorage.getItem(
+          "golfPracticeCounter"
+        )
+      )
+      || {}
+    );
+
+  } catch {
+
+    return {};
+
+  }
+}
+
+
+function createDefaultGolfSession() {
+
+  return {
+
+    completed: false,
+
+    warmup: 0,
+
+    backswing: 0,
+
+    hitstop: 0,
+
+    headleft: 0,
+
+    clubs: [
+      false,
+      false,
+      false
+    ],
+
+    wedgeDistances: [
+      false,
+      false,
+      false,
+      false
+    ],
+
+    random: [
+      0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0
+    ]
+
+  };
+}
+
+
+function createDefaultGolfWeek() {
+
+  return {
+    sessions: {
+      1: createDefaultGolfSession(),
+      2: createDefaultGolfSession()
+    }
+  };
+}
+
+
+function normalizeGolfSession(
+  session
+) {
+
+  const defaults =
+    createDefaultGolfSession();
+
+
+  if (
+    !session
+    ||
+    typeof session !== "object"
+  ) {
+    return defaults;
+  }
+
+
+  return {
+
+    completed:
+      !!session.completed,
+
+    warmup:
+      Number(
+        session.warmup || 0
+      ),
+
+    backswing:
+      Number(
+        session.backswing || 0
+      ),
+
+    hitstop:
+      Number(
+        session.hitstop || 0
+      ),
+
+    headleft:
+      Number(
+        session.headleft || 0
+      ),
+
+    clubs:
+      Array.isArray(
+        session.clubs
+      )
+        ? [
+            !!session.clubs[0],
+            !!session.clubs[1],
+            !!session.clubs[2]
+          ]
+        : defaults.clubs,
+
+    wedgeDistances:
+      Array.isArray(
+        session.wedgeDistances
+      )
+        ? [
+            !!session.wedgeDistances[0],
+            !!session.wedgeDistances[1],
+            !!session.wedgeDistances[2],
+            !!session.wedgeDistances[3]
+          ]
+        : defaults.wedgeDistances,
+
+    random:
+      Array.isArray(
+        session.random
+      )
+        ? Array.from(
+            { length: 10 },
+            (_, i) =>
+              [0, 1, 2].includes(
+                Number(
+                  session.random[i]
+                )
+              )
+                ? Number(
+                    session.random[i]
+                  )
+                : 0
+          )
+        : defaults.random
+  };
+}
+
+
+function normalizeGolfWeek(data) {
+
+  if (
+    !data
+    ||
+    typeof data !== "object"
+  ) {
+    data =
+      createDefaultGolfWeek();
+  }
+
+
+  if (!data.sessions) {
+    data.sessions = {};
+  }
+
+
+  data.sessions[1] =
+    normalizeGolfSession(
+      data.sessions[1]
+    );
+
+
+  data.sessions[2] =
+    normalizeGolfSession(
+      data.sessions[2]
+    );
+
+
+  return data;
+}
+
+
+function getGolfWeekData() {
+
+  const weekKey =
+    getCurrentWeekKey();
+
+  const allData =
+    getAllGolfData();
+
+
+  if (!allData[weekKey]) {
+
+    allData[weekKey] =
+      createDefaultGolfWeek();
+
+  }
+
+
+  allData[weekKey] =
+    normalizeGolfWeek(
+      allData[weekKey]
+    );
+
+
+  return allData[weekKey];
+}
+
+
+function saveGolfWeekData(
+  data
+) {
+
+  const weekKey =
+    getCurrentWeekKey();
+
+  const allData =
+    getAllGolfData();
+
+
+  allData[weekKey] =
+    normalizeGolfWeek(data);
+
+
+  localStorage.setItem(
+    "golfPracticeCounter",
+    JSON.stringify(allData)
+  );
+}
+
+
+/* =========================================================
+   GOLF SCREEN
+========================================================= */
+
+function openGolfPractice() {
+
+  if (!isCurrentWeek()) {
+
+    alert(
+      "골프 연습 기록은 현재 주에서만 입력할 수 있어."
+    );
+
+    return;
+  }
+
+
+  const data =
+    getGolfWeekData();
+
+
+  if (
+    !data.sessions[1].completed
+  ) {
+
+    selectedGolfSession = 1;
+
+  } else if (
+    !data.sessions[2].completed
+  ) {
+
+    selectedGolfSession = 2;
+
+  } else {
+
+    selectedGolfSession = 2;
+  }
+
+
+  hideMain();
+
+
+  document
+    .getElementById(
+      "golfScreen"
+    )
+    .classList.add(
+      "open"
+    );
+
+
+  renderGolfPractice();
+
+  window.scrollTo(0, 0);
+}
+
+
+function closeGolfPractice() {
+
+  document
+    .getElementById(
+      "golfScreen"
+    )
+    .classList.remove(
+      "open"
+    );
+
+  showMain();
+}
+
+
+function selectGolfSession(
+  sessionNumber
+) {
+
+  selectedGolfSession =
+    sessionNumber;
+
+  renderGolfPractice();
+}
+
+
+function renderGolfPractice() {
+
+  const golfWeek =
+    getGolfWeekData();
+
+  const session =
+    golfWeek.sessions[
+      selectedGolfSession
+    ];
+
+
+  const session1Button =
+    document.getElementById(
+      "golfSession1Button"
+    );
+
+  const session2Button =
+    document.getElementById(
+      "golfSession2Button"
+    );
+
+
+  session1Button.classList.toggle(
+    "active",
+    selectedGolfSession === 1
+  );
+
+  session2Button.classList.toggle(
+    "active",
+    selectedGolfSession === 2
+  );
+
+
+  session1Button.classList.toggle(
+    "complete",
+    golfWeek.sessions[1].completed
+  );
+
+  session2Button.classList.toggle(
+    "complete",
+    golfWeek.sessions[2].completed
+  );
+
+
+  session1Button.textContent =
+    golfWeek.sessions[1].completed
+      ? "SESSION 1 ✓"
+      : "SESSION 1";
+
+
+  session2Button.textContent =
+    golfWeek.sessions[2].completed
+      ? "SESSION 2 ✓"
+      : "SESSION 2";
+
+
+  const list =
+    document.getElementById(
+      "golfPracticeList"
+    );
+
+  list.innerHTML = "";
+
+
+  /* WARM UP */
+
+  list.appendChild(
+    createGolfCounterBlock({
+      number: "00",
+      title: "WARM UP",
+      time: "5 MIN",
+      cue: "54° → IRON · EASY HALF SWING",
+      subtext: "몸 풀기 · 약 10구",
+      key: "warmup",
+      max: 1,
+      current: session.warmup
+    })
+  );
+
+
+  /* BACKSWING */
+
+  list.appendChild(
+    createGolfCounterBlock({
+      number: "01",
+      title: "BACKSWING STABILITY",
+      time: "10 MIN",
+      cue: "NO SWAY · RIGHT KNEE · SHOULDER TURN",
+      subtext: "5회 공 없이 → 약 15구 · 60–70%",
+      key: "backswing",
+      max: 3,
+      current: session.backswing
+    })
+  );
+
+
+  /* HIT STOP */
+
+  list.appendChild(
+    createGolfCounterBlock({
+      number: "02",
+      title: "HIT & STOP",
+      time: "12 MIN",
+      cue: "PULL → LEFT LEG → HIT → STOP",
+      subtext: "50% · 60% · 70% · 80%",
+      key: "hitstop",
+      max: 4,
+      current: session.hitstop
+    })
+  );
+
+
+  /* HEAD + LEFT */
+
+  list.appendChild(
+    createGolfCounterBlock({
+      number: "03",
+      title: "HEAD + LEFT SIDE",
+      time: "10 MIN",
+      cue: "HEAD BACK · LEFT PRESSURE · TURN",
+      subtext: "약 15구 · 70%",
+      key: "headleft",
+      max: 3,
+      current: session.headleft
+    })
+  );
+
+
+  /* DISTANCE */
+
+  list.appendChild(
+    createGolfDistanceBlock(
+      session
+    )
+  );
+
+
+  /* RANDOM TEST */
+
+  list.appendChild(
+    createGolfRandomBlock(
+      session
+    )
+  );
+
+
+  updateGolfProgress();
+
+
+  document
+    .getElementById(
+      "golfFinished"
+    )
+    .classList.toggle(
+      "show",
+      session.completed
+    );
+}
+
+
+/* =========================================================
+   GOLF COUNTER BLOCK
+========================================================= */
+
+function createGolfCounterBlock({
+  number,
+  title,
+  time,
+  cue,
+  subtext,
+  key,
+  max,
+  current
+}) {
+
+  const block =
+    document.createElement(
+      "div"
+    );
+
+  block.className =
+    "practice-block";
+
+
+  const numberEl =
+    document.createElement(
+      "div"
+    );
+
+  numberEl.className =
+    "practice-number";
+
+  numberEl.textContent =
+    number;
+
+
+  const titleRow =
+    document.createElement(
+      "div"
+    );
+
+  titleRow.className =
+    "practice-title-row";
+
+
+  const titleEl =
+    document.createElement(
+      "div"
+    );
+
+  titleEl.className =
+    "practice-title";
+
+  titleEl.textContent =
+    title;
+
+
+  const timeEl =
+    document.createElement(
+      "div"
+    );
+
+  timeEl.className =
+    "practice-time";
+
+  timeEl.textContent =
+    time;
+
+
+  titleRow.appendChild(
+    titleEl
+  );
+
+  titleRow.appendChild(
+    timeEl
+  );
+
+
+  const cueEl =
+    document.createElement(
+      "div"
+    );
+
+  cueEl.className =
+    "practice-cue";
+
+  cueEl.textContent =
+    cue;
+
+
+  const sub =
+    document.createElement(
+      "div"
+    );
+
+  sub.className =
+    "practice-subtext";
+
+  sub.textContent =
+    subtext;
+
+
+  const dots =
+    document.createElement(
+      "div"
+    );
+
+  dots.className =
+    "practice-checks";
+
+
+  for (
+    let i = 0;
+    i < max;
+    i++
+  ) {
+
+    const dot =
+      document.createElement(
+        "button"
+      );
+
+    dot.className =
+      "practice-dot";
+
+
+    if (i < current) {
+      dot.classList.add(
+        "active"
+      );
+    }
+
+
+    dot.addEventListener(
+      "click",
+      () => {
+
+        updateGolfCounter(
+          key,
+          i
+        );
+
+      }
+    );
+
+
+    dots.appendChild(dot);
+  }
+
+
+  block.appendChild(
+    numberEl
+  );
+
+  block.appendChild(
+    titleRow
+  );
+
+  block.appendChild(
+    cueEl
+  );
+
+  block.appendChild(
+    sub
+  );
+
+  block.appendChild(
+    dots
+  );
+
+
+  return block;
+}
+
+
+function updateGolfCounter(
+  key,
+  index
+) {
+
+  const data =
+    getGolfWeekData();
+
+  const session =
+    data.sessions[
+      selectedGolfSession
+    ];
+
+
+  const current =
+    Number(
+      session[key] || 0
+    );
+
+
+  session[key] =
+    index < current
+      ? index
+      : index + 1;
+
+
+  session.completed =
+    false;
+
+
+  saveGolfWeekData(data);
+
+  renderGolfPractice();
+}
+
+
+/* =========================================================
+   GOLF DISTANCE BLOCK
+========================================================= */
+
+function createGolfDistanceBlock(
+  session
+) {
+
+  const block =
+    document.createElement(
+      "div"
+    );
+
+  block.className =
+    "practice-block";
+
+
+  block.innerHTML = `
+    <div class="practice-number">
+      04
+    </div>
+
+    <div class="practice-title-row">
+      <div class="practice-title">
+        DISTANCE CONTROL
+      </div>
+
+      <div class="practice-time">
+        15 MIN
+      </div>
+    </div>
+
+    <div class="practice-cue">
+      CARRY FIRST · SAME RHYTHM
+    </div>
+
+    <div class="practice-subtext">
+      SESSION ${selectedGolfSession}
+    </div>
+  `;
+
+
+  /* CLUBS */
+
+  const clubChecks =
+    document.createElement(
+      "div"
+    );
+
+  clubChecks.className =
+    "practice-checks";
+
+
+  golfSessionClubs[
+    selectedGolfSession
+  ].forEach(
+    (club, index) => {
+
+      clubChecks.appendChild(
+        createLabelledPracticeDot(
+          club,
+          session.clubs[index],
+          () => {
+
+            toggleGolfArrayItem(
+              "clubs",
+              index
+            );
+
+          }
+        )
+      );
+
+    }
+  );
+
+
+  block.appendChild(
+    clubChecks
+  );
+
+
+  /* 54 WEDGE DISTANCES */
+
+  const wedgeText =
+    document.createElement(
+      "div"
+    );
+
+  wedgeText.className =
+    "practice-subtext";
+
+  wedgeText.style.marginTop =
+    "20px";
+
+  wedgeText.textContent =
+    "54° CARRY";
+
+
+  block.appendChild(
+    wedgeText
+  );
+
+
+  const wedgeChecks =
+    document.createElement(
+      "div"
+    );
+
+  wedgeChecks.className =
+    "practice-checks";
+
+
+  [
+    "50m",
+    "60m",
+    "70m",
+    "80m"
+  ].forEach(
+    (distance, index) => {
+
+      wedgeChecks.appendChild(
+        createLabelledPracticeDot(
+          distance,
+          session.wedgeDistances[
+            index
+          ],
+          () => {
+
+            toggleGolfArrayItem(
+              "wedgeDistances",
+              index
+            );
+
+          }
+        )
+      );
+
+    }
+  );
+
+
+  block.appendChild(
+    wedgeChecks
+  );
+
+
+  return block;
+}
+
+
+function createLabelledPracticeDot(
+  label,
+  active,
+  clickHandler
+) {
+
+  const item =
+    document.createElement(
+      "div"
+    );
+
+  item.className =
+    "practice-check-item";
+
+
+  const dot =
+    document.createElement(
+      "button"
+    );
+
+  dot.className =
+    "practice-dot";
+
+
+  if (active) {
+    dot.classList.add(
+      "active"
+    );
+  }
+
+
+  dot.addEventListener(
+    "click",
+    clickHandler
+  );
+
+
+  const labelEl =
+    document.createElement(
+      "div"
+    );
+
+  labelEl.className =
+    "practice-check-label";
+
+  labelEl.textContent =
+    label;
+
+
+  item.appendChild(dot);
+  item.appendChild(labelEl);
+
+
+  return item;
+}
+
+
+function toggleGolfArrayItem(
+  key,
+  index
+) {
+
+  const data =
+    getGolfWeekData();
+
+  const session =
+    data.sessions[
+      selectedGolfSession
+    ];
+
+
+  session[key][index] =
+    !session[key][index];
+
+
+  session.completed =
+    false;
+
+
+  saveGolfWeekData(data);
+
+  renderGolfPractice();
+}
+
+
+/* =========================================================
+   RANDOM TEST
+========================================================= */
+
+function createGolfRandomBlock(
+  session
+) {
+
+  const block =
+    document.createElement(
+      "div"
+    );
+
+  block.className =
+    "practice-block";
+
+
+  block.innerHTML = `
+    <div class="practice-number">
+      05
+    </div>
+
+    <div class="practice-title-row">
+      <div class="practice-title">
+        RANDOM TEST
+      </div>
+
+      <div class="practice-time">
+        8 MIN
+      </div>
+    </div>
+
+    <div class="practice-cue">
+      ONE BALL ONLY · NO RETRY
+    </div>
+
+    <div class="practice-subtext">
+      목표 캐리 ±10m = 성공
+    </div>
+  `;
+
+
+  const grid =
+    document.createElement(
+      "div"
+    );
+
+  grid.className =
+    "random-grid";
+
+
+  session.random.forEach(
+    (status, index) => {
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+      item.className =
+        "random-item";
+
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+      button.className =
+        "random-button";
+
+
+      /*
+        0 = not tested
+        1 = success
+        2 = fail
+      */
+
+      if (status === 1) {
+
+        button.classList.add(
+          "success"
+        );
+
+        button.textContent =
+          "●";
+
+      } else if (
+        status === 2
+      ) {
+
+        button.classList.add(
+          "fail"
+        );
+
+        button.textContent =
+          "×";
+
+      } else {
+
+        button.textContent =
+          "○";
+      }
+
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          cycleRandomTest(
+            index
+          );
+
+        }
+      );
+
+
+      const label =
+        document.createElement(
+          "div"
+        );
+
+      label.className =
+        "random-label";
+
+      label.textContent =
+        index + 1;
+
+
+      item.appendChild(button);
+      item.appendChild(label);
+
+      grid.appendChild(item);
+
+    }
+  );
+
+
+  const successCount =
+    session.random.filter(
+      value => value === 1
+    ).length;
+
+
+  const testedCount =
+    session.random.filter(
+      value => value !== 0
+    ).length;
+
+
+  const score =
+    document.createElement(
+      "div"
+    );
+
+  score.className =
+    "random-score";
+
+  score.textContent =
+    testedCount === 0
+      ? "— / 10"
+      : `${successCount} / ${testedCount} SUCCESS`;
+
+
+  block.appendChild(grid);
+  block.appendChild(score);
+
+
+  return block;
+}
+
+
+function cycleRandomTest(
+  index
+) {
+
+  const data =
+    getGolfWeekData();
+
+  const session =
+    data.sessions[
+      selectedGolfSession
+    ];
+
+
+  const current =
+    session.random[index];
+
+
+  /*
+    ○ → ● → × → ○
+  */
+
+  session.random[index] =
+    current === 0
+      ? 1
+      : current === 1
+        ? 2
+        : 0;
+
+
+  session.completed =
+    false;
+
+
+  saveGolfWeekData(data);
+
+  renderGolfPractice();
+}
+
+
+/* =========================================================
+   GOLF PROGRESS
+========================================================= */
+
+function getGolfCompletedChecks() {
+
+  const session =
+    getGolfWeekData()
+      .sessions[
+        selectedGolfSession
+      ];
+
+
+  const randomTested =
+    session.random.filter(
+      value => value !== 0
+    ).length;
+
+
+  return (
+    session.warmup
+    +
+    session.backswing
+    +
+    session.hitstop
+    +
+    session.headleft
+    +
+    session.clubs.filter(
+      Boolean
+    ).length
+    +
+    session.wedgeDistances.filter(
+      Boolean
+    ).length
+    +
+    randomTested
+  );
+}
+
+
+function updateGolfProgress() {
+
+  const completed =
+    getGolfCompletedChecks();
+
+
+  const percent =
+    Math.round(
+      completed
+      /
+      totalGolfChecks
+      *
+      100
+    );
+
+
+  document
+    .getElementById(
+      "golfCheckText"
+    )
+    .textContent =
+    `${completed} / ${totalGolfChecks} CHECKS`;
+
+
+  document
+    .getElementById(
+      "golfPercent"
+    )
+    .textContent =
+    `${percent}%`;
+
+
+  document
+    .getElementById(
+      "golfProgressBar"
+    )
+    .style.width =
+    `${percent}%`;
+
+
+  document
+    .getElementById(
+      "finishGolfButton"
+    )
+    .disabled =
+    completed
+    !==
+    totalGolfChecks;
+}
+
+
+/* =========================================================
+   FINISH GOLF
+========================================================= */
+
+function finishGolfPractice() {
+
+  if (
+    getGolfCompletedChecks()
+    !==
+    totalGolfChecks
+  ) {
+    return;
+  }
+
+
+  const data =
+    getGolfWeekData();
+
+
+  data.sessions[
+    selectedGolfSession
+  ].completed =
+    true;
+
+
+  saveGolfWeekData(data);
+
+
+  const completedSessions =
+    [
+      data.sessions[1],
+      data.sessions[2]
+    ].filter(
+      session =>
+        session.completed
+    ).length;
+
+
+  const weekKey =
+    getCurrentWeekKey();
+
+  const weekData =
+    getWeekData(
+      weekKey
+    );
+
+
+  weekData.golf =
+    completedSessions;
+
+
+  saveWeekData(
+    weekKey,
+    weekData
+  );
+
+
+  renderGolfPractice();
+
+
+  if (
+    selectedGolfSession === 1
+    &&
+    !data.sessions[2].completed
+  ) {
+
+    setTimeout(
+      () => {
+
+        selectedGolfSession = 2;
+
+        renderGolfPractice();
+
+        window.scrollTo(
+          0,
+          0
+        );
+
+      },
+      500
+    );
+
+  } else {
+
+    setTimeout(
+      closeGolfPractice,
+      500
+    );
+  }
+}
+
+
+/* =========================================================
+   RESET GOLF SESSION
+========================================================= */
+
+function resetGolfSession() {
+
+  if (
+    !confirm(
+      `SESSION ${selectedGolfSession} 기록을 초기화할까?`
+    )
+  ) {
+    return;
+  }
+
+
+  const data =
+    getGolfWeekData();
+
+
+  data.sessions[
+    selectedGolfSession
+  ] =
+    createDefaultGolfSession();
+
+
+  saveGolfWeekData(data);
+
+
+  const completedSessions =
+    [
+      data.sessions[1],
+      data.sessions[2]
+    ].filter(
+      session =>
+        session.completed
+    ).length;
+
+
+  const weekKey =
+    getCurrentWeekKey();
+
+  const weekData =
+    getWeekData(
+      weekKey
+    );
+
+
+  weekData.golf =
+    completedSessions;
+
+
+  saveWeekData(
+    weekKey,
+    weekData
+  );
+
+
+  renderGolfPractice();
+}
+
+
+/* =========================================================
+   SCREEN HELPERS
+========================================================= */
+
+function hideMain() {
+
+  document
+    .getElementById(
+      "mainScreen"
+    )
+    .classList.add(
+      "hidden"
+    );
+}
+
+
+function showMain() {
+
+  document
+    .getElementById(
+      "mainScreen"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
+  renderAll();
+
+  window.scrollTo(
+    0,
+    0
+  );
 }
 
 
@@ -3446,7 +4560,7 @@ function backupData() {
       "weekly-counter",
 
     version:
-      4,
+      5,
 
     createdAt:
       new Date()
@@ -3459,7 +4573,10 @@ function backupData() {
       getAllMonthlyData(),
 
     workout:
-      getAllWorkoutData()
+      getAllWorkoutData(),
+
+    golfPractice:
+      getAllGolfData()
 
   };
 
@@ -3494,30 +4611,34 @@ function backupData() {
     );
 
 
-  const today =
-    new Date()
-      .toISOString()
-      .slice(
-        0,
-        10
-      );
+  const now =
+    new Date();
+
+
+  const filenameDate =
+    [
+      now.getFullYear(),
+      String(
+        now.getMonth() + 1
+      ).padStart(2, "0"),
+      String(
+        now.getDate()
+      ).padStart(2, "0")
+    ].join("-");
 
 
   link.href =
     url;
 
-
   link.download =
-    `weekly-counter-backup-${today}.json`;
+    `weekly-counter-backup-${filenameDate}.json`;
 
 
   document.body.appendChild(
     link
   );
 
-
   link.click();
-
 
   document.body.removeChild(
     link
@@ -3534,7 +4655,6 @@ function backupData() {
     },
     1000
   );
-
 }
 
 
@@ -3549,7 +4669,6 @@ function openRestoreFile() {
       "restoreFile"
     )
     .click();
-
 }
 
 
@@ -3559,9 +4678,7 @@ function restoreData(event) {
     event.target.files[0];
 
 
-  if (
-    !file
-  ) {
+  if (!file) {
     return;
   }
 
@@ -3591,13 +4708,10 @@ function restoreData(event) {
             "Weekly Counter 백업 파일이 아니야."
           );
 
-
           event.target.value =
             "";
 
-
           return;
-
         }
 
 
@@ -3611,12 +4725,11 @@ function restoreData(event) {
             "";
 
           return;
-
         }
 
 
         /*
-          VERSION 1
+          VERSION 1 호환
         */
 
         if (
@@ -3632,9 +4745,7 @@ function restoreData(event) {
             )
           );
 
-        }
-
-        else {
+        } else {
 
           localStorage.setItem(
             "weeklyCounter",
@@ -3662,17 +4773,22 @@ function restoreData(event) {
             )
           );
 
+
+          localStorage.setItem(
+            "golfPracticeCounter",
+            JSON.stringify(
+              backup.golfPractice
+              || {}
+            )
+          );
         }
 
 
-        historyPage =
-          0;
+        historyPage = 0;
 
 
         displayedMonday =
-          getMonday(
-            new Date()
-          );
+          getMonday(new Date());
 
 
         displayedMonth =
@@ -3690,27 +4806,20 @@ function restoreData(event) {
           "RESTORE 완료."
         );
 
-      }
-
-      catch {
+      } catch {
 
         alert(
           "백업 파일을 읽을 수 없어."
         );
-
       }
 
 
       event.target.value =
         "";
-
     };
 
 
-  reader.readAsText(
-    file
-  );
-
+  reader.readAsText(file);
 }
 
 
@@ -3727,7 +4836,6 @@ function renderAll() {
   renderHistory();
 
   renderMonthly();
-
 }
 
 
