@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0">
 
 <title>Weekly Counter</title>
 
+
 <style>
+
+/* =========================================================
+   BASE
+========================================================= */
+
 * {
   box-sizing: border-box;
 }
@@ -45,8 +56,9 @@ h1 {
 }
 
 
+
 /* =========================================================
-   COMMON
+   COMMON PROGRESS
 ========================================================= */
 
 .progress-wrapper {
@@ -77,8 +89,9 @@ h1 {
 }
 
 
+
 /* =========================================================
-   MAIN WEEKLY SCREEN
+   MAIN SCREEN
 ========================================================= */
 
 .weekly-section {
@@ -140,7 +153,6 @@ h1 {
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
-  transition: 0.15s;
 }
 
 .dot.active {
@@ -151,6 +163,7 @@ h1 {
 .dot:active {
   transform: scale(0.9);
 }
+
 
 
 /* =========================================================
@@ -176,13 +189,10 @@ body.readonly .dot {
   cursor: default;
 }
 
-body.readonly .dot:active {
-  transform: none;
-}
 
 
 /* =========================================================
-   WEEK NAVIGATION
+   NAVIGATION
 ========================================================= */
 
 .week-navigation {
@@ -203,7 +213,6 @@ body.readonly .dot:active {
 
 .nav-button:disabled {
   opacity: 0.25;
-  cursor: default;
 }
 
 .current-button {
@@ -219,7 +228,6 @@ body.readonly .dot:active {
   background: transparent;
   color: #666;
   font-size: 11px;
-  cursor: pointer;
 }
 
 body.readonly .reset {
@@ -227,8 +235,9 @@ body.readonly .reset {
 }
 
 
+
 /* =========================================================
-   COLLAPSIBLE SECTIONS
+   COLLAPSIBLE
 ========================================================= */
 
 .history-section,
@@ -251,7 +260,6 @@ body.readonly .reset {
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 1px;
-  cursor: pointer;
 }
 
 .toggle-arrow {
@@ -272,6 +280,7 @@ body.readonly .reset {
 }
 
 
+
 /* =========================================================
    HISTORY
 ========================================================= */
@@ -279,7 +288,13 @@ body.readonly .reset {
 .history-header,
 .history-row {
   display: grid;
-  grid-template-columns: 55px 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns:
+    55px
+    1fr
+    1fr
+    1fr
+    1fr
+    1fr;
   gap: 5px;
   text-align: center;
 }
@@ -299,7 +314,6 @@ body.readonly .reset {
   align-items: center;
   border-bottom: 1px solid #222;
   font-size: 11px;
-  cursor: pointer;
 }
 
 .history-week {
@@ -327,7 +341,6 @@ body.readonly .reset {
   border-radius: 7px;
   background: transparent;
   color: #888;
-  cursor: pointer;
 }
 
 .history-page-button:disabled {
@@ -338,6 +351,7 @@ body.readonly .reset {
   color: #666;
   font-size: 11px;
 }
+
 
 
 /* =========================================================
@@ -355,7 +369,6 @@ body.readonly .reset {
   color: #aaa;
   font-size: 13px;
   font-weight: bold;
-  letter-spacing: 1px;
 }
 
 .month-nav {
@@ -364,7 +377,6 @@ body.readonly .reset {
   background: transparent;
   color: #777;
   font-size: 18px;
-  cursor: pointer;
 }
 
 .month-nav:disabled {
@@ -418,7 +430,6 @@ body.readonly .reset {
 .monthly-readonly .monthly-input {
   border-color: transparent;
   background: transparent;
-  color: #999;
   pointer-events: none;
 }
 
@@ -427,6 +438,7 @@ body.readonly .reset {
   color: #555;
   font-size: 10px;
 }
+
 
 
 /* =========================================================
@@ -452,8 +464,8 @@ body.readonly .reset {
   border-radius: 8px;
   background: transparent;
   color: #777;
-  cursor: pointer;
 }
+
 
 
 /* =========================================================
@@ -485,7 +497,6 @@ body.readonly .reset {
   background: none;
   color: #999;
   font-size: 28px;
-  cursor: pointer;
 }
 
 .sub-title {
@@ -513,6 +524,7 @@ body.readonly .reset {
 }
 
 
+
 /* =========================================================
    WORKOUT
 ========================================================= */
@@ -526,10 +538,6 @@ body.readonly .reset {
   border-bottom: 1px solid #222;
 }
 
-.exercise:first-child {
-  padding-top: 0;
-}
-
 .exercise-main {
   display: flex;
   align-items: center;
@@ -539,7 +547,6 @@ body.readonly .reset {
 
 .exercise-info {
   flex: 1;
-  min-width: 0;
 }
 
 .exercise-name {
@@ -577,7 +584,6 @@ body.readonly .reset {
   padding: 8px;
   border: 1px solid #333;
   border-radius: 7px;
-  outline: none;
   background: #181818;
   color: #eee;
   font-size: 15px;
@@ -602,7 +608,6 @@ body.readonly .reset {
   border: 2px solid #666;
   border-radius: 50%;
   background: transparent;
-  cursor: pointer;
 }
 
 .set-dot.active,
@@ -612,8 +617,9 @@ body.readonly .reset {
 }
 
 
+
 /* =========================================================
-   GOLF PRACTICE
+   GOLF SESSION SWITCH
 ========================================================= */
 
 .practice-session-switch {
@@ -641,6 +647,83 @@ body.readonly .reset {
   color: #aaa;
 }
 
+
+
+/* =========================================================
+   GOLF TIMER
+========================================================= */
+
+.coach-card {
+  margin-top: 26px;
+  padding: 22px 18px;
+  border: 1px solid #333;
+  border-radius: 12px;
+  background: #151515;
+}
+
+.coach-status {
+  color: #666;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+
+.coach-routine {
+  margin-top: 10px;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.coach-cue {
+  margin-top: 8px;
+  min-height: 18px;
+  color: #777;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.coach-time {
+  margin-top: 20px;
+  font-size: 48px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.coach-total {
+  margin-top: 6px;
+  color: #555;
+  font-size: 10px;
+}
+
+.coach-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.coach-button {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background: transparent;
+  color: #aaa;
+  font-size: 11px;
+}
+
+.coach-start {
+  border-color: #eee;
+  background: #eee;
+  color: #111;
+  font-weight: bold;
+}
+
+
+
+/* =========================================================
+   GOLF PRACTICE LIST
+========================================================= */
+
 .practice-list {
   margin-top: 34px;
 }
@@ -654,7 +737,6 @@ body.readonly .reset {
   margin-bottom: 5px;
   color: #555;
   font-size: 10px;
-  letter-spacing: 1px;
 }
 
 .practice-title-row {
@@ -701,9 +783,17 @@ body.readonly .reset {
 }
 
 .practice-check-label {
+  max-width: 70px;
   color: #666;
   font-size: 9px;
+  text-align: center;
 }
+
+
+
+/* =========================================================
+   RANDOM TEST
+========================================================= */
 
 .random-grid {
   display: grid;
@@ -739,7 +829,7 @@ body.readonly .reset {
 
 .random-button.fail {
   border-color: #555;
-  color: #999;
+  color: #aaa;
 }
 
 .random-label {
@@ -755,8 +845,9 @@ body.readonly .reset {
 }
 
 
+
 /* =========================================================
-   FINISH / RESET
+   COMPLETE BUTTONS
 ========================================================= */
 
 .finish-button {
@@ -769,7 +860,6 @@ body.readonly .reset {
   color: #111;
   font-size: 14px;
   font-weight: bold;
-  cursor: pointer;
 }
 
 .finish-button:disabled {
@@ -802,307 +892,389 @@ body.readonly .reset {
 .complete-notice.show {
   display: block;
 }
+
 </style>
+
 </head>
+
 
 
 <body>
 
+
 <!-- =========================================================
-     MAIN
+     MAIN SCREEN
 ========================================================= -->
 
-<div class="container" id="mainScreen">
+<div
+  class="container"
+  id="mainScreen">
 
-  <h1 id="weekTitle">WEEK</h1>
-  <div class="week-info" id="weekDates"></div>
+
+<h1 id="weekTitle">
+  WEEK
+</h1>
+
+<div
+  class="week-info"
+  id="weekDates">
+</div>
 
 
-  <div class="progress-wrapper">
-    <div class="progress-label">
-      <span>WEEK ELAPSED</span>
-      <span id="progressPercent">0%</span>
+<div class="progress-wrapper">
+
+  <div class="progress-label">
+
+    <span>
+      WEEK ELAPSED
+    </span>
+
+    <span id="progressPercent">
+      0%
+    </span>
+
+  </div>
+
+  <div class="progress-bg">
+
+    <div
+      class="progress-bar"
+      id="progressBar">
     </div>
 
-    <div class="progress-bg">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
+  </div>
+
+</div>
+
+
+
+<div class="weekly-section">
+
+
+<!-- BODY -->
+
+<div class="group">
+
+  <div class="group-title">
+    BODY
   </div>
 
 
-  <div class="weekly-section">
+  <div class="counter-row">
 
-    <!-- BODY -->
+    <div
+      class="counter-name feature-link"
+      onclick="openWorkout()">
 
-    <div class="group">
-      <div class="group-title">BODY</div>
+      <span>
+        STRENGTH
+      </span>
 
-      <div class="counter-row">
-        <div class="counter-name feature-link" onclick="openWorkout()">
-          <span>STRENGTH</span>
-          <span class="feature-arrow">›</span>
-        </div>
+      <span class="feature-arrow">
+        ›
+      </span>
 
-        <div
-          class="dots"
-          data-category="strength"
-          data-count="1">
-        </div>
-      </div>
-
-
-      <div class="counter-row">
-        <div class="counter-name">RUNNING</div>
-
-        <div
-          class="dots"
-          data-category="running"
-          data-count="2">
-        </div>
-      </div>
     </div>
 
-
-    <!-- GOLF -->
-
-    <div class="group">
-      <div class="group-title">GOLF</div>
-
-      <div class="counter-row">
-        <div class="counter-name feature-link" onclick="openGolfPractice()">
-          <span>PRACTICE</span>
-          <span class="feature-arrow">›</span>
-        </div>
-
-        <div
-          class="dots"
-          data-category="golf"
-          data-count="2">
-        </div>
-      </div>
-
-
-      <div class="counter-row">
-        <div class="counter-name">COURSE</div>
-
-        <div
-          class="dots"
-          data-category="course"
-          data-count="1">
-        </div>
-      </div>
-    </div>
-
-
-    <!-- CAREER -->
-
-    <div class="group">
-      <div class="group-title">CAREER</div>
-
-      <div class="counter-row">
-        <div class="counter-name">TRANSITION</div>
-
-        <div
-          class="dots"
-          data-category="career"
-          data-count="1">
-        </div>
-      </div>
+    <div
+      class="dots"
+      data-category="strength"
+      data-count="1">
     </div>
 
   </div>
 
 
-  <div class="readonly-notice">
-    PAST WEEK · READ ONLY
+  <div class="counter-row">
+
+    <div class="counter-name">
+      RUNNING
+    </div>
+
+    <div
+      class="dots"
+      data-category="running"
+      data-count="2">
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- GOLF -->
+
+<div class="group">
+
+  <div class="group-title">
+    GOLF
   </div>
 
 
-  <div class="week-navigation">
-    <button class="nav-button" onclick="moveWeek(-1)">
-      ‹ PREV
-    </button>
+  <div class="counter-row">
 
-    <button
-      class="nav-button current-button"
-      id="currentWeekButton"
-      onclick="goCurrentWeek()">
-      CURRENT
-    </button>
+    <div
+      class="counter-name feature-link"
+      onclick="openGolfPractice()">
 
-    <button
-      class="nav-button"
-      id="nextWeekButton"
-      onclick="moveWeek(1)">
-      NEXT ›
-    </button>
+      <span>
+        PRACTICE
+      </span>
+
+      <span class="feature-arrow">
+        ›
+      </span>
+
+    </div>
+
+    <div
+      class="dots"
+      data-category="golf"
+      data-count="2">
+    </div>
+
   </div>
 
 
-  <button class="reset" onclick="resetWeek()">
-    RESET THIS WEEK
+  <div class="counter-row">
+
+    <div class="counter-name">
+      COURSE
+    </div>
+
+    <div
+      class="dots"
+      data-category="course"
+      data-count="1">
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- CAREER -->
+
+<div class="group">
+
+  <div class="group-title">
+    CAREER
+  </div>
+
+
+  <div class="counter-row">
+
+    <div class="counter-name">
+      TRANSITION
+    </div>
+
+    <div
+      class="dots"
+      data-category="career"
+      data-count="1">
+    </div>
+
+  </div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="readonly-notice">
+  PAST WEEK · READ ONLY
+</div>
+
+
+
+<div class="week-navigation">
+
+  <button
+    class="nav-button"
+    onclick="moveWeek(-1)">
+    ‹ PREV
   </button>
 
+  <button
+    class="nav-button current-button"
+    id="currentWeekButton"
+    onclick="goCurrentWeek()">
+    CURRENT
+  </button>
 
-  <!-- HISTORY -->
+  <button
+    class="nav-button"
+    id="nextWeekButton"
+    onclick="moveWeek(1)">
+    NEXT ›
+  </button>
 
-  <div class="history-section">
+</div>
 
-    <button
-      class="section-toggle"
-      onclick="toggleSection('historyContent','historyArrow')">
-      <span>HISTORY</span>
-      <span class="toggle-arrow" id="historyArrow">▼</span>
-    </button>
 
-    <div class="collapsible" id="historyContent">
 
-      <div class="history-header">
-        <div>WEEK</div>
-        <div>STR</div>
-        <div>RUN</div>
-        <div>PRC</div>
-        <div>CRS</div>
-        <div>CAR</div>
-      </div>
+<button
+  class="reset"
+  onclick="resetWeek()">
+  RESET THIS WEEK
+</button>
 
-      <div id="historyRows"></div>
 
-      <div class="history-pagination">
-        <button
-          class="history-page-button"
-          id="historyPrev"
-          onclick="changeHistoryPage(-1)">
-          ‹
-        </button>
 
-        <div
-          class="history-page-info"
-          id="historyPageInfo">
-        </div>
+<!-- HISTORY -->
 
-        <button
-          class="history-page-button"
-          id="historyNext"
-          onclick="changeHistoryPage(1)">
-          ›
-        </button>
-      </div>
+<div class="history-section">
 
-    </div>
+<button
+  class="section-toggle"
+  onclick="toggleSection(
+    'historyContent',
+    'historyArrow'
+  )">
 
+  <span>
+    HISTORY
+  </span>
+
+  <span
+    class="toggle-arrow"
+    id="historyArrow">
+    ▼
+  </span>
+
+</button>
+
+
+<div
+  class="collapsible"
+  id="historyContent">
+
+
+<div class="history-header">
+
+  <div>WEEK</div>
+  <div>STR</div>
+  <div>RUN</div>
+  <div>PRC</div>
+  <div>CRS</div>
+  <div>CAR</div>
+
+</div>
+
+
+<div id="historyRows"></div>
+
+
+<div class="history-pagination">
+
+  <button
+    class="history-page-button"
+    id="historyPrev"
+    onclick="changeHistoryPage(-1)">
+    ‹
+  </button>
+
+  <div
+    class="history-page-info"
+    id="historyPageInfo">
   </div>
 
+  <button
+    class="history-page-button"
+    id="historyNext"
+    onclick="changeHistoryPage(1)">
+    ›
+  </button>
 
-  <!-- MONTHLY -->
-
-  <div class="monthly-section">
-
-    <button
-      class="section-toggle"
-      onclick="toggleSection('monthlyContent','monthlyArrow')">
-      <span>MONTHLY</span>
-      <span class="toggle-arrow" id="monthlyArrow">▼</span>
-    </button>
-
-    <div class="collapsible" id="monthlyContent">
-
-      <div class="month-header">
-        <button class="month-nav" onclick="moveMonth(-1)">‹</button>
-        <div class="month-name" id="monthName"></div>
-        <button
-          class="month-nav"
-          id="nextMonthButton"
-          onclick="moveMonth(1)">
-          ›
-        </button>
-      </div>
+</div>
 
 
-      <div id="monthlyFields">
+</div>
 
-        <div class="monthly-row">
-          <div class="monthly-label">WEIGHT</div>
-
-          <div class="monthly-input-wrap">
-            <input
-              type="number"
-              inputmode="decimal"
-              step="0.1"
-              class="monthly-input"
-              id="weightInput"
-              placeholder="—"
-              onchange="saveMonthly()">
-
-            <span class="monthly-unit">kg</span>
-          </div>
-        </div>
+</div>
 
 
-        <div class="monthly-row">
-          <div class="monthly-label">LONG RUN</div>
 
-          <div class="monthly-input-wrap">
-            <input
-              type="number"
-              inputmode="decimal"
-              step="0.1"
-              class="monthly-input"
-              id="longRunInput"
-              placeholder="—"
-              onchange="saveMonthly()">
+<!-- MONTHLY -->
 
-            <span class="monthly-unit">km</span>
-          </div>
-        </div>
+<div class="monthly-section">
+
+<button
+  class="section-toggle"
+  onclick="toggleSection(
+    'monthlyContent',
+    'monthlyArrow'
+  )">
+
+  <span>
+    MONTHLY
+  </span>
+
+  <span
+    class="toggle-arrow"
+    id="monthlyArrow">
+    ▼
+  </span>
+
+</button>
 
 
-        <div class="monthly-row">
-          <div class="monthly-label">CULTURE</div>
+<div
+  class="collapsible"
+  id="monthlyContent">
 
-          <div class="monthly-input-wrap">
-            <input
-              type="text"
-              class="monthly-input culture"
-              id="cultureInput"
-              placeholder="예: 김애란 2/3"
-              onchange="saveMonthly()">
-          </div>
-        </div>
 
-      </div>
+<div class="month-header">
 
-      <div class="monthly-note">
-        현재 월만 수정 가능. 과거 월은 기록 확인용.
-      </div>
+  <button
+    class="month-nav"
+    onclick="moveMonth(-1)">
+    ‹
+  </button>
 
-    </div>
-
+  <div
+    class="month-name"
+    id="monthName">
   </div>
 
+  <button
+    class="month-nav"
+    id="nextMonthButton"
+    onclick="moveMonth(1)">
+    ›
+  </button>
 
-  <!-- DATA -->
+</div>
 
-  <div class="data-section">
 
-    <div class="data-title">DATA</div>
 
-    <div class="backup-section">
-      <button class="backup-button" onclick="backupData()">
-        BACKUP
-      </button>
+<div id="monthlyFields">
 
-      <button class="backup-button" onclick="openRestoreFile()">
-        RESTORE
-      </button>
-    </div>
+
+<div class="monthly-row">
+
+  <div class="monthly-label">
+    WEIGHT
+  </div>
+
+  <div class="monthly-input-wrap">
 
     <input
-      type="file"
-      id="restoreFile"
-      accept=".json,application/json"
-      style="display:none"
-      onchange="restoreData(event)">
+      type="number"
+      inputmode="decimal"
+      step="0.1"
+      class="monthly-input"
+      id="weightInput"
+      placeholder="—"
+      onchange="saveMonthly()">
+
+    <span class="monthly-unit">
+      kg
+    </span>
 
   </div>
 
@@ -1110,136 +1282,397 @@ body.readonly .reset {
 
 
 
-<!-- =========================================================
-     STRENGTH SCREEN
-========================================================= -->
+<div class="monthly-row">
 
-<div class="container" id="workoutScreen">
-
-  <div class="sub-header">
-    <button class="back-button" onclick="closeWorkout()">‹</button>
-    <div class="sub-title">STRENGTH</div>
+  <div class="monthly-label">
+    LONG RUN
   </div>
 
-  <div class="sub-subtitle">
-    ROUTINE B · FULL BODY
-  </div>
+  <div class="monthly-input-wrap">
 
+    <input
+      type="number"
+      inputmode="decimal"
+      step="0.1"
+      class="monthly-input"
+      id="longRunInput"
+      placeholder="—"
+      onchange="saveMonthly()">
 
-  <div class="sub-progress">
-
-    <div class="sub-progress-info">
-      <span id="workoutSetText">0 / 15 SETS</span>
-      <span id="workoutPercent">0%</span>
-    </div>
-
-    <div class="progress-bg">
-      <div
-        class="progress-bar"
-        id="workoutProgressBar">
-      </div>
-    </div>
+    <span class="monthly-unit">
+      km
+    </span>
 
   </div>
 
+</div>
 
-  <div class="exercise-list" id="exerciseList"></div>
 
 
-  <div class="complete-notice" id="workoutFinished">
-    WORKOUT COMPLETE
+<div class="monthly-row">
+
+  <div class="monthly-label">
+    CULTURE
+  </div>
+
+  <div class="monthly-input-wrap">
+
+    <input
+      type="text"
+      class="monthly-input culture"
+      id="cultureInput"
+      placeholder="예: 김애란 2/3"
+      onchange="saveMonthly()">
+
+  </div>
+
+</div>
+
+
+</div>
+
+
+<div class="monthly-note">
+  현재 월만 수정 가능. 과거 월은 기록 확인용.
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- DATA -->
+
+<div class="data-section">
+
+  <div class="data-title">
+    DATA
   </div>
 
 
-  <button
-    class="finish-button"
-    id="finishWorkoutButton"
-    onclick="finishWorkout()">
-    FINISH WORKOUT
-  </button>
+  <div class="backup-section">
+
+    <button
+      class="backup-button"
+      onclick="backupData()">
+      BACKUP
+    </button>
+
+    <button
+      class="backup-button"
+      onclick="openRestoreFile()">
+      RESTORE
+    </button>
+
+  </div>
 
 
-  <button class="sub-reset" onclick="resetWorkout()">
-    RESET WORKOUT
-  </button>
+  <input
+    type="file"
+    id="restoreFile"
+    accept=".json,application/json"
+    style="display:none"
+    onchange="restoreData(event)">
+
+</div>
+
 
 </div>
 
 
 
 <!-- =========================================================
-     GOLF PRACTICE SCREEN
+     WORKOUT SCREEN
 ========================================================= -->
 
-<div class="container" id="golfScreen">
-
-  <div class="sub-header">
-    <button class="back-button" onclick="closeGolfPractice()">‹</button>
-    <div class="sub-title">GOLF PRACTICE</div>
-  </div>
-
-  <div class="sub-subtitle">
-    QED · 60 MIN ROUTINE
-  </div>
+<div
+  class="container"
+  id="workoutScreen">
 
 
-  <div class="practice-session-switch">
-
-    <button
-      class="session-button"
-      id="golfSession1Button"
-      onclick="selectGolfSession(1)">
-      SESSION 1
-    </button>
-
-    <button
-      class="session-button"
-      id="golfSession2Button"
-      onclick="selectGolfSession(2)">
-      SESSION 2
-    </button>
-
-  </div>
-
-
-  <div class="sub-progress">
-
-    <div class="sub-progress-info">
-      <span id="golfCheckText">0 / 28 CHECKS</span>
-      <span id="golfPercent">0%</span>
-    </div>
-
-    <div class="progress-bg">
-      <div
-        class="progress-bar"
-        id="golfProgressBar">
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="practice-list" id="golfPracticeList"></div>
-
-
-  <div class="complete-notice" id="golfFinished">
-    PRACTICE COMPLETE
-  </div>
-
+<div class="sub-header">
 
   <button
-    class="finish-button"
-    id="finishGolfButton"
-    onclick="finishGolfPractice()">
-    FINISH PRACTICE
+    class="back-button"
+    onclick="closeWorkout()">
+    ‹
   </button>
 
+  <div class="sub-title">
+    STRENGTH
+  </div>
+
+</div>
+
+
+<div class="sub-subtitle">
+  ROUTINE B · FULL BODY
+</div>
+
+
+
+<div class="sub-progress">
+
+  <div class="sub-progress-info">
+
+    <span id="workoutSetText">
+      0 / 15 SETS
+    </span>
+
+    <span id="workoutPercent">
+      0%
+    </span>
+
+  </div>
+
+
+  <div class="progress-bg">
+
+    <div
+      class="progress-bar"
+      id="workoutProgressBar">
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div
+  class="exercise-list"
+  id="exerciseList">
+</div>
+
+
+
+<div
+  class="complete-notice"
+  id="workoutFinished">
+
+  WORKOUT COMPLETE
+
+</div>
+
+
+
+<button
+  class="finish-button"
+  id="finishWorkoutButton"
+  onclick="finishWorkout()">
+
+  FINISH WORKOUT
+
+</button>
+
+
+
+<button
+  class="sub-reset"
+  onclick="resetWorkout()">
+
+  RESET WORKOUT
+
+</button>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     GOLF SCREEN
+========================================================= -->
+
+<div
+  class="container"
+  id="golfScreen">
+
+
+<div class="sub-header">
 
   <button
-    class="sub-reset"
-    onclick="resetGolfSession()">
-    RESET THIS SESSION
+    class="back-button"
+    onclick="closeGolfPractice()">
+    ‹
   </button>
+
+  <div class="sub-title">
+    GOLF PRACTICE
+  </div>
+
+</div>
+
+
+<div class="sub-subtitle">
+  QED · 60 MIN ROUTINE
+</div>
+
+
+
+<!-- SESSION -->
+
+<div class="practice-session-switch">
+
+  <button
+    class="session-button"
+    id="golfSession1Button"
+    onclick="selectGolfSession(1)">
+    SESSION 1
+  </button>
+
+  <button
+    class="session-button"
+    id="golfSession2Button"
+    onclick="selectGolfSession(2)">
+    SESSION 2
+  </button>
+
+</div>
+
+
+
+<!-- COACH TIMER -->
+
+<div class="coach-card">
+
+  <div
+    class="coach-status"
+    id="coachStatus">
+    READY
+  </div>
+
+
+  <div
+    class="coach-routine"
+    id="coachRoutine">
+    60 MIN PRACTICE
+  </div>
+
+
+  <div
+    class="coach-cue"
+    id="coachCue">
+
+    Press start when you're ready.
+
+  </div>
+
+
+  <div
+    class="coach-time"
+    id="coachTime">
+    60:00
+  </div>
+
+
+  <div
+    class="coach-total"
+    id="coachTotal">
+    TOTAL · 60 MIN
+  </div>
+
+
+  <div class="coach-controls">
+
+    <button
+      class="coach-button coach-start"
+      id="coachStartButton"
+      onclick="startGolfCoach()">
+      START PRACTICE
+    </button>
+
+
+    <button
+      class="coach-button"
+      id="coachPauseButton"
+      onclick="toggleGolfPause()"
+      style="display:none">
+      PAUSE
+    </button>
+
+
+    <button
+      class="coach-button"
+      id="coachSkipButton"
+      onclick="skipGolfRoutine()"
+      style="display:none">
+      SKIP ›
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- CHECK PROGRESS -->
+
+<div class="sub-progress">
+
+  <div class="sub-progress-info">
+
+    <span id="golfCheckText">
+      0 / 28 CHECKS
+    </span>
+
+    <span id="golfPercent">
+      0%
+    </span>
+
+  </div>
+
+  <div class="progress-bg">
+
+    <div
+      class="progress-bar"
+      id="golfProgressBar">
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div
+  class="practice-list"
+  id="golfPracticeList">
+</div>
+
+
+
+<div
+  class="complete-notice"
+  id="golfFinished">
+
+  PRACTICE COMPLETE
+
+</div>
+
+
+
+<button
+  class="finish-button"
+  id="finishGolfButton"
+  onclick="finishGolfPractice()">
+
+  FINISH PRACTICE
+
+</button>
+
+
+
+<button
+  class="sub-reset"
+  onclick="resetGolfSession()">
+
+  RESET THIS SESSION
+
+</button>
+
 
 </div>
 
@@ -1252,96 +1685,152 @@ body.readonly .reset {
 ========================================================= */
 
 const categories = {
+
   strength: 1,
   running: 2,
   golf: 2,
   course: 1,
   career: 1
+
 };
 
 const historyPerPage = 8;
 
 
+
 /* =========================================================
-   STRENGTH ROUTINE B
+   STRENGTH ROUTINE
 ========================================================= */
 
 const workoutExercises = [
+
   {
     id: "squat",
     name: "SQUAT",
     reps: 8,
     sets: 3
   },
+
   {
     id: "legcurl",
     name: "LEG CURL",
     reps: 12,
     sets: 3
   },
+
   {
     id: "seatedrow",
     name: "SEATED ROW",
     reps: 12,
     sets: 3
   },
+
   {
     id: "inclinepress",
     name: "INCLINE PRESS",
     reps: 10,
     sets: 3
   },
+
   {
     id: "reardelt",
     name: "REAR DELT FLY",
     reps: 20,
     sets: 3
   }
+
 ];
+
 
 const totalWorkoutSets =
   workoutExercises.reduce(
-    (sum, exercise) => sum + exercise.sets,
+    (sum, item) =>
+      sum + item.sets,
     0
   );
+
 
 
 /* =========================================================
    GOLF ROUTINE
 ========================================================= */
 
-const golfSessionClubs = {
-  1: [
-    "54°",
-    "PW",
-    "8 IRON"
-  ],
+const golfRoutines = [
 
-  2: [
-    "54°",
-    "9 IRON",
-    "7 IRON"
-  ]
-};
+  {
+    key: "warmup",
+    name: "WARM UP",
+    duration: 5 * 60,
+    cue: "Easy half swings. Find the rhythm.",
+    announcement:
+      "Warm up starts."
+  },
+
+  {
+    key: "backswing",
+    name: "BACKSWING STABILITY",
+    duration: 10 * 60,
+    cue:
+      "No sway. Right knee stable. Shoulder turn.",
+    announcement:
+      "Next routine. Backswing Stability starts."
+  },
+
+  {
+    key: "hitstop",
+    name: "HIT & STOP",
+    duration: 12 * 60,
+    cue:
+      "Pull. Left leg. Hit. Stop.",
+    announcement:
+      "Next routine. Hit and Stop starts."
+  },
+
+  {
+    key: "headleft",
+    name: "HEAD + LEFT SIDE",
+    duration: 10 * 60,
+    cue:
+      "Head back. Pressure left. Turn.",
+    announcement:
+      "Next routine. Head and Left Side starts."
+  },
+
+  {
+    key: "distance",
+    name: "DISTANCE CONTROL",
+    duration: 15 * 60,
+    cue:
+      "Carry first. Same rhythm.",
+    announcement:
+      "Next routine. Distance Control starts."
+  },
+
+  {
+    key: "random",
+    name: "RANDOM TEST",
+    duration: 8 * 60,
+    cue:
+      "One ball only. No retry.",
+    announcement:
+      "Next routine. Random Test starts."
+  }
+
+];
 
 
-/*
-Golf checks:
+const totalGolfSeconds =
+  golfRoutines.reduce(
+    (sum, item) =>
+      sum + item.duration,
+    0
+  );
 
-Warm up              1
-Backswing             3
-Hit & Stop            4
-Head + Left           3
-Club distance         3
-54 distance           4
-Random test          10
------------------------
-Total                28
-*/
 
 const totalGolfChecks = 28;
 
 let selectedGolfSession = 1;
+
 
 
 /* =========================================================
@@ -1350,21 +1839,30 @@ let selectedGolfSession = 1;
 
 function getMonday(date) {
 
-  const d = new Date(date);
+  const d =
+    new Date(date);
 
-  const day = d.getDay();
+  const day =
+    d.getDay();
 
   const diff =
     d.getDate()
     - day
-    + (day === 0 ? -6 : 1);
+    + (
+      day === 0
+        ? -6
+        : 1
+    );
+
 
   return new Date(
     d.getFullYear(),
     d.getMonth(),
     diff
   );
+
 }
+
 
 
 function getWeekNumber(date) {
@@ -1378,14 +1876,18 @@ function getWeekNumber(date) {
       )
     );
 
+
   const dayNum =
-    d.getUTCDay() || 7;
+    d.getUTCDay()
+    || 7;
+
 
   d.setUTCDate(
     d.getUTCDate()
     + 4
     - dayNum
   );
+
 
   const yearStart =
     new Date(
@@ -1395,6 +1897,7 @@ function getWeekNumber(date) {
         1
       )
     );
+
 
   return Math.ceil(
     (
@@ -1406,60 +1909,89 @@ function getWeekNumber(date) {
     )
     / 7
   );
+
 }
+
 
 
 function formatDate(date) {
-  return `${date.getMonth() + 1}.${date.getDate()}`;
+
+  return (
+    `${date.getMonth() + 1}.`
+    +
+    `${date.getDate()}`
+  );
+
 }
+
 
 
 function getWeekKeyFromDate(date) {
 
-  const monday = getMonday(date);
+  const monday =
+    getMonday(date);
+
 
   return [
     monday.getFullYear(),
     monday.getMonth() + 1,
     monday.getDate()
   ].join("-");
+
 }
+
 
 
 function getCurrentWeekKey() {
-  return getWeekKeyFromDate(new Date());
+
+  return getWeekKeyFromDate(
+    new Date()
+  );
+
 }
+
 
 
 function dateFromWeekKey(key) {
 
   const parts =
-    key.split("-").map(Number);
+    key
+      .split("-")
+      .map(Number);
+
 
   return new Date(
     parts[0],
     parts[1] - 1,
     parts[2]
   );
+
 }
 
 
+
 /* =========================================================
-   WEEK VIEW
+   CURRENT WEEK
 ========================================================= */
 
 let displayedMonday =
-  getMonday(new Date());
+  getMonday(
+    new Date()
+  );
 
 
 function isCurrentWeek() {
 
   return (
-    getWeekKeyFromDate(displayedMonday)
+    getWeekKeyFromDate(
+      displayedMonday
+    )
     ===
     getCurrentWeekKey()
   );
+
 }
+
 
 
 /* =========================================================
@@ -1479,12 +2011,16 @@ function getAllData() {
       || {}
     );
 
-  } catch {
+  }
+
+  catch {
 
     return {};
 
   }
+
 }
+
 
 
 function getWeekData(weekKey) {
@@ -1493,7 +2029,9 @@ function getWeekData(weekKey) {
     getAllData()[weekKey]
     || {}
   );
+
 }
+
 
 
 function saveWeekData(
@@ -1504,74 +2042,107 @@ function saveWeekData(
   const allData =
     getAllData();
 
+
   allData[weekKey] =
     data;
 
+
   localStorage.setItem(
     "weeklyCounter",
-    JSON.stringify(allData)
+    JSON.stringify(
+      allData
+    )
   );
+
 }
 
 
+
 /* =========================================================
-   WEEK DISPLAY
+   MAIN WEEK DISPLAY
 ========================================================= */
 
 function updateWeekInfo() {
 
   const monday =
-    new Date(displayedMonday);
+    new Date(
+      displayedMonday
+    );
+
 
   const sunday =
-    new Date(monday);
+    new Date(
+      monday
+    );
+
 
   sunday.setDate(
-    monday.getDate() + 6
+    monday.getDate()
+    + 6
   );
 
 
   document
-    .getElementById("weekTitle")
+    .getElementById(
+      "weekTitle"
+    )
     .textContent =
     `WEEK ${getWeekNumber(monday)}`;
 
 
   document
-    .getElementById("weekDates")
+    .getElementById(
+      "weekDates"
+    )
     .textContent =
     `${formatDate(monday)} — ${formatDate(sunday)}`;
 
 
-  const progressBar =
+  const bar =
     document.getElementById(
       "progressBar"
     );
 
-  const progressPercent =
+
+  const text =
     document.getElementById(
       "progressPercent"
     );
 
 
-  if (isCurrentWeek()) {
+  if (
+    isCurrentWeek()
+  ) {
 
     const now =
       new Date();
 
+
     const start =
-      new Date(monday);
+      new Date(
+        monday
+      );
+
 
     start.setHours(
-      0, 0, 0, 0
+      0,
+      0,
+      0,
+      0
     );
 
 
     const end =
-      new Date(sunday);
+      new Date(
+        sunday
+      );
+
 
     end.setHours(
-      23, 59, 59, 999
+      23,
+      59,
+      59,
+      999
     );
 
 
@@ -1594,26 +2165,34 @@ function updateWeekInfo() {
       );
 
 
-    progressBar.style.width =
+    bar.style.width =
       `${percent}%`;
 
-    progressPercent.textContent =
+
+    text.textContent =
       `${Math.round(percent)}%`;
 
-  } else {
+  }
 
-    progressBar.style.width =
+  else {
+
+    bar.style.width =
       "100%";
 
-    progressPercent.textContent =
+
+    text.textContent =
       "100%";
+
   }
 
 
-  document.body.classList.toggle(
-    "readonly",
-    !isCurrentWeek()
-  );
+  document
+    .body
+    .classList
+    .toggle(
+      "readonly",
+      !isCurrentWeek()
+    );
 
 
   document
@@ -1630,7 +2209,9 @@ function updateWeekInfo() {
     )
     .disabled =
     isCurrentWeek();
+
 }
+
 
 
 /* =========================================================
@@ -1644,12 +2225,17 @@ function renderCounters() {
       displayedMonday
     );
 
-  const savedData =
-    getWeekData(weekKey);
+
+  const saved =
+    getWeekData(
+      weekKey
+    );
 
 
   document
-    .querySelectorAll(".dots")
+    .querySelectorAll(
+      ".dots"
+    )
     .forEach(
       container => {
 
@@ -1658,15 +2244,21 @@ function renderCounters() {
 
 
         const category =
-          container.dataset.category;
+          container
+            .dataset
+            .category;
+
 
         const count =
           Number(
-            container.dataset.count
+            container
+              .dataset
+              .count
           );
 
+
         const completed =
-          savedData[category]
+          saved[category]
           || 0;
 
 
@@ -1677,45 +2269,62 @@ function renderCounters() {
         ) {
 
           const dot =
-            document.createElement(
-              "button"
-            );
+            document
+              .createElement(
+                "button"
+              );
+
 
           dot.className =
             "dot";
 
 
-          if (i < completed) {
-            dot.classList.add(
-              "active"
-            );
-          }
+          if (
+            i < completed
+          ) {
 
-
-          if (isCurrentWeek()) {
-
-            dot.addEventListener(
-              "click",
-              () => {
-
-                handleDotClick(
-                  container,
-                  dot,
-                  category
-                );
-
-              }
-            );
+            dot
+              .classList
+              .add(
+                "active"
+              );
 
           }
 
 
-          container.appendChild(dot);
+          if (
+            isCurrentWeek()
+          ) {
+
+            dot
+              .addEventListener(
+                "click",
+                () => {
+
+                  handleDotClick(
+                    container,
+                    dot,
+                    category
+                  );
+
+                }
+              );
+
+          }
+
+
+          container
+            .appendChild(
+              dot
+            );
+
         }
 
       }
     );
+
 }
+
 
 
 function handleDotClick(
@@ -1725,54 +2334,52 @@ function handleDotClick(
 ) {
 
   const dots =
-    [...container.children];
+    [
+      ...container.children
+    ];
+
 
   const index =
-    dots.indexOf(dot);
+    dots.indexOf(
+      dot
+    );
 
-  const currentActive =
+
+  const current =
     dots.filter(
-      d => d.classList.contains(
-        "active"
-      )
+      d =>
+        d.classList.contains(
+          "active"
+        )
     ).length;
 
 
   const newValue =
-    index < currentActive
+    index < current
       ? index
       : index + 1;
 
 
-  dots.forEach(
-    (d, idx) => {
-
-      d.classList.toggle(
-        "active",
-        idx < newValue
-      );
-
-    }
-  );
-
-
-  const weekKey =
-    getCurrentWeekKey();
-
   const data =
-    getWeekData(weekKey);
+    getWeekData(
+      getCurrentWeekKey()
+    );
+
 
   data[category] =
     newValue;
 
+
   saveWeekData(
-    weekKey,
+    getCurrentWeekKey(),
     data
   );
 
 
-  renderHistory();
+  renderAll();
+
 }
+
 
 
 /* =========================================================
@@ -1782,19 +2389,27 @@ function handleDotClick(
 function moveWeek(offset) {
 
   const next =
-    new Date(displayedMonday);
+    new Date(
+      displayedMonday
+    );
+
 
   next.setDate(
     next.getDate()
-    + offset * 7
+    +
+    offset * 7
   );
 
 
-  const currentMonday =
-    getMonday(new Date());
+  const current =
+    getMonday(
+      new Date()
+    );
 
 
-  if (next > currentMonday) {
+  if (
+    next > current
+  ) {
     return;
   }
 
@@ -1802,17 +2417,25 @@ function moveWeek(offset) {
   displayedMonday =
     next;
 
+
   renderAll();
+
 }
+
 
 
 function goCurrentWeek() {
 
   displayedMonday =
-    getMonday(new Date());
+    getMonday(
+      new Date()
+    );
+
 
   renderAll();
+
 }
+
 
 
 /* =========================================================
@@ -1821,37 +2444,43 @@ function goCurrentWeek() {
 
 function resetWeek() {
 
-  if (!isCurrentWeek()) {
+  if (
+    !isCurrentWeek()
+  ) {
     return;
   }
 
 
   if (
     !confirm(
-      "이번 주 메인 기록을 모두 초기화할까?\n운동/골프 세부 기록은 유지돼."
+      "이번 주 메인 기록을 초기화할까?\n세부 운동 기록은 유지돼."
     )
   ) {
     return;
   }
 
 
-  const weekKey =
-    getCurrentWeekKey();
-
   const allData =
     getAllData();
 
-  delete allData[weekKey];
+
+  delete allData[
+    getCurrentWeekKey()
+  ];
 
 
   localStorage.setItem(
     "weeklyCounter",
-    JSON.stringify(allData)
+    JSON.stringify(
+      allData
+    )
   );
 
 
   renderAll();
+
 }
+
 
 
 /* =========================================================
@@ -1864,33 +2493,42 @@ function toggleSection(
 ) {
 
   const content =
-    document.getElementById(
-      contentId
-    );
+    document
+      .getElementById(
+        contentId
+      );
+
 
   const arrow =
-    document.getElementById(
-      arrowId
-    );
+    document
+      .getElementById(
+        arrowId
+      );
 
 
   const open =
-    content.classList.toggle(
-      "open"
+    content
+      .classList
+      .toggle(
+        "open"
+      );
+
+
+  arrow
+    .classList
+    .toggle(
+      "open",
+      open
     );
-
-
-  arrow.classList.toggle(
-    "open",
-    open
-  );
 
 
   if (
     contentId ===
     "historyContent"
   ) {
+
     renderHistory();
+
   }
 
 
@@ -1898,9 +2536,13 @@ function toggleSection(
     contentId ===
     "monthlyContent"
   ) {
+
     renderMonthly();
+
   }
+
 }
+
 
 
 /* =========================================================
@@ -1910,12 +2552,14 @@ function toggleSection(
 let historyPage = 0;
 
 
+
 function createDotsText(
   value,
   max
 ) {
 
-  let output = "";
+  let text = "";
+
 
   for (
     let i = 0;
@@ -1923,80 +2567,108 @@ function createDotsText(
     i++
   ) {
 
-    output +=
+    text +=
       i < value
         ? "●"
         : "○";
+
   }
 
-  return output;
+
+  return text;
+
 }
+
 
 
 function generateHistoryWeeks() {
 
   const weeks = [];
 
-  const currentMonday =
-    getMonday(new Date());
 
-  const savedKeys =
-    Object.keys(
-      getAllData()
+  const current =
+    getMonday(
+      new Date()
     );
 
 
-  let earliestDate =
-    new Date(currentMonday);
+  let earliest =
+    new Date(
+      current
+    );
 
-  earliestDate.setDate(
-    earliestDate.getDate()
+
+  earliest.setDate(
+    earliest.getDate()
     - 11 * 7
   );
 
 
-  savedKeys.forEach(
-    key => {
+  Object
+    .keys(
+      getAllData()
+    )
+    .forEach(
+      key => {
 
-      const date =
-        dateFromWeekKey(key);
+        const date =
+          dateFromWeekKey(
+            key
+          );
 
-      if (date < earliestDate) {
-        earliestDate = date;
+
+        if (
+          date < earliest
+        ) {
+
+          earliest =
+            date;
+
+        }
+
       }
-
-    }
-  );
+    );
 
 
   let cursor =
-    new Date(currentMonday);
+    new Date(
+      current
+    );
 
 
   while (
-    cursor >= earliestDate
+    cursor >= earliest
   ) {
 
     weeks.push(
-      new Date(cursor)
+      new Date(
+        cursor
+      )
     );
 
+
     cursor.setDate(
-      cursor.getDate() - 7
+      cursor.getDate()
+      - 7
     );
+
   }
 
 
   return weeks;
+
 }
+
 
 
 function renderHistory() {
 
-  const container =
-    document.getElementById(
-      "historyRows"
-    );
+  const rows =
+    document
+      .getElementById(
+        "historyRows"
+      );
+
 
   const weeks =
     generateHistoryWeeks();
@@ -2023,119 +2695,142 @@ function renderHistory() {
     );
 
 
-  const start =
-    historyPage
-    * historyPerPage;
-
-
   const pageWeeks =
     weeks.slice(
-      start,
-      start
-      + historyPerPage
+      historyPage
+      *
+      historyPerPage,
+
+      historyPage
+      *
+      historyPerPage
+      +
+      historyPerPage
     );
 
 
-  container.innerHTML = "";
+  rows.innerHTML =
+    "";
 
 
-  pageWeeks.forEach(
-    monday => {
+  pageWeeks
+    .forEach(
+      monday => {
 
-      const key =
-        getWeekKeyFromDate(
-          monday
-        );
-
-      const data =
-        getWeekData(key);
-
-
-      const row =
-        document.createElement(
-          "div"
-        );
-
-      row.className =
-        "history-row";
+        const data =
+          getWeekData(
+            getWeekKeyFromDate(
+              monday
+            )
+          );
 
 
-      const values = [
-
-        `W${getWeekNumber(monday)}`,
-
-        createDotsText(
-          data.strength || 0,
-          1
-        ),
-
-        createDotsText(
-          data.running || 0,
-          2
-        ),
-
-        createDotsText(
-          data.golf || 0,
-          2
-        ),
-
-        createDotsText(
-          data.course || 0,
-          1
-        ),
-
-        createDotsText(
-          data.career || 0,
-          1
-        )
-
-      ];
-
-
-      values.forEach(
-        (value, index) => {
-
-          const cell =
-            document.createElement(
+        const row =
+          document
+            .createElement(
               "div"
             );
 
-          cell.className =
-            index === 0
-              ? "history-week"
-              : "history-value";
 
-          cell.textContent =
-            value;
-
-          row.appendChild(cell);
-
-        }
-      );
+        row.className =
+          "history-row";
 
 
-      row.addEventListener(
-        "click",
-        () => {
+        const values = [
 
-          displayedMonday =
-            new Date(monday);
+          `W${getWeekNumber(monday)}`,
 
-          renderAll();
+          createDotsText(
+            data.strength || 0,
+            1
+          ),
 
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
+          createDotsText(
+            data.running || 0,
+            2
+          ),
 
-        }
-      );
+          createDotsText(
+            data.golf || 0,
+            2
+          ),
+
+          createDotsText(
+            data.course || 0,
+            1
+          ),
+
+          createDotsText(
+            data.career || 0,
+            1
+          )
+
+        ];
 
 
-      container.appendChild(row);
+        values
+          .forEach(
+            (
+              value,
+              index
+            ) => {
 
-    }
-  );
+              const cell =
+                document
+                  .createElement(
+                    "div"
+                  );
+
+
+              cell.className =
+                index === 0
+                  ? "history-week"
+                  : "history-value";
+
+
+              cell.textContent =
+                value;
+
+
+              row
+                .appendChild(
+                  cell
+                );
+
+            }
+          );
+
+
+        row
+          .addEventListener(
+            "click",
+            () => {
+
+              displayedMonday =
+                new Date(
+                  monday
+                );
+
+
+              renderAll();
+
+
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+              });
+
+            }
+          );
+
+
+        rows
+          .appendChild(
+            row
+          );
+
+      }
+    );
 
 
   document
@@ -2160,16 +2855,25 @@ function renderHistory() {
     )
     .disabled =
     historyPage
-    >= totalPages - 1;
+    >=
+    totalPages - 1;
+
 }
 
 
-function changeHistoryPage(direction) {
 
-  historyPage += direction;
+function changeHistoryPage(
+  direction
+) {
+
+  historyPage +=
+    direction;
+
 
   renderHistory();
+
 }
+
 
 
 /* =========================================================
@@ -2189,27 +2893,36 @@ function getAllMonthlyData() {
       || {}
     );
 
-  } catch {
+  }
+
+  catch {
 
     return {};
 
   }
+
 }
+
 
 
 function getMonthKey(date) {
 
   return (
     date.getFullYear()
-    + "-"
-    + String(
-      date.getMonth() + 1
+    +
+    "-"
+    +
+    String(
+      date.getMonth()
+      + 1
     ).padStart(
       2,
       "0"
     )
   );
+
 }
+
 
 
 let displayedMonth =
@@ -2220,20 +2933,30 @@ let displayedMonth =
   );
 
 
+
 function isCurrentMonth() {
 
   return (
-    getMonthKey(displayedMonth)
+    getMonthKey(
+      displayedMonth
+    )
     ===
-    getMonthKey(new Date())
+    getMonthKey(
+      new Date()
+    )
   );
+
 }
+
 
 
 function renderMonthly() {
 
   const key =
-    getMonthKey(displayedMonth);
+    getMonthKey(
+      displayedMonth
+    );
+
 
   const data =
     getAllMonthlyData()[key]
@@ -2247,7 +2970,10 @@ function renderMonthly() {
     .textContent =
     `${displayedMonth.getFullYear()} · ${String(
       displayedMonth.getMonth() + 1
-    ).padStart(2, "0")}`;
+    ).padStart(
+      2,
+      "0"
+    )}`;
 
 
   document
@@ -2278,7 +3004,8 @@ function renderMonthly() {
     .getElementById(
       "monthlyFields"
     )
-    .classList.toggle(
+    .classList
+    .toggle(
       "monthly-readonly",
       !isCurrentMonth()
     );
@@ -2290,24 +3017,31 @@ function renderMonthly() {
     )
     .disabled =
     isCurrentMonth();
+
 }
+
 
 
 function saveMonthly() {
 
-  if (!isCurrentMonth()) {
+  if (
+    !isCurrentMonth()
+  ) {
     return;
   }
 
 
   const key =
-    getMonthKey(displayedMonth);
+    getMonthKey(
+      displayedMonth
+    );
 
-  const allData =
+
+  const all =
     getAllMonthlyData();
 
 
-  allData[key] = {
+  all[key] = {
 
     weight:
       document
@@ -2328,26 +3062,35 @@ function saveMonthly() {
         .getElementById(
           "cultureInput"
         )
-        .value.trim()
+        .value
+        .trim()
 
   };
 
 
   localStorage.setItem(
     "monthlyCounter",
-    JSON.stringify(allData)
+    JSON.stringify(
+      all
+    )
   );
+
 }
+
 
 
 function moveMonth(offset) {
 
   const next =
-    new Date(displayedMonth);
+    new Date(
+      displayedMonth
+    );
+
 
   next.setMonth(
     next.getMonth()
-    + offset
+    +
+    offset
   );
 
 
@@ -2359,7 +3102,9 @@ function moveMonth(offset) {
     );
 
 
-  if (next > current) {
+  if (
+    next > current
+  ) {
     return;
   }
 
@@ -2367,8 +3112,11 @@ function moveMonth(offset) {
   displayedMonth =
     next;
 
+
   renderMonthly();
+
 }
+
 
 
 /* =========================================================
@@ -2388,200 +3136,246 @@ function getAllWorkoutData() {
       || {}
     );
 
-  } catch {
+  }
+
+  catch {
 
     return {};
 
   }
+
 }
+
 
 
 function createDefaultWorkoutData() {
 
-  const exercises = {};
+  const exercises =
+    {};
 
-  workoutExercises.forEach(
-    exercise => {
 
-      exercises[exercise.id] = {
-        sets: 0,
-        weight: ""
-      };
+  workoutExercises
+    .forEach(
+      exercise => {
 
-    }
-  );
+        exercises[
+          exercise.id
+        ] = {
+
+          sets: 0,
+          weight: ""
+
+        };
+
+      }
+    );
 
 
   return {
+
     completed: false,
-    exercises: exercises
+    exercises
+
   };
+
 }
 
 
-function normalizeWorkoutData(data) {
+
+function normalizeWorkoutData(
+  data
+) {
 
   if (
     !data
     ||
-    typeof data !== "object"
+    typeof data !==
+    "object"
   ) {
+
     data =
       createDefaultWorkoutData();
+
   }
-
-
-  if (!data.exercises) {
-    data.exercises = {};
-  }
-
-
-  workoutExercises.forEach(
-    exercise => {
-
-      const current =
-        data.exercises[
-          exercise.id
-        ];
-
-
-      if (
-        typeof current ===
-        "number"
-      ) {
-
-        data.exercises[
-          exercise.id
-        ] = {
-          sets: current,
-          weight: ""
-        };
-
-      } else if (
-        !current
-        ||
-        typeof current !== "object"
-      ) {
-
-        data.exercises[
-          exercise.id
-        ] = {
-          sets: 0,
-          weight: ""
-        };
-
-      } else {
-
-        if (
-          current.sets ===
-          undefined
-        ) {
-          current.sets = 0;
-        }
-
-        if (
-          current.weight ===
-          undefined
-        ) {
-          current.weight = "";
-        }
-      }
-
-    }
-  );
 
 
   if (
-    data.completed ===
-    undefined
+    !data.exercises
   ) {
-    data.completed = false;
+
+    data.exercises =
+      {};
+
   }
 
 
+  workoutExercises
+    .forEach(
+      exercise => {
+
+        let current =
+          data.exercises[
+            exercise.id
+          ];
+
+
+        if (
+          typeof current ===
+          "number"
+        ) {
+
+          current = {
+
+            sets: current,
+            weight: ""
+
+          };
+
+        }
+
+
+        if (
+          !current
+          ||
+          typeof current !==
+          "object"
+        ) {
+
+          current = {
+
+            sets: 0,
+            weight: ""
+
+          };
+
+        }
+
+
+        current.sets =
+          Number(
+            current.sets
+            || 0
+          );
+
+
+        current.weight =
+          current.weight
+          ?? "";
+
+
+        data.exercises[
+          exercise.id
+        ] =
+          current;
+
+      }
+    );
+
+
+  data.completed =
+    !!data.completed;
+
+
   return data;
+
 }
+
 
 
 function getWorkoutData() {
 
-  const weekKey =
+  const key =
     getCurrentWeekKey();
 
-  const allData =
+
+  const all =
     getAllWorkoutData();
 
 
-  if (!allData[weekKey]) {
+  if (
+    !all[key]
+  ) {
 
-    allData[weekKey] =
+    all[key] =
       createDefaultWorkoutData();
 
   }
 
 
-  allData[weekKey] =
-    normalizeWorkoutData(
-      allData[weekKey]
-    );
+  return normalizeWorkoutData(
+    all[key]
+  );
 
-
-  return allData[weekKey];
 }
 
 
+
 function saveWorkoutData(
-  workoutData
+  data
 ) {
 
-  const weekKey =
-    getCurrentWeekKey();
-
-  const allData =
+  const all =
     getAllWorkoutData();
 
 
-  allData[weekKey] =
+  all[
+    getCurrentWeekKey()
+  ] =
     normalizeWorkoutData(
-      workoutData
+      data
     );
 
 
   localStorage.setItem(
     "workoutCounter",
-    JSON.stringify(allData)
+    JSON.stringify(
+      all
+    )
   );
+
 }
 
 
+
 /* =========================================================
-   PREVIOUS WORKOUT WEIGHT
+   PREVIOUS WEIGHT
 ========================================================= */
 
 function getPreviousWorkoutWeight(
   exerciseId
 ) {
 
-  const allData =
+  const all =
     getAllWorkoutData();
 
-  const currentMonday =
-    getMonday(new Date());
+
+  const current =
+    getMonday(
+      new Date()
+    );
 
 
   const keys =
-    Object.keys(allData)
+    Object.keys(
+      all
+    )
     .filter(
       key =>
-        dateFromWeekKey(key)
+        dateFromWeekKey(
+          key
+        )
         <
-        currentMonday
+        current
     )
     .sort(
       (a, b) =>
-        dateFromWeekKey(b)
+        dateFromWeekKey(
+          b
+        )
         -
-        dateFromWeekKey(a)
+        dateFromWeekKey(
+          a
+        )
     );
 
 
@@ -2591,32 +3385,34 @@ function getPreviousWorkoutWeight(
 
     const workout =
       normalizeWorkoutData(
-        allData[key]
+        all[key]
       );
 
+
     const exercise =
-      workout.exercises[
-        exerciseId
-      ];
+      workout
+        .exercises[
+          exerciseId
+        ];
 
 
     if (
       exercise
       &&
       exercise.weight !== ""
-      &&
-      exercise.weight !== null
-      &&
-      exercise.weight !== undefined
     ) {
 
       return exercise.weight;
+
     }
+
   }
 
 
   return "";
+
 }
+
 
 
 /* =========================================================
@@ -2625,29 +3421,42 @@ function getPreviousWorkoutWeight(
 
 function openWorkout() {
 
-  if (!isCurrentWeek()) {
+  if (
+    !isCurrentWeek()
+  ) {
 
     alert(
-      "운동 기록은 현재 주에서만 입력할 수 있어."
+      "현재 주에서만 입력할 수 있어."
     );
 
     return;
+
   }
 
 
   hideMain();
 
+
   document
     .getElementById(
       "workoutScreen"
     )
-    .classList.add("open");
+    .classList
+    .add(
+      "open"
+    );
 
 
   renderWorkout();
 
-  window.scrollTo(0, 0);
+
+  window.scrollTo(
+    0,
+    0
+  );
+
 }
+
 
 
 function closeWorkout() {
@@ -2656,10 +3465,16 @@ function closeWorkout() {
     .getElementById(
       "workoutScreen"
     )
-    .classList.remove("open");
+    .classList
+    .remove(
+      "open"
+    );
+
 
   showMain();
+
 }
+
 
 
 function renderWorkout() {
@@ -2667,294 +3482,326 @@ function renderWorkout() {
   const data =
     getWorkoutData();
 
+
   const list =
-    document.getElementById(
-      "exerciseList"
-    );
-
-  list.innerHTML = "";
-
-
-  workoutExercises.forEach(
-    exercise => {
-
-      const exerciseData =
-        data.exercises[
-          exercise.id
-        ];
-
-      const previousWeight =
-        getPreviousWorkoutWeight(
-          exercise.id
-        );
-
-
-      const item =
-        document.createElement(
-          "div"
-        );
-
-      item.className =
-        "exercise";
-
-
-      const main =
-        document.createElement(
-          "div"
-        );
-
-      main.className =
-        "exercise-main";
-
-
-      const info =
-        document.createElement(
-          "div"
-        );
-
-      info.className =
-        "exercise-info";
-
-
-      const name =
-        document.createElement(
-          "div"
-        );
-
-      name.className =
-        "exercise-name";
-
-      name.textContent =
-        exercise.name;
-
-
-      const reps =
-        document.createElement(
-          "div"
-        );
-
-      reps.className =
-        "exercise-reps";
-
-      reps.textContent =
-        `${exercise.reps} REPS`;
-
-
-      const last =
-        document.createElement(
-          "div"
-        );
-
-      last.className =
-        "previous-weight";
-
-      last.textContent =
-        previousWeight !== ""
-          ? `LAST ${previousWeight} kg`
-          : "LAST —";
-
-
-      info.appendChild(name);
-      info.appendChild(reps);
-      info.appendChild(last);
-
-
-      const right =
-        document.createElement(
-          "div"
-        );
-
-      right.className =
-        "exercise-right";
-
-
-      const weightWrap =
-        document.createElement(
-          "div"
-        );
-
-      weightWrap.className =
-        "weight-wrap";
-
-
-      const input =
-        document.createElement(
-          "input"
-        );
-
-      input.type =
-        "number";
-
-      input.inputMode =
-        "decimal";
-
-      input.step =
-        "0.5";
-
-      input.placeholder =
-        "—";
-
-      input.className =
-        "weight-input";
-
-      input.value =
-        exerciseData.weight
-        ?? "";
-
-
-      input.addEventListener(
-        "change",
-        () => {
-
-          saveExerciseWeight(
-            exercise.id,
-            input.value
-          );
-
-        }
+    document
+      .getElementById(
+        "exerciseList"
       );
 
 
-      const unit =
-        document.createElement(
-          "span"
-        );
-
-      unit.className =
-        "weight-unit";
-
-      unit.textContent =
-        "kg";
+  list.innerHTML =
+    "";
 
 
-      weightWrap.appendChild(input);
-      weightWrap.appendChild(unit);
+  workoutExercises
+    .forEach(
+      exercise => {
+
+        const d =
+          data.exercises[
+            exercise.id
+          ];
 
 
-      const dots =
-        document.createElement(
-          "div"
-        );
-
-      dots.className =
-        "set-dots";
+        const item =
+          document
+            .createElement(
+              "div"
+            );
 
 
-      for (
-        let i = 0;
-        i < exercise.sets;
-        i++
-      ) {
-
-        const dot =
-          document.createElement(
-            "button"
-          );
-
-        dot.className =
-          "set-dot";
+        item.className =
+          "exercise";
 
 
-        if (
-          i
-          <
-          exerciseData.sets
-        ) {
-          dot.classList.add(
-            "active"
-          );
-        }
+        const main =
+          document
+            .createElement(
+              "div"
+            );
 
 
-        dot.addEventListener(
-          "click",
+        main.className =
+          "exercise-main";
+
+
+        const info =
+          document
+            .createElement(
+              "div"
+            );
+
+
+        info.className =
+          "exercise-info";
+
+
+        info.innerHTML = `
+
+          <div class="exercise-name">
+            ${exercise.name}
+          </div>
+
+          <div class="exercise-reps">
+            ${exercise.reps} REPS
+          </div>
+
+          <div class="previous-weight">
+
+            ${
+              getPreviousWorkoutWeight(
+                exercise.id
+              ) !== ""
+
+              ?
+
+              "LAST "
+              +
+              getPreviousWorkoutWeight(
+                exercise.id
+              )
+              +
+              " kg"
+
+              :
+
+              "LAST —"
+            }
+
+          </div>
+
+        `;
+
+
+        const right =
+          document
+            .createElement(
+              "div"
+            );
+
+
+        right.className =
+          "exercise-right";
+
+
+        const weight =
+          document
+            .createElement(
+              "div"
+            );
+
+
+        weight.className =
+          "weight-wrap";
+
+
+        const input =
+          document
+            .createElement(
+              "input"
+            );
+
+
+        input.type =
+          "number";
+
+
+        input.inputMode =
+          "decimal";
+
+
+        input.step =
+          "0.5";
+
+
+        input.className =
+          "weight-input";
+
+
+        input.placeholder =
+          "—";
+
+
+        input.value =
+          d.weight;
+
+
+        input.addEventListener(
+          "change",
           () => {
 
-            updateWorkoutSet(
-              exercise.id,
-              i
+            const workout =
+              getWorkoutData();
+
+
+            workout
+              .exercises[
+                exercise.id
+              ]
+              .weight =
+              input.value;
+
+
+            saveWorkoutData(
+              workout
             );
 
           }
         );
 
 
-        dots.appendChild(dot);
+        const unit =
+          document
+            .createElement(
+              "span"
+            );
+
+
+        unit.className =
+          "weight-unit";
+
+
+        unit.textContent =
+          "kg";
+
+
+        weight.appendChild(
+          input
+        );
+
+
+        weight.appendChild(
+          unit
+        );
+
+
+        const dots =
+          document
+            .createElement(
+              "div"
+            );
+
+
+        dots.className =
+          "set-dots";
+
+
+        for (
+          let i = 0;
+          i < exercise.sets;
+          i++
+        ) {
+
+          const dot =
+            document
+              .createElement(
+                "button"
+              );
+
+
+          dot.className =
+            "set-dot";
+
+
+          if (
+            i < d.sets
+          ) {
+
+            dot
+              .classList
+              .add(
+                "active"
+              );
+
+          }
+
+
+          dot.addEventListener(
+            "click",
+            () => {
+
+              const workout =
+                getWorkoutData();
+
+
+              const current =
+                workout
+                  .exercises[
+                    exercise.id
+                  ]
+                  .sets;
+
+
+              workout
+                .exercises[
+                  exercise.id
+                ]
+                .sets =
+                i < current
+                  ? i
+                  : i + 1;
+
+
+              workout.completed =
+                false;
+
+
+              saveWorkoutData(
+                workout
+              );
+
+
+              renderWorkout();
+
+            }
+          );
+
+
+          dots.appendChild(
+            dot
+          );
+
+        }
+
+
+        right.appendChild(
+          weight
+        );
+
+
+        right.appendChild(
+          dots
+        );
+
+
+        main.appendChild(
+          info
+        );
+
+
+        main.appendChild(
+          right
+        );
+
+
+        item.appendChild(
+          main
+        );
+
+
+        list.appendChild(
+          item
+        );
+
       }
-
-
-      right.appendChild(
-        weightWrap
-      );
-
-      right.appendChild(
-        dots
-      );
-
-
-      main.appendChild(info);
-      main.appendChild(right);
-
-      item.appendChild(main);
-
-      list.appendChild(item);
-
-    }
-  );
+    );
 
 
   updateWorkoutProgress();
+
 }
 
-
-function saveExerciseWeight(
-  exerciseId,
-  weight
-) {
-
-  const data =
-    getWorkoutData();
-
-  data.exercises[
-    exerciseId
-  ].weight =
-    weight;
-
-  saveWorkoutData(data);
-}
-
-
-function updateWorkoutSet(
-  exerciseId,
-  index
-) {
-
-  const data =
-    getWorkoutData();
-
-  const current =
-    data.exercises[
-      exerciseId
-    ].sets
-    || 0;
-
-
-  data.exercises[
-    exerciseId
-  ].sets =
-    index < current
-      ? index
-      : index + 1;
-
-
-  data.completed =
-    false;
-
-
-  saveWorkoutData(data);
-
-  renderWorkout();
-}
 
 
 function getCompletedWorkoutSets() {
@@ -2963,29 +3810,37 @@ function getCompletedWorkoutSets() {
     getWorkoutData();
 
 
-  return workoutExercises.reduce(
-    (sum, exercise) =>
-      sum
-      +
+  return workoutExercises
+    .reduce(
       (
-        data.exercises[
-          exercise.id
-        ].sets
-        || 0
-      ),
-    0
-  );
+        sum,
+        exercise
+      ) =>
+
+        sum
+        +
+        data
+          .exercises[
+            exercise.id
+          ]
+          .sets,
+
+      0
+    );
+
 }
+
 
 
 function updateWorkoutProgress() {
 
-  const completed =
+  const done =
     getCompletedWorkoutSets();
+
 
   const percent =
     Math.round(
-      completed
+      done
       /
       totalWorkoutSets
       *
@@ -2998,7 +3853,7 @@ function updateWorkoutProgress() {
       "workoutSetText"
     )
     .textContent =
-    `${completed} / ${totalWorkoutSets} SETS`;
+    `${done} / ${totalWorkoutSets} SETS`;
 
 
   document
@@ -3022,8 +3877,7 @@ function updateWorkoutProgress() {
       "finishWorkoutButton"
     )
     .disabled =
-    completed
-    !==
+    done !==
     totalWorkoutSets;
 
 
@@ -3031,11 +3885,15 @@ function updateWorkoutProgress() {
     .getElementById(
       "workoutFinished"
     )
-    .classList.toggle(
+    .classList
+    .toggle(
       "show",
-      getWorkoutData().completed
+      getWorkoutData()
+        .completed
     );
+
 }
+
 
 
 function finishWorkout() {
@@ -3049,87 +3907,96 @@ function finishWorkout() {
   }
 
 
-  const workoutData =
+  const workout =
     getWorkoutData();
 
-  workoutData.completed =
+
+  workout.completed =
     true;
 
+
   saveWorkoutData(
-    workoutData
+    workout
   );
 
 
-  const weekKey =
-    getCurrentWeekKey();
+  const weekly =
+    getWeekData(
+      getCurrentWeekKey()
+    );
 
-  const weekData =
-    getWeekData(weekKey);
 
-  weekData.strength =
+  weekly.strength =
     1;
 
+
   saveWeekData(
-    weekKey,
-    weekData
+    getCurrentWeekKey(),
+    weekly
   );
-
-
-  renderWorkout();
 
 
   setTimeout(
     closeWorkout,
-    400
+    300
   );
+
 }
+
 
 
 function resetWorkout() {
 
   if (
     !confirm(
-      "이번 주 운동 기록을 초기화할까?\n세트와 중량 입력이 모두 초기화돼."
+      "이번 주 운동 세트와 중량을 초기화할까?"
     )
   ) {
     return;
   }
 
 
-  const weekKey =
-    getCurrentWeekKey();
-
-  const allWorkout =
+  const all =
     getAllWorkoutData();
 
-  delete allWorkout[weekKey];
+
+  delete all[
+    getCurrentWeekKey()
+  ];
 
 
   localStorage.setItem(
     "workoutCounter",
     JSON.stringify(
-      allWorkout
+      all
     )
   );
 
 
-  const weekData =
-    getWeekData(weekKey);
+  const weekly =
+    getWeekData(
+      getCurrentWeekKey()
+    );
 
-  weekData.strength = 0;
+
+  weekly.strength =
+    0;
+
 
   saveWeekData(
-    weekKey,
-    weekData
+    getCurrentWeekKey(),
+    weekly
   );
 
 
   renderWorkout();
+
 }
 
 
+
 /* =========================================================
-   GOLF STORAGE
+   GOLF DATA
 ========================================================= */
 
 function getAllGolfData() {
@@ -3145,12 +4012,16 @@ function getAllGolfData() {
       || {}
     );
 
-  } catch {
+  }
+
+  catch {
 
     return {};
 
   }
+
 }
+
 
 
 function createDefaultGolfSession() {
@@ -3183,21 +4054,48 @@ function createDefaultGolfSession() {
     random: [
       0, 0, 0, 0, 0,
       0, 0, 0, 0, 0
-    ]
+    ],
+
+    coach: {
+
+      started: false,
+
+      paused: false,
+
+      completed: false,
+
+      routineIndex: 0,
+
+      remaining: 5 * 60,
+
+      endTime: null
+
+    }
 
   };
+
 }
+
 
 
 function createDefaultGolfWeek() {
 
   return {
+
     sessions: {
-      1: createDefaultGolfSession(),
-      2: createDefaultGolfSession()
+
+      1:
+        createDefaultGolfSession(),
+
+      2:
+        createDefaultGolfSession()
+
     }
+
   };
+
 }
+
 
 
 function normalizeGolfSession(
@@ -3211,162 +4109,227 @@ function normalizeGolfSession(
   if (
     !session
     ||
-    typeof session !== "object"
+    typeof session !==
+    "object"
   ) {
+
     return defaults;
+
   }
 
 
-  return {
-
-    completed:
-      !!session.completed,
-
-    warmup:
-      Number(
-        session.warmup || 0
-      ),
-
-    backswing:
-      Number(
-        session.backswing || 0
-      ),
-
-    hitstop:
-      Number(
-        session.hitstop || 0
-      ),
-
-    headleft:
-      Number(
-        session.headleft || 0
-      ),
-
-    clubs:
-      Array.isArray(
-        session.clubs
-      )
-        ? [
-            !!session.clubs[0],
-            !!session.clubs[1],
-            !!session.clubs[2]
-          ]
-        : defaults.clubs,
-
-    wedgeDistances:
-      Array.isArray(
-        session.wedgeDistances
-      )
-        ? [
-            !!session.wedgeDistances[0],
-            !!session.wedgeDistances[1],
-            !!session.wedgeDistances[2],
-            !!session.wedgeDistances[3]
-          ]
-        : defaults.wedgeDistances,
-
-    random:
-      Array.isArray(
-        session.random
-      )
-        ? Array.from(
-            { length: 10 },
-            (_, i) =>
-              [0, 1, 2].includes(
-                Number(
-                  session.random[i]
-                )
-              )
-                ? Number(
-                    session.random[i]
-                  )
-                : 0
-          )
-        : defaults.random
-  };
-}
+  session.completed =
+    !!session.completed;
 
 
-function normalizeGolfWeek(data) {
+  session.warmup =
+    Number(
+      session.warmup
+      || 0
+    );
+
+
+  session.backswing =
+    Number(
+      session.backswing
+      || 0
+    );
+
+
+  session.hitstop =
+    Number(
+      session.hitstop
+      || 0
+    );
+
+
+  session.headleft =
+    Number(
+      session.headleft
+      || 0
+    );
+
 
   if (
-    !data
-    ||
-    typeof data !== "object"
+    !Array.isArray(
+      session.clubs
+    )
   ) {
-    data =
-      createDefaultGolfWeek();
+
+    session.clubs =
+      defaults.clubs;
+
   }
 
 
-  if (!data.sessions) {
-    data.sessions = {};
+  session.clubs =
+    Array.from(
+      {
+        length: 3
+      },
+      (_, i) =>
+        !!session.clubs[i]
+    );
+
+
+  if (
+    !Array.isArray(
+      session.wedgeDistances
+    )
+  ) {
+
+    session.wedgeDistances =
+      defaults.wedgeDistances;
+
   }
 
 
-  data.sessions[1] =
-    normalizeGolfSession(
-      data.sessions[1]
+  session.wedgeDistances =
+    Array.from(
+      {
+        length: 4
+      },
+      (_, i) =>
+        !!session
+          .wedgeDistances[i]
     );
 
 
-  data.sessions[2] =
-    normalizeGolfSession(
-      data.sessions[2]
+  if (
+    !Array.isArray(
+      session.random
+    )
+  ) {
+
+    session.random =
+      defaults.random;
+
+  }
+
+
+  session.random =
+    Array.from(
+      {
+        length: 10
+      },
+      (_, i) => {
+
+        const value =
+          Number(
+            session.random[i]
+            || 0
+          );
+
+
+        return (
+          [0,1,2]
+            .includes(
+              value
+            )
+        )
+          ? value
+          : 0;
+
+      }
     );
 
 
-  return data;
+  if (
+    !session.coach
+  ) {
+
+    session.coach =
+      defaults.coach;
+
+  }
+
+
+  session.coach = {
+
+    ...defaults.coach,
+
+    ...session.coach
+
+  };
+
+
+  return session;
+
 }
+
 
 
 function getGolfWeekData() {
 
-  const weekKey =
-    getCurrentWeekKey();
-
-  const allData =
+  const all =
     getAllGolfData();
 
 
-  if (!allData[weekKey]) {
+  const key =
+    getCurrentWeekKey();
 
-    allData[weekKey] =
+
+  if (
+    !all[key]
+  ) {
+
+    all[key] =
       createDefaultGolfWeek();
 
   }
 
 
-  allData[weekKey] =
-    normalizeGolfWeek(
-      allData[weekKey]
+  if (
+    !all[key].sessions
+  ) {
+
+    all[key].sessions =
+      {};
+
+  }
+
+
+  all[key].sessions[1] =
+    normalizeGolfSession(
+      all[key].sessions[1]
     );
 
 
-  return allData[weekKey];
+  all[key].sessions[2] =
+    normalizeGolfSession(
+      all[key].sessions[2]
+    );
+
+
+  return all[key];
+
 }
+
 
 
 function saveGolfWeekData(
   data
 ) {
 
-  const weekKey =
-    getCurrentWeekKey();
-
-  const allData =
+  const all =
     getAllGolfData();
 
 
-  allData[weekKey] =
-    normalizeGolfWeek(data);
+  all[
+    getCurrentWeekKey()
+  ] =
+    data;
 
 
   localStorage.setItem(
     "golfPracticeCounter",
-    JSON.stringify(allData)
+    JSON.stringify(
+      all
+    )
   );
+
 }
+
 
 
 /* =========================================================
@@ -3375,13 +4338,16 @@ function saveGolfWeekData(
 
 function openGolfPractice() {
 
-  if (!isCurrentWeek()) {
+  if (
+    !isCurrentWeek()
+  ) {
 
     alert(
-      "골프 연습 기록은 현재 주에서만 입력할 수 있어."
+      "현재 주에서만 골프 연습 기록을 입력할 수 있어."
     );
 
     return;
+
   }
 
 
@@ -3390,20 +4356,30 @@ function openGolfPractice() {
 
 
   if (
-    !data.sessions[1].completed
+    !data.sessions[1]
+      .completed
   ) {
 
-    selectedGolfSession = 1;
+    selectedGolfSession =
+      1;
 
-  } else if (
-    !data.sessions[2].completed
+  }
+
+  else if (
+    !data.sessions[2]
+      .completed
   ) {
 
-    selectedGolfSession = 2;
+    selectedGolfSession =
+      2;
 
-  } else {
+  }
 
-    selectedGolfSession = 2;
+  else {
+
+    selectedGolfSession =
+      2;
+
   }
 
 
@@ -3414,171 +4390,187 @@ function openGolfPractice() {
     .getElementById(
       "golfScreen"
     )
-    .classList.add(
+    .classList
+    .add(
       "open"
     );
 
 
   renderGolfPractice();
 
-  window.scrollTo(0, 0);
+
+  startCoachTicker();
+
+
+  window.scrollTo(
+    0,
+    0
+  );
+
 }
 
 
+
 function closeGolfPractice() {
+
+  stopCoachTicker();
+
 
   document
     .getElementById(
       "golfScreen"
     )
-    .classList.remove(
+    .classList
+    .remove(
       "open"
     );
 
+
   showMain();
+
 }
+
 
 
 function selectGolfSession(
-  sessionNumber
+  number
 ) {
 
   selectedGolfSession =
-    sessionNumber;
+    number;
+
 
   renderGolfPractice();
+
+
+  startCoachTicker();
+
 }
 
 
+
+/* =========================================================
+   GOLF PRACTICE DISPLAY
+========================================================= */
+
 function renderGolfPractice() {
 
-  const golfWeek =
+  const week =
     getGolfWeekData();
 
+
   const session =
-    golfWeek.sessions[
+    week.sessions[
       selectedGolfSession
     ];
 
 
-  const session1Button =
-    document.getElementById(
-      "golfSession1Button"
-    );
-
-  const session2Button =
-    document.getElementById(
-      "golfSession2Button"
-    );
+  const b1 =
+    document
+      .getElementById(
+        "golfSession1Button"
+      );
 
 
-  session1Button.classList.toggle(
+  const b2 =
+    document
+      .getElementById(
+        "golfSession2Button"
+      );
+
+
+  b1.classList.toggle(
     "active",
     selectedGolfSession === 1
   );
 
-  session2Button.classList.toggle(
+
+  b2.classList.toggle(
     "active",
     selectedGolfSession === 2
   );
 
 
-  session1Button.classList.toggle(
-    "complete",
-    golfWeek.sessions[1].completed
-  );
-
-  session2Button.classList.toggle(
-    "complete",
-    golfWeek.sessions[2].completed
-  );
+  b1.textContent =
+    week.sessions[1]
+      .completed
+        ? "SESSION 1 ✓"
+        : "SESSION 1";
 
 
-  session1Button.textContent =
-    golfWeek.sessions[1].completed
-      ? "SESSION 1 ✓"
-      : "SESSION 1";
-
-
-  session2Button.textContent =
-    golfWeek.sessions[2].completed
-      ? "SESSION 2 ✓"
-      : "SESSION 2";
+  b2.textContent =
+    week.sessions[2]
+      .completed
+        ? "SESSION 2 ✓"
+        : "SESSION 2";
 
 
   const list =
-    document.getElementById(
-      "golfPracticeList"
-    );
+    document
+      .getElementById(
+        "golfPracticeList"
+      );
 
-  list.innerHTML = "";
 
+  list.innerHTML =
+    "";
 
-  /* WARM UP */
 
   list.appendChild(
-    createGolfCounterBlock({
-      number: "00",
-      title: "WARM UP",
-      time: "5 MIN",
-      cue: "54° → IRON · EASY HALF SWING",
-      subtext: "몸 풀기 · 약 10구",
-      key: "warmup",
-      max: 1,
-      current: session.warmup
-    })
+    createGolfCounterBlock(
+      "00",
+      "WARM UP",
+      "5 MIN",
+      "54° → IRON · EASY HALF SWING",
+      "약 10구",
+      "warmup",
+      1,
+      session.warmup
+    )
   );
 
 
-  /* BACKSWING */
-
   list.appendChild(
-    createGolfCounterBlock({
-      number: "01",
-      title: "BACKSWING STABILITY",
-      time: "10 MIN",
-      cue: "NO SWAY · RIGHT KNEE · SHOULDER TURN",
-      subtext: "5회 공 없이 → 약 15구 · 60–70%",
-      key: "backswing",
-      max: 3,
-      current: session.backswing
-    })
+    createGolfCounterBlock(
+      "01",
+      "BACKSWING STABILITY",
+      "10 MIN",
+      "NO SWAY · RIGHT KNEE · SHOULDER TURN",
+      "5회 공 없이 → 약 15구",
+      "backswing",
+      3,
+      session.backswing
+    )
   );
 
 
-  /* HIT STOP */
-
   list.appendChild(
-    createGolfCounterBlock({
-      number: "02",
-      title: "HIT & STOP",
-      time: "12 MIN",
-      cue: "PULL → LEFT LEG → HIT → STOP",
-      subtext: "50% · 60% · 70% · 80%",
-      key: "hitstop",
-      max: 4,
-      current: session.hitstop
-    })
+    createGolfCounterBlock(
+      "02",
+      "HIT & STOP",
+      "12 MIN",
+      "PULL → LEFT LEG → HIT → STOP",
+      "50% · 60% · 70% · 80%",
+      "hitstop",
+      4,
+      session.hitstop
+    )
   );
 
 
-  /* HEAD + LEFT */
-
   list.appendChild(
-    createGolfCounterBlock({
-      number: "03",
-      title: "HEAD + LEFT SIDE",
-      time: "10 MIN",
-      cue: "HEAD BACK · LEFT PRESSURE · TURN",
-      subtext: "약 15구 · 70%",
-      key: "headleft",
-      max: 3,
-      current: session.headleft
-    })
+    createGolfCounterBlock(
+      "03",
+      "HEAD + LEFT SIDE",
+      "10 MIN",
+      "HEAD BACK · LEFT PRESSURE · TURN",
+      "약 15구 · 70%",
+      "headleft",
+      3,
+      session.headleft
+    )
   );
 
-
-  /* DISTANCE */
 
   list.appendChild(
     createGolfDistanceBlock(
@@ -3586,8 +4578,6 @@ function renderGolfPractice() {
     )
   );
 
-
-  /* RANDOM TEST */
 
   list.appendChild(
     createGolfRandomBlock(
@@ -3599,22 +4589,13 @@ function renderGolfPractice() {
   updateGolfProgress();
 
 
-  document
-    .getElementById(
-      "golfFinished"
-    )
-    .classList.toggle(
-      "show",
-      session.completed
-    );
+  renderGolfCoach();
+
 }
 
 
-/* =========================================================
-   GOLF COUNTER BLOCK
-========================================================= */
 
-function createGolfCounterBlock({
+function createGolfCounterBlock(
   number,
   title,
   time,
@@ -3623,101 +4604,56 @@ function createGolfCounterBlock({
   key,
   max,
   current
-}) {
+) {
 
   const block =
-    document.createElement(
-      "div"
-    );
+    document
+      .createElement(
+        "div"
+      );
+
 
   block.className =
     "practice-block";
 
 
-  const numberEl =
-    document.createElement(
-      "div"
-    );
+  block.innerHTML = `
 
-  numberEl.className =
-    "practice-number";
+    <div class="practice-number">
+      ${number}
+    </div>
 
-  numberEl.textContent =
-    number;
+    <div class="practice-title-row">
 
+      <div class="practice-title">
+        ${title}
+      </div>
 
-  const titleRow =
-    document.createElement(
-      "div"
-    );
+      <div class="practice-time">
+        ${time}
+      </div>
 
-  titleRow.className =
-    "practice-title-row";
+    </div>
 
+    <div class="practice-cue">
+      ${cue}
+    </div>
 
-  const titleEl =
-    document.createElement(
-      "div"
-    );
+    <div class="practice-subtext">
+      ${subtext}
+    </div>
 
-  titleEl.className =
-    "practice-title";
-
-  titleEl.textContent =
-    title;
+  `;
 
 
-  const timeEl =
-    document.createElement(
-      "div"
-    );
-
-  timeEl.className =
-    "practice-time";
-
-  timeEl.textContent =
-    time;
+  const checks =
+    document
+      .createElement(
+        "div"
+      );
 
 
-  titleRow.appendChild(
-    titleEl
-  );
-
-  titleRow.appendChild(
-    timeEl
-  );
-
-
-  const cueEl =
-    document.createElement(
-      "div"
-    );
-
-  cueEl.className =
-    "practice-cue";
-
-  cueEl.textContent =
-    cue;
-
-
-  const sub =
-    document.createElement(
-      "div"
-    );
-
-  sub.className =
-    "practice-subtext";
-
-  sub.textContent =
-    subtext;
-
-
-  const dots =
-    document.createElement(
-      "div"
-    );
-
-  dots.className =
+  checks.className =
     "practice-checks";
 
 
@@ -3728,18 +4664,26 @@ function createGolfCounterBlock({
   ) {
 
     const dot =
-      document.createElement(
-        "button"
-      );
+      document
+        .createElement(
+          "button"
+        );
+
 
     dot.className =
       "practice-dot";
 
 
-    if (i < current) {
-      dot.classList.add(
-        "active"
-      );
+    if (
+      i < current
+    ) {
+
+      dot
+        .classList
+        .add(
+          "active"
+        );
+
     }
 
 
@@ -3756,33 +4700,22 @@ function createGolfCounterBlock({
     );
 
 
-    dots.appendChild(dot);
+    checks.appendChild(
+      dot
+    );
+
   }
 
 
   block.appendChild(
-    numberEl
-  );
-
-  block.appendChild(
-    titleRow
-  );
-
-  block.appendChild(
-    cueEl
-  );
-
-  block.appendChild(
-    sub
-  );
-
-  block.appendChild(
-    dots
+    checks
   );
 
 
   return block;
+
 }
+
 
 
 function updateGolfCounter(
@@ -3790,18 +4723,20 @@ function updateGolfCounter(
   index
 ) {
 
-  const data =
+  const week =
     getGolfWeekData();
 
+
   const session =
-    data.sessions[
+    week.sessions[
       selectedGolfSession
     ];
 
 
   const current =
     Number(
-      session[key] || 0
+      session[key]
+      || 0
     );
 
 
@@ -3815,14 +4750,19 @@ function updateGolfCounter(
     false;
 
 
-  saveGolfWeekData(data);
+  saveGolfWeekData(
+    week
+  );
+
 
   renderGolfPractice();
+
 }
 
 
+
 /* =========================================================
-   GOLF DISTANCE BLOCK
+   DISTANCE CONTROL
 ========================================================= */
 
 function createGolfDistanceBlock(
@@ -3830,20 +4770,32 @@ function createGolfDistanceBlock(
 ) {
 
   const block =
-    document.createElement(
-      "div"
-    );
+    document
+      .createElement(
+        "div"
+      );
+
 
   block.className =
     "practice-block";
 
 
+  const actualClubs =
+    selectedGolfSession === 1
+
+      ? "TODAY · 54° / PW / 8 IRON"
+
+      : "TODAY · 54° / 9 IRON / 7 IRON";
+
+
   block.innerHTML = `
+
     <div class="practice-number">
       04
     </div>
 
     <div class="practice-title-row">
+
       <div class="practice-title">
         DISTANCE CONTROL
       </div>
@@ -3851,6 +4803,7 @@ function createGolfDistanceBlock(
       <div class="practice-time">
         15 MIN
       </div>
+
     </div>
 
     <div class="practice-cue">
@@ -3858,44 +4811,58 @@ function createGolfDistanceBlock(
     </div>
 
     <div class="practice-subtext">
-      SESSION ${selectedGolfSession}
+      ${actualClubs}
     </div>
+
   `;
 
 
-  /* CLUBS */
-
   const clubChecks =
-    document.createElement(
-      "div"
-    );
+    document
+      .createElement(
+        "div"
+      );
+
 
   clubChecks.className =
     "practice-checks";
 
 
-  golfSessionClubs[
-    selectedGolfSession
-  ].forEach(
-    (club, index) => {
+  const labels = [
 
-      clubChecks.appendChild(
-        createLabelledPracticeDot(
-          club,
-          session.clubs[index],
-          () => {
+    "54°",
+    "PW / 9 IRON",
+    "8 / 7 IRON"
 
-            toggleGolfArrayItem(
-              "clubs",
-              index
-            );
+  ];
 
-          }
-        )
-      );
 
-    }
-  );
+  labels
+    .forEach(
+      (
+        label,
+        index
+      ) => {
+
+        clubChecks
+          .appendChild(
+            createLabelledDot(
+              label,
+              session
+                .clubs[index],
+              () => {
+
+                toggleGolfArray(
+                  "clubs",
+                  index
+                );
+
+              }
+            )
+          );
+
+      }
+    );
 
 
   block.appendChild(
@@ -3903,32 +4870,37 @@ function createGolfDistanceBlock(
   );
 
 
-  /* 54 WEDGE DISTANCES */
 
-  const wedgeText =
-    document.createElement(
-      "div"
-    );
+  const wedgeTitle =
+    document
+      .createElement(
+        "div"
+      );
 
-  wedgeText.className =
+
+  wedgeTitle.className =
     "practice-subtext";
 
-  wedgeText.style.marginTop =
+
+  wedgeTitle.style.marginTop =
     "20px";
 
-  wedgeText.textContent =
+
+  wedgeTitle.textContent =
     "54° CARRY";
 
 
   block.appendChild(
-    wedgeText
+    wedgeTitle
   );
 
 
   const wedgeChecks =
-    document.createElement(
-      "div"
-    );
+    document
+      .createElement(
+        "div"
+      );
+
 
   wedgeChecks.className =
     "practice-checks";
@@ -3939,28 +4911,34 @@ function createGolfDistanceBlock(
     "60m",
     "70m",
     "80m"
-  ].forEach(
-    (distance, index) => {
+  ]
+    .forEach(
+      (
+        label,
+        index
+      ) => {
 
-      wedgeChecks.appendChild(
-        createLabelledPracticeDot(
-          distance,
-          session.wedgeDistances[
-            index
-          ],
-          () => {
+        wedgeChecks
+          .appendChild(
+            createLabelledDot(
+              label,
+              session
+                .wedgeDistances[
+                  index
+                ],
+              () => {
 
-            toggleGolfArrayItem(
-              "wedgeDistances",
-              index
-            );
+                toggleGolfArray(
+                  "wedgeDistances",
+                  index
+                );
 
-          }
-        )
-      );
+              }
+            )
+          );
 
-    }
-  );
+      }
+    );
 
 
   block.appendChild(
@@ -3969,37 +4947,49 @@ function createGolfDistanceBlock(
 
 
   return block;
+
 }
 
 
-function createLabelledPracticeDot(
+
+function createLabelledDot(
   label,
   active,
   clickHandler
 ) {
 
   const item =
-    document.createElement(
-      "div"
-    );
+    document
+      .createElement(
+        "div"
+      );
+
 
   item.className =
     "practice-check-item";
 
 
   const dot =
-    document.createElement(
-      "button"
-    );
+    document
+      .createElement(
+        "button"
+      );
+
 
   dot.className =
     "practice-dot";
 
 
-  if (active) {
-    dot.classList.add(
-      "active"
-    );
+  if (
+    active
+  ) {
+
+    dot
+      .classList
+      .add(
+        "active"
+      );
+
   }
 
 
@@ -4010,35 +5000,47 @@ function createLabelledPracticeDot(
 
 
   const labelEl =
-    document.createElement(
-      "div"
-    );
+    document
+      .createElement(
+        "div"
+      );
+
 
   labelEl.className =
     "practice-check-label";
+
 
   labelEl.textContent =
     label;
 
 
-  item.appendChild(dot);
-  item.appendChild(labelEl);
+  item.appendChild(
+    dot
+  );
+
+
+  item.appendChild(
+    labelEl
+  );
 
 
   return item;
+
 }
 
 
-function toggleGolfArrayItem(
+
+function toggleGolfArray(
   key,
   index
 ) {
 
-  const data =
+  const week =
     getGolfWeekData();
 
+
   const session =
-    data.sessions[
+    week.sessions[
       selectedGolfSession
     ];
 
@@ -4051,14 +5053,19 @@ function toggleGolfArrayItem(
     false;
 
 
-  saveGolfWeekData(data);
+  saveGolfWeekData(
+    week
+  );
+
 
   renderGolfPractice();
+
 }
 
 
+
 /* =========================================================
-   RANDOM TEST
+   RANDOM
 ========================================================= */
 
 function createGolfRandomBlock(
@@ -4066,20 +5073,24 @@ function createGolfRandomBlock(
 ) {
 
   const block =
-    document.createElement(
-      "div"
-    );
+    document
+      .createElement(
+        "div"
+      );
+
 
   block.className =
     "practice-block";
 
 
   block.innerHTML = `
+
     <div class="practice-number">
       05
     </div>
 
     <div class="practice-title-row">
+
       <div class="practice-title">
         RANDOM TEST
       </div>
@@ -4087,6 +5098,7 @@ function createGolfRandomBlock(
       <div class="practice-time">
         8 MIN
       </div>
+
     </div>
 
     <div class="practice-cue">
@@ -4096,180 +5108,223 @@ function createGolfRandomBlock(
     <div class="practice-subtext">
       목표 캐리 ±10m = 성공
     </div>
+
   `;
 
 
   const grid =
-    document.createElement(
-      "div"
-    );
+    document
+      .createElement(
+        "div"
+      );
+
 
   grid.className =
     "random-grid";
 
 
-  session.random.forEach(
-    (status, index) => {
+  session.random
+    .forEach(
+      (
+        status,
+        index
+      ) => {
 
-      const item =
-        document.createElement(
-          "div"
-        );
-
-      item.className =
-        "random-item";
-
-
-      const button =
-        document.createElement(
-          "button"
-        );
-
-      button.className =
-        "random-button";
+        const item =
+          document
+            .createElement(
+              "div"
+            );
 
 
-      /*
-        0 = not tested
-        1 = success
-        2 = fail
-      */
-
-      if (status === 1) {
-
-        button.classList.add(
-          "success"
-        );
-
-        button.textContent =
-          "●";
-
-      } else if (
-        status === 2
-      ) {
-
-        button.classList.add(
-          "fail"
-        );
-
-        button.textContent =
-          "×";
-
-      } else {
-
-        button.textContent =
-          "○";
-      }
+        item.className =
+          "random-item";
 
 
-      button.addEventListener(
-        "click",
-        () => {
+        const button =
+          document
+            .createElement(
+              "button"
+            );
 
-          cycleRandomTest(
-            index
+
+        button.className =
+          "random-button";
+
+
+        if (
+          status === 1
+        ) {
+
+          button.classList.add(
+            "success"
           );
 
+
+          button.textContent =
+            "●";
+
         }
-      );
+
+        else if (
+          status === 2
+        ) {
+
+          button.classList.add(
+            "fail"
+          );
 
 
-      const label =
-        document.createElement(
-          "div"
+          button.textContent =
+            "×";
+
+        }
+
+        else {
+
+          button.textContent =
+            "○";
+
+        }
+
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const week =
+              getGolfWeekData();
+
+
+            const current =
+              week
+                .sessions[
+                  selectedGolfSession
+                ]
+                .random[index];
+
+
+            week
+              .sessions[
+                selectedGolfSession
+              ]
+              .random[index] =
+
+              current === 0
+                ? 1
+                :
+                current === 1
+                  ? 2
+                  : 0;
+
+
+            week
+              .sessions[
+                selectedGolfSession
+              ]
+              .completed =
+              false;
+
+
+            saveGolfWeekData(
+              week
+            );
+
+
+            renderGolfPractice();
+
+          }
         );
 
-      label.className =
-        "random-label";
 
-      label.textContent =
-        index + 1;
-
-
-      item.appendChild(button);
-      item.appendChild(label);
-
-      grid.appendChild(item);
-
-    }
-  );
+        const label =
+          document
+            .createElement(
+              "div"
+            );
 
 
-  const successCount =
-    session.random.filter(
-      value => value === 1
-    ).length;
+        label.className =
+          "random-label";
 
 
-  const testedCount =
-    session.random.filter(
-      value => value !== 0
-    ).length;
+        label.textContent =
+          index + 1;
+
+
+        item.appendChild(
+          button
+        );
+
+
+        item.appendChild(
+          label
+        );
+
+
+        grid.appendChild(
+          item
+        );
+
+      }
+    );
+
+
+  const success =
+    session.random
+      .filter(
+        x => x === 1
+      )
+      .length;
+
+
+  const tested =
+    session.random
+      .filter(
+        x => x !== 0
+      )
+      .length;
 
 
   const score =
-    document.createElement(
-      "div"
-    );
+    document
+      .createElement(
+        "div"
+      );
+
 
   score.className =
     "random-score";
 
+
   score.textContent =
-    testedCount === 0
+    tested === 0
+
       ? "— / 10"
-      : `${successCount} / ${testedCount} SUCCESS`;
+
+      :
+
+      `${success} / ${tested} SUCCESS`;
 
 
-  block.appendChild(grid);
-  block.appendChild(score);
+  block.appendChild(
+    grid
+  );
+
+
+  block.appendChild(
+    score
+  );
 
 
   return block;
+
 }
 
-
-function cycleRandomTest(
-  index
-) {
-
-  const data =
-    getGolfWeekData();
-
-  const session =
-    data.sessions[
-      selectedGolfSession
-    ];
-
-
-  const current =
-    session.random[index];
-
-
-  /*
-    ○ → ● → × → ○
-  */
-
-  session.random[index] =
-    current === 0
-      ? 1
-      : current === 1
-        ? 2
-        : 0;
-
-
-  session.completed =
-    false;
-
-
-  saveGolfWeekData(data);
-
-  renderGolfPractice();
-}
 
 
 /* =========================================================
-   GOLF PROGRESS
+   GOLF CHECK PROGRESS
 ========================================================= */
 
 function getGolfCompletedChecks() {
@@ -4281,43 +5336,57 @@ function getGolfCompletedChecks() {
       ];
 
 
-  const randomTested =
-    session.random.filter(
-      value => value !== 0
-    ).length;
-
-
   return (
+
     session.warmup
+
     +
+
     session.backswing
+
     +
+
     session.hitstop
+
     +
+
     session.headleft
+
     +
-    session.clubs.filter(
-      Boolean
-    ).length
+
+    session.clubs
+      .filter(Boolean)
+      .length
+
     +
-    session.wedgeDistances.filter(
-      Boolean
-    ).length
+
+    session.wedgeDistances
+      .filter(Boolean)
+      .length
+
     +
-    randomTested
+
+    session.random
+      .filter(
+        x => x !== 0
+      )
+      .length
+
   );
+
 }
+
 
 
 function updateGolfProgress() {
 
-  const completed =
+  const done =
     getGolfCompletedChecks();
 
 
   const percent =
     Math.round(
-      completed
+      done
       /
       totalGolfChecks
       *
@@ -4330,7 +5399,7 @@ function updateGolfProgress() {
       "golfCheckText"
     )
     .textContent =
-    `${completed} / ${totalGolfChecks} CHECKS`;
+    `${done} / ${totalGolfChecks} CHECKS`;
 
 
   document
@@ -4354,14 +5423,958 @@ function updateGolfProgress() {
       "finishGolfButton"
     )
     .disabled =
-    completed
-    !==
+    done !==
     totalGolfChecks;
+
+
+  const session =
+    getGolfWeekData()
+      .sessions[
+        selectedGolfSession
+      ];
+
+
+  document
+    .getElementById(
+      "golfFinished"
+    )
+    .classList
+    .toggle(
+      "show",
+      session.completed
+    );
+
 }
 
 
+
 /* =========================================================
-   FINISH GOLF
+   AUDIO / SPEECH
+========================================================= */
+
+let audioContext = null;
+
+
+
+function prepareAudio() {
+
+  if (
+    !audioContext
+  ) {
+
+    audioContext =
+      new (
+        window.AudioContext
+        ||
+        window.webkitAudioContext
+      )();
+
+  }
+
+
+  if (
+    audioContext.state ===
+    "suspended"
+  ) {
+
+    audioContext.resume();
+
+  }
+
+}
+
+
+
+function playBeep() {
+
+  try {
+
+    prepareAudio();
+
+
+    const oscillator =
+      audioContext
+        .createOscillator();
+
+
+    const gain =
+      audioContext
+        .createGain();
+
+
+    oscillator.frequency.value =
+      880;
+
+
+    gain.gain.value =
+      0.12;
+
+
+    oscillator.connect(
+      gain
+    );
+
+
+    gain.connect(
+      audioContext.destination
+    );
+
+
+    oscillator.start();
+
+
+    oscillator.stop(
+      audioContext.currentTime
+      +
+      0.18
+    );
+
+  }
+
+  catch {
+
+  }
+
+}
+
+
+
+function speak(
+  text
+) {
+
+  try {
+
+    window
+      .speechSynthesis
+      .cancel();
+
+
+    const utterance =
+      new SpeechSynthesisUtterance(
+        text
+      );
+
+
+    utterance.lang =
+      "en-US";
+
+
+    utterance.rate =
+      0.92;
+
+
+    utterance.pitch =
+      1;
+
+
+    window
+      .speechSynthesis
+      .speak(
+        utterance
+      );
+
+  }
+
+  catch {
+
+  }
+
+}
+
+
+
+function announce(
+  text
+) {
+
+  playBeep();
+
+
+  if (
+    navigator.vibrate
+  ) {
+
+    navigator.vibrate(
+      [
+        180,
+        100,
+        180
+      ]
+    );
+
+  }
+
+
+  setTimeout(
+    () => {
+
+      speak(
+        text
+      );
+
+    },
+    350
+  );
+
+}
+
+
+
+/* =========================================================
+   GOLF COACH TIMER
+========================================================= */
+
+let coachInterval =
+  null;
+
+
+
+function getCurrentCoach() {
+
+  return getGolfWeekData()
+    .sessions[
+      selectedGolfSession
+    ]
+    .coach;
+
+}
+
+
+
+function saveCoach(
+  coach
+) {
+
+  const week =
+    getGolfWeekData();
+
+
+  week
+    .sessions[
+      selectedGolfSession
+    ]
+    .coach =
+    coach;
+
+
+  saveGolfWeekData(
+    week
+  );
+
+}
+
+
+
+function startGolfCoach() {
+
+  prepareAudio();
+
+
+  const week =
+    getGolfWeekData();
+
+
+  const session =
+    week.sessions[
+      selectedGolfSession
+    ];
+
+
+  session.coach = {
+
+    started: true,
+
+    paused: false,
+
+    completed: false,
+
+    routineIndex: 0,
+
+    remaining:
+      golfRoutines[0]
+        .duration,
+
+    endTime:
+      Date.now()
+      +
+      golfRoutines[0]
+        .duration
+      *
+      1000
+
+  };
+
+
+  saveGolfWeekData(
+    week
+  );
+
+
+  announce(
+    golfRoutines[0]
+      .announcement
+  );
+
+
+  renderGolfCoach();
+
+
+  startCoachTicker();
+
+}
+
+
+
+function startCoachTicker() {
+
+  stopCoachTicker();
+
+
+  coachInterval =
+    setInterval(
+      () => {
+
+        updateCoachClock();
+
+      },
+      500
+    );
+
+
+  updateCoachClock();
+
+}
+
+
+
+function stopCoachTicker() {
+
+  if (
+    coachInterval
+  ) {
+
+    clearInterval(
+      coachInterval
+    );
+
+
+    coachInterval =
+      null;
+
+  }
+
+}
+
+
+
+function updateCoachClock() {
+
+  const week =
+    getGolfWeekData();
+
+
+  const session =
+    week.sessions[
+      selectedGolfSession
+    ];
+
+
+  const coach =
+    session.coach;
+
+
+  if (
+    !coach.started
+    ||
+    coach.completed
+    ||
+    coach.paused
+  ) {
+
+    renderGolfCoach();
+
+    return;
+
+  }
+
+
+  let remaining =
+    Math.ceil(
+      (
+        coach.endTime
+        -
+        Date.now()
+      )
+      /
+      1000
+    );
+
+
+  if (
+    remaining <= 0
+  ) {
+
+    advanceGolfRoutine();
+
+    return;
+
+  }
+
+
+  coach.remaining =
+    remaining;
+
+
+  session.coach =
+    coach;
+
+
+  saveGolfWeekData(
+    week
+  );
+
+
+  renderGolfCoach();
+
+}
+
+
+
+function advanceGolfRoutine() {
+
+  const week =
+    getGolfWeekData();
+
+
+  const session =
+    week.sessions[
+      selectedGolfSession
+    ];
+
+
+  const coach =
+    session.coach;
+
+
+  const nextIndex =
+    coach.routineIndex
+    +
+    1;
+
+
+  if (
+    nextIndex >=
+    golfRoutines.length
+  ) {
+
+    coach.completed =
+      true;
+
+
+    coach.started =
+      true;
+
+
+    coach.paused =
+      false;
+
+
+    coach.remaining =
+      0;
+
+
+    coach.endTime =
+      null;
+
+
+    session.coach =
+      coach;
+
+
+    saveGolfWeekData(
+      week
+    );
+
+
+    announce(
+      "Practice complete."
+    );
+
+
+    renderGolfCoach();
+
+
+    return;
+
+  }
+
+
+  const next =
+    golfRoutines[
+      nextIndex
+    ];
+
+
+  coach.routineIndex =
+    nextIndex;
+
+
+  coach.remaining =
+    next.duration;
+
+
+  coach.endTime =
+    Date.now()
+    +
+    next.duration
+    *
+    1000;
+
+
+  coach.paused =
+    false;
+
+
+  session.coach =
+    coach;
+
+
+  saveGolfWeekData(
+    week
+  );
+
+
+  announce(
+    next.announcement
+  );
+
+
+  renderGolfCoach();
+
+}
+
+
+
+function toggleGolfPause() {
+
+  const week =
+    getGolfWeekData();
+
+
+  const session =
+    week.sessions[
+      selectedGolfSession
+    ];
+
+
+  const coach =
+    session.coach;
+
+
+  if (
+    !coach.started
+    ||
+    coach.completed
+  ) {
+    return;
+  }
+
+
+  if (
+    !coach.paused
+  ) {
+
+    coach.remaining =
+      Math.max(
+        0,
+        Math.ceil(
+          (
+            coach.endTime
+            -
+            Date.now()
+          )
+          /
+          1000
+        )
+      );
+
+
+    coach.paused =
+      true;
+
+
+    coach.endTime =
+      null;
+
+  }
+
+  else {
+
+    coach.paused =
+      false;
+
+
+    coach.endTime =
+      Date.now()
+      +
+      coach.remaining
+      *
+      1000;
+
+  }
+
+
+  session.coach =
+    coach;
+
+
+  saveGolfWeekData(
+    week
+  );
+
+
+  renderGolfCoach();
+
+}
+
+
+
+function skipGolfRoutine() {
+
+  const coach =
+    getCurrentCoach();
+
+
+  if (
+    !coach.started
+    ||
+    coach.completed
+  ) {
+    return;
+  }
+
+
+  advanceGolfRoutine();
+
+}
+
+
+
+function resetGolfCoach() {
+
+  const week =
+    getGolfWeekData();
+
+
+  week
+    .sessions[
+      selectedGolfSession
+    ]
+    .coach =
+    createDefaultGolfSession()
+      .coach;
+
+
+  saveGolfWeekData(
+    week
+  );
+
+
+  renderGolfCoach();
+
+}
+
+
+
+function formatSeconds(
+  seconds
+) {
+
+  seconds =
+    Math.max(
+      0,
+      Number(
+        seconds
+      )
+      || 0
+    );
+
+
+  const minutes =
+    Math.floor(
+      seconds
+      /
+      60
+    );
+
+
+  const secs =
+    seconds
+    %
+    60;
+
+
+  return (
+    String(
+      minutes
+    )
+    .padStart(
+      2,
+      "0"
+    )
+    +
+    ":"
+    +
+    String(
+      secs
+    )
+    .padStart(
+      2,
+      "0"
+    )
+  );
+
+}
+
+
+
+function renderGolfCoach() {
+
+  const coach =
+    getCurrentCoach();
+
+
+  const status =
+    document
+      .getElementById(
+        "coachStatus"
+      );
+
+
+  const routine =
+    document
+      .getElementById(
+        "coachRoutine"
+      );
+
+
+  const cue =
+    document
+      .getElementById(
+        "coachCue"
+      );
+
+
+  const time =
+    document
+      .getElementById(
+        "coachTime"
+      );
+
+
+  const total =
+    document
+      .getElementById(
+        "coachTotal"
+      );
+
+
+  const start =
+    document
+      .getElementById(
+        "coachStartButton"
+      );
+
+
+  const pause =
+    document
+      .getElementById(
+        "coachPauseButton"
+      );
+
+
+  const skip =
+    document
+      .getElementById(
+        "coachSkipButton"
+      );
+
+
+
+  if (
+    !coach.started
+  ) {
+
+    status.textContent =
+      "READY";
+
+
+    routine.textContent =
+      "60 MIN PRACTICE";
+
+
+    cue.textContent =
+      "Press start when you're ready.";
+
+
+    time.textContent =
+      "60:00";
+
+
+    total.textContent =
+      `SESSION ${selectedGolfSession}`;
+
+
+    start.style.display =
+      "block";
+
+
+    start.textContent =
+      "START PRACTICE";
+
+
+    pause.style.display =
+      "none";
+
+
+    skip.style.display =
+      "none";
+
+
+    return;
+
+  }
+
+
+
+  if (
+    coach.completed
+  ) {
+
+    status.textContent =
+      "COMPLETE";
+
+
+    routine.textContent =
+      "PRACTICE COMPLETE";
+
+
+    cue.textContent =
+      "60 minute routine finished.";
+
+
+    time.textContent =
+      "00:00";
+
+
+    total.textContent =
+      "GOOD WORK";
+
+
+    start.style.display =
+      "block";
+
+
+    start.textContent =
+      "START AGAIN";
+
+
+    pause.style.display =
+      "none";
+
+
+    skip.style.display =
+      "none";
+
+
+    return;
+
+  }
+
+
+
+  const item =
+    golfRoutines[
+      coach.routineIndex
+    ];
+
+
+  status.textContent =
+    coach.paused
+      ? "PAUSED"
+      : `NOW · ${coach.routineIndex + 1} / ${golfRoutines.length}`;
+
+
+  routine.textContent =
+    item.name;
+
+
+  cue.textContent =
+    item.cue;
+
+
+  time.textContent =
+    formatSeconds(
+      coach.remaining
+    );
+
+
+  const elapsedBefore =
+    golfRoutines
+      .slice(
+        0,
+        coach.routineIndex
+      )
+      .reduce(
+        (
+          sum,
+          r
+        ) =>
+          sum
+          +
+          r.duration,
+        0
+      );
+
+
+  const totalElapsed =
+    elapsedBefore
+    +
+    (
+      item.duration
+      -
+      coach.remaining
+    );
+
+
+  total.textContent =
+    `${Math.floor(totalElapsed / 60)} / 60 MIN`;
+
+
+  start.style.display =
+    "none";
+
+
+  pause.style.display =
+    "block";
+
+
+  pause.textContent =
+    coach.paused
+      ? "RESUME"
+      : "PAUSE";
+
+
+  skip.style.display =
+    "block";
+
+}
+
+
+
+/* =========================================================
+   FINISH GOLF SESSION
 ========================================================= */
 
 function finishGolfPractice() {
@@ -4375,81 +6388,61 @@ function finishGolfPractice() {
   }
 
 
-  const data =
+  const week =
     getGolfWeekData();
 
 
-  data.sessions[
-    selectedGolfSession
-  ].completed =
+  week
+    .sessions[
+      selectedGolfSession
+    ]
+    .completed =
     true;
 
 
-  saveGolfWeekData(data);
+  saveGolfWeekData(
+    week
+  );
 
 
-  const completedSessions =
+  const completed =
     [
-      data.sessions[1],
-      data.sessions[2]
-    ].filter(
-      session =>
-        session.completed
-    ).length;
+      week.sessions[1],
+      week.sessions[2]
+    ]
+    .filter(
+      item =>
+        item.completed
+    )
+    .length;
 
 
-  const weekKey =
-    getCurrentWeekKey();
-
-  const weekData =
+  const weekly =
     getWeekData(
-      weekKey
+      getCurrentWeekKey()
     );
 
 
-  weekData.golf =
-    completedSessions;
+  weekly.golf =
+    completed;
 
 
   saveWeekData(
-    weekKey,
-    weekData
+    getCurrentWeekKey(),
+    weekly
   );
 
 
   renderGolfPractice();
 
 
-  if (
-    selectedGolfSession === 1
-    &&
-    !data.sessions[2].completed
-  ) {
+  setTimeout(
+    closeGolfPractice,
+    400
+  );
 
-    setTimeout(
-      () => {
-
-        selectedGolfSession = 2;
-
-        renderGolfPractice();
-
-        window.scrollTo(
-          0,
-          0
-        );
-
-      },
-      500
-    );
-
-  } else {
-
-    setTimeout(
-      closeGolfPractice,
-      500
-    );
-  }
 }
+
 
 
 /* =========================================================
@@ -4460,57 +6453,60 @@ function resetGolfSession() {
 
   if (
     !confirm(
-      `SESSION ${selectedGolfSession} 기록을 초기화할까?`
+      `SESSION ${selectedGolfSession}의 연습 기록과 타이머를 모두 초기화할까?`
     )
   ) {
     return;
   }
 
 
-  const data =
+  const week =
     getGolfWeekData();
 
 
-  data.sessions[
+  week.sessions[
     selectedGolfSession
   ] =
     createDefaultGolfSession();
 
 
-  saveGolfWeekData(data);
+  saveGolfWeekData(
+    week
+  );
 
 
-  const completedSessions =
+  const completed =
     [
-      data.sessions[1],
-      data.sessions[2]
-    ].filter(
-      session =>
-        session.completed
-    ).length;
+      week.sessions[1],
+      week.sessions[2]
+    ]
+    .filter(
+      item =>
+        item.completed
+    )
+    .length;
 
 
-  const weekKey =
-    getCurrentWeekKey();
-
-  const weekData =
+  const weekly =
     getWeekData(
-      weekKey
+      getCurrentWeekKey()
     );
 
 
-  weekData.golf =
-    completedSessions;
+  weekly.golf =
+    completed;
 
 
   saveWeekData(
-    weekKey,
-    weekData
+    getCurrentWeekKey(),
+    weekly
   );
 
 
   renderGolfPractice();
+
 }
+
 
 
 /* =========================================================
@@ -4523,10 +6519,13 @@ function hideMain() {
     .getElementById(
       "mainScreen"
     )
-    .classList.add(
+    .classList
+    .add(
       "hidden"
     );
+
 }
+
 
 
 function showMain() {
@@ -4535,17 +6534,22 @@ function showMain() {
     .getElementById(
       "mainScreen"
     )
-    .classList.remove(
+    .classList
+    .remove(
       "hidden"
     );
 
+
   renderAll();
+
 
   window.scrollTo(
     0,
     0
   );
+
 }
+
 
 
 /* =========================================================
@@ -4560,7 +6564,7 @@ function backupData() {
       "weekly-counter",
 
     version:
-      5,
+      6,
 
     createdAt:
       new Date()
@@ -4581,17 +6585,15 @@ function backupData() {
   };
 
 
-  const json =
-    JSON.stringify(
-      backup,
-      null,
-      2
-    );
-
-
   const blob =
     new Blob(
-      [json],
+      [
+        JSON.stringify(
+          backup,
+          null,
+          2
+        )
+      ],
       {
         type:
           "application/json"
@@ -4606,56 +6608,65 @@ function backupData() {
 
 
   const link =
-    document.createElement(
-      "a"
-    );
+    document
+      .createElement(
+        "a"
+      );
 
 
   const now =
     new Date();
 
 
-  const filenameDate =
+  const date =
     [
       now.getFullYear(),
       String(
-        now.getMonth() + 1
-      ).padStart(2, "0"),
+        now.getMonth()
+        + 1
+      ).padStart(
+        2,
+        "0"
+      ),
       String(
         now.getDate()
-      ).padStart(2, "0")
+      ).padStart(
+        2,
+        "0"
+      )
     ].join("-");
 
 
   link.href =
     url;
 
+
   link.download =
-    `weekly-counter-backup-${filenameDate}.json`;
+    `weekly-counter-backup-${date}.json`;
 
 
-  document.body.appendChild(
-    link
-  );
+  document.body
+    .appendChild(
+      link
+    );
+
 
   link.click();
 
-  document.body.removeChild(
-    link
-  );
+
+  link.remove();
 
 
   setTimeout(
-    () => {
-
+    () =>
       URL.revokeObjectURL(
         url
-      );
-
-    },
+      ),
     1000
   );
+
 }
+
 
 
 /* =========================================================
@@ -4669,16 +6680,24 @@ function openRestoreFile() {
       "restoreFile"
     )
     .click();
+
 }
 
 
-function restoreData(event) {
+
+function restoreData(
+  event
+) {
 
   const file =
-    event.target.files[0];
+    event
+      .target
+      .files[0];
 
 
-  if (!file) {
+  if (
+    !file
+  ) {
     return;
   }
 
@@ -4699,19 +6718,12 @@ function restoreData(event) {
 
 
         if (
-          backup.app
-          !==
+          backup.app !==
           "weekly-counter"
         ) {
 
-          alert(
-            "Weekly Counter 백업 파일이 아니야."
-          );
+          throw new Error();
 
-          event.target.value =
-            "";
-
-          return;
         }
 
 
@@ -4725,12 +6737,9 @@ function restoreData(event) {
             "";
 
           return;
+
         }
 
-
-        /*
-          VERSION 1 호환
-        */
 
         if (
           backup.version === 1
@@ -4745,7 +6754,9 @@ function restoreData(event) {
             )
           );
 
-        } else {
+        }
+
+        else {
 
           localStorage.setItem(
             "weeklyCounter",
@@ -4781,14 +6792,14 @@ function restoreData(event) {
               || {}
             )
           );
+
         }
 
 
-        historyPage = 0;
-
-
         displayedMonday =
-          getMonday(new Date());
+          getMonday(
+            new Date()
+          );
 
 
         displayedMonth =
@@ -4799,6 +6810,10 @@ function restoreData(event) {
           );
 
 
+        historyPage =
+          0;
+
+
         renderAll();
 
 
@@ -4806,21 +6821,29 @@ function restoreData(event) {
           "RESTORE 완료."
         );
 
-      } catch {
+      }
+
+      catch {
 
         alert(
           "백업 파일을 읽을 수 없어."
         );
+
       }
 
 
       event.target.value =
         "";
+
     };
 
 
-  reader.readAsText(file);
+  reader.readAsText(
+    file
+  );
+
 }
+
 
 
 /* =========================================================
@@ -4836,7 +6859,9 @@ function renderAll() {
   renderHistory();
 
   renderMonthly();
+
 }
+
 
 
 /* =========================================================
@@ -4847,5 +6872,7 @@ renderAll();
 
 </script>
 
+
 </body>
+
 </html>
