@@ -6588,7 +6588,7 @@ function backupData() {
       "weekly-counter",
 
     version:
-      6,
+      7,
 
     createdAt:
       new Date()
@@ -6604,7 +6604,30 @@ function backupData() {
       getAllWorkoutData(),
 
     golfPractice:
-      getAllGolfData()
+      getAllGolfData(),
+
+    bookMap:
+      (() => {
+        try {
+          return (
+            JSON.parse(
+              localStorage.getItem(
+                "bookMapDataV1"
+              )
+            )
+            || {
+              version: 1,
+              authors: []
+            }
+          );
+        }
+        catch {
+          return {
+            version: 1,
+            authors: []
+          };
+        }
+      })()
 
   };
 
@@ -6753,7 +6776,7 @@ function restoreData(
 
         if (
           !confirm(
-            "현재 기록을 백업 파일의 기록으로 교체할까?"
+            "현재 WEEKLY / MONTHLY / STRENGTH / GOLF / BOOK MAP 기록을 백업 파일의 기록으로 교체할까?"
           )
         ) {
 
@@ -6817,6 +6840,30 @@ function restoreData(
             )
           );
 
+
+          /*
+            VERSION 7+:
+            BOOK MAP까지 통합 복원.
+
+            예전 백업(v1~v6)에는 bookMap이 없으므로
+            그 경우 현재 BOOK MAP 데이터는 건드리지 않는다.
+          */
+
+          if (
+            backup.bookMap
+            &&
+            typeof backup.bookMap === "object"
+          ) {
+
+            localStorage.setItem(
+              "bookMapDataV1",
+              JSON.stringify(
+                backup.bookMap
+              )
+            );
+
+          }
+
         }
 
 
@@ -6842,7 +6889,7 @@ function restoreData(
 
 
         alert(
-          "RESTORE 완료."
+          "RESTORE 완료. BOOK MAP 포함 통합 복원이 적용됐어."
         );
 
       }
