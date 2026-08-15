@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Map</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#111;
+  --panel:#171717;
+  --panel2:#1d1d1d;
+  --line:#2d2d2d;
+  --text:#f4f4f4;
+  --muted:#7c7c7c;
+  --muted2:#555;
+}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
+button,input,textarea{font:inherit}
+button{-webkit-tap-highlight-color:transparent}
+.container{
+  max-width:860px;
+  margin:0 auto;
+  padding:26px 20px 64px;
+}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.back{
+  border:0;
+  background:transparent;
+  color:#999;
+  font-size:14px;
+  cursor:pointer;
+  padding:8px 0;
+}
+.title{
+  margin-top:12px;
+  font-size:30px;
+  font-weight:700;
+}
+.subtitle{
+  margin-top:6px;
+  color:#777;
+  font-size:12px;
+  line-height:1.6;
+}
+.toolbar{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:22px;
+}
+.toolbar button,.toolbar select{
+  border:1px solid #333;
+  background:transparent;
+  color:#aaa;
+  border-radius:8px;
+  padding:10px 12px;
+  cursor:pointer;
+}
+.toolbar button.primary{
+  background:#eee;
+  border-color:#eee;
+  color:#111;
+  font-weight:700;
+}
+.legend{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:16px;
+  color:#777;
+  font-size:11px;
+}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend-dot{
+  width:10px;height:10px;border-radius:50%;display:inline-block;
+  border:1px solid #666;background:transparent;
+}
+.legend-dot.started{background:#777;border-color:#777}
+.legend-dot.complete{background:#f4f4f4;border-color:#f4f4f4}
+.map-wrap{
+  position:relative;
+  margin-top:24px;
+  height:580px;
+  border:1px solid #2d2d2d;
+  border-radius:14px;
+  overflow:hidden;
+  background:
+    linear-gradient(to right, transparent 49.8%, #292929 49.8%, #292929 50.2%, transparent 50.2%),
+    linear-gradient(to bottom, transparent 49.8%, #292929 49.8%, #292929 50.2%, transparent 50.2%),
+    #141414;
+}
+.axis-label{
+  position:absolute;
+  color:#555;
+  font-size:10px;
+  letter-spacing:.7px;
+  pointer-events:none;
+  z-index:1;
+}
+.axis-left{left:10px;top:50%;transform:translateY(-50%)}
+.axis-right{right:10px;top:50%;transform:translateY(-50%);text-align:right}
+.axis-top{top:10px;left:50%;transform:translateX(-50%)}
+.axis-bottom{bottom:10px;left:50%;transform:translateX(-50%)}
+.node{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  cursor:pointer;
+  user-select:none;
+  touch-action:none;
+  z-index:3;
+}
+.node-dot{
+  width:26px;height:26px;border-radius:50%;
+  border:2px solid #6f6f6f;
+  background:#141414;
+  box-shadow:0 0 0 4px rgba(255,255,255,0.02);
+}
+.node.started .node-dot{
+  background:#777;
+  border-color:#999;
+}
+.node.complete .node-dot{
+  background:#f3f3f3;
+  border-color:#f3f3f3;
+  box-shadow:0 0 18px rgba(255,255,255,.20);
+}
+.node-name{
+  max-width:100px;
+  color:#999;
+  font-size:11px;
+  font-weight:700;
+  text-align:center;
+  text-shadow:0 1px 2px #111;
+}
+.node.complete .node-name{color:#eee}
+.node-progress{
+  color:#555;
+  font-size:9px;
+}
+.map-note{
+  margin-top:10px;
+  color:#555;
+  font-size:10px;
+}
+.footer-actions{
+  display:flex;
+  gap:8px;
+  margin-top:18px;
+}
+.footer-actions button{
+  flex:1;
+  padding:11px;
+  border:1px solid #333;
+  border-radius:8px;
+  background:transparent;
+  color:#777;
+  cursor:pointer;
+}
+.overlay{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  background:rgba(0,0,0,.58);
+  z-index:20;
+}
+.overlay.open{display:flex}
+.sheet{
+  width:min(100%,700px);
+  max-height:88vh;
+  overflow:auto;
+  background:#171717;
+  border:1px solid #333;
+  border-bottom:none;
+  border-radius:18px 18px 0 0;
+  padding:22px 20px 32px;
+}
+.sheet-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+.sheet-title{
+  font-size:24px;
+  font-weight:700;
+}
+.sheet-progress{
+  margin-top:5px;
+  color:#777;
+  font-size:11px;
+}
+.close{
+  border:0;
+  background:transparent;
+  color:#888;
+  font-size:24px;
+  cursor:pointer;
+}
+.section{
+  margin-top:26px;
+  padding-top:18px;
+  border-top:1px solid #292929;
+}
+.section-title{
+  margin-bottom:12px;
+  color:#666;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.2px;
+}
+.book-row{
+  display:grid;
+  grid-template-columns:36px 1fr;
+  gap:10px;
+  align-items:center;
+  margin-top:9px;
+}
+.book-check{
+  width:32px;height:32px;border-radius:50%;
+  border:2px solid #666;background:transparent;cursor:pointer;
+}
+.book-check.active{
+  background:#eee;border-color:#eee;
+}
+.text-input,.number-input,textarea{
+  width:100%;
+  border:1px solid #333;
+  border-radius:8px;
+  background:#111;
+  color:#eee;
+  outline:none;
+}
+.text-input,.number-input{padding:10px 11px}
+textarea{
+  min-height:140px;
+  resize:vertical;
+  padding:12px;
+  line-height:1.55;
+}
+textarea:disabled{
+  color:#555;
+  background:#141414;
+}
+.locked{
+  margin-bottom:10px;
+  color:#666;
+  font-size:11px;
+  line-height:1.5;
+}
+.position-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.position-label{
+  color:#666;
+  font-size:10px;
+  margin-bottom:6px;
+}
+.range{
+  width:100%;
+}
+.tags{
+  width:100%;
+  border:1px solid #333;
+  border-radius:8px;
+  background:#111;
+  color:#eee;
+  padding:10px 11px;
+}
+.danger{
+  width:100%;
+  margin-top:26px;
+  padding:11px;
+  border:1px solid #3a2a2a;
+  border-radius:8px;
+  background:transparent;
+  color:#8f6262;
+  cursor:pointer;
+}
+.modal{
+  align-items:center;
+  padding:20px;
+}
+.dialog{
+  width:min(100%,420px);
+  background:#171717;
+  border:1px solid #333;
+  border-radius:14px;
+  padding:20px;
+}
+.dialog-title{
+  font-size:18px;
+  font-weight:700;
+}
+.dialog label{
+  display:block;
+  margin-top:14px;
+  color:#777;
+  font-size:10px;
+}
+.dialog-actions{
+  display:flex;
+  gap:8px;
+  margin-top:18px;
+}
+.dialog-actions button{
+  flex:1;
+  padding:11px;
+  border:1px solid #333;
+  border-radius:8px;
+  background:transparent;
+  color:#aaa;
+  cursor:pointer;
+}
+.dialog-actions .primary{
+  background:#eee;
+  border-color:#eee;
+  color:#111;
+  font-weight:700;
+}
+@media (max-width:600px){
+  .container{padding-left:14px;padding-right:14px}
+  .map-wrap{height:560px}
+  .node-name{max-width:82px;font-size:10px}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div class="topbar">
+    <button class="back" onclick="location.href='index.html'">‹ WEEKLY COUNTER</button>
+    <button class="back" onclick="centerPreset()">RESET VIEW</button>
+  </div>
+
+  <div class="title">BOOK MAP</div>
+  <div class="subtitle">
+    작가를 3권씩 읽고 지도를 채운다. 노드는 드래그해서 위치를 바꿀 수 있고,
+    3/3이 되면 AUTHOR NOTE가 열린다.
+  </div>
+
+  <div class="toolbar">
+    <button class="primary" onclick="openAddAuthor()">+ ADD AUTHOR</button>
+    <button onclick="setFilter('all')">ALL</button>
+    <button onclick="setFilter('complete')">3/3 ONLY</button>
+    <button onclick="setFilter('unread')">UNREAD</button>
+  </div>
+
+  <div class="legend">
+    <span><i class="legend-dot"></i> 0/3</span>
+    <span><i class="legend-dot started"></i> 1–2/3</span>
+    <span><i class="legend-dot complete"></i> 3/3</span>
+  </div>
+
+  <div class="map-wrap" id="map">
+    <div class="axis-label axis-top">사회 / 시대</div>
+    <div class="axis-label axis-bottom">개인 / 내면</div>
+    <div class="axis-label axis-left">서사적 / 전통적</div>
+    <div class="axis-label axis-right">실험적 / 형식적</div>
+  </div>
+
+  <div class="map-note">
+    위치는 정답이 아니라 네 독서 경험을 구조화하기 위한 좌표야. 읽으면서 얼마든지 옮기면 된다.
+  </div>
+
+  <div class="footer-actions">
+    <button onclick="backupBookMap()">BACKUP</button>
+    <button onclick="document.getElementById('restoreBookFile').click()">RESTORE</button>
+  </div>
+
+  <input id="restoreBookFile" type="file" accept=".json,application/json" style="display:none" onchange="restoreBookMap(event)">
+</div>
+
+<!-- AUTHOR SHEET -->
+<div class="overlay" id="authorOverlay" onclick="overlayClose(event)">
+  <div class="sheet" id="authorSheet"></div>
+</div>
+
+<!-- ADD AUTHOR -->
+<div class="overlay modal" id="addOverlay" onclick="overlayClose(event)">
+  <div class="dialog">
+    <div class="dialog-title">ADD AUTHOR</div>
+
+    <label>AUTHOR</label>
+    <input id="newAuthorName" class="text-input" placeholder="작가 이름">
+
+    <label>BOOK 1</label>
+    <input id="newBook1" class="text-input" placeholder="첫 번째 책">
+
+    <label>BOOK 2</label>
+    <input id="newBook2" class="text-input" placeholder="두 번째 책">
+
+    <label>BOOK 3</label>
+    <input id="newBook3" class="text-input" placeholder="세 번째 책">
+
+    <div class="dialog-actions">
+      <button onclick="closeAddAuthor()">CANCEL</button>
+      <button class="primary" onclick="addAuthor()">ADD</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = "bookMapDataV1";
+let currentAuthorId = null;
+let currentFilter = "all";
+let dragState = null;
+
+const seedAuthors = [
+  {
+    id:"seong-haena",
+    name:"성해나",
+    x:60,y:68,
+    books:[
+      {title:"",read:false},
+      {title:"",read:false},
+      {title:"",read:false}
+    ],
+    note:"",
+    tags:""
+  },
+  {
+    id:"kim-aeran",
+    name:"김애란",
+    x:39,y:57,
+    books:[
+      {title:"비행운",read:false},
+      {title:"바깥은 여름",read:false},
+      {title:"두근두근 내 인생",read:false}
+    ],
+    note:"",
+    tags:""
+  },
+  {
+    id:"baek-surin",
+    name:"백수린",
+    x:63,y:79,
+    books:[
+      {title:"",read:false},
+      {title:"",read:false},
+      {title:"",read:false}
+    ],
+    note:"",
+    tags:""
+  },
+  {
+    id:"son-bomi",
+    name:"손보미",
+    x:76,y:64,
+    books:[
+      {title:"",read:false},
+      {title:"",read:false},
+      {title:"",read:false}
+    ],
+    note:"",
+    tags:""
+  },
+  {
+    id:"oh-seokhwa",
+    name:"오석화",
+    x:50,y:84,
+    books:[
+      {title:"",read:false},
+      {title:"",read:false},
+      {title:"",read:false}
+    ],
+    note:"",
+    tags:""
+  }
+];
+
+function deepClone(x){ return JSON.parse(JSON.stringify(x)); }
+
+function getData(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if(saved && Array.isArray(saved.authors)) return saved;
+  }catch(e){}
+  const initial = {version:1, authors:deepClone(seedAuthors)};
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
+  return initial;
+}
+
+function saveData(data){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function slugify(name){
+  return (
+    name.trim().toLowerCase()
+      .replace(/\s+/g,"-")
+      .replace(/[^a-z0-9가-힣\-]/g,"")
+      + "-" + Date.now().toString(36)
+  );
+}
+
+function progress(author){
+  return author.books.filter(b=>b.read).length;
+}
+
+function authorState(author){
+  const p = progress(author);
+  if(p === 3) return "complete";
+  if(p > 0) return "started";
+  return "unread";
+}
+
+function visibleByFilter(author){
+  const state = authorState(author);
+  if(currentFilter === "all") return true;
+  if(currentFilter === "complete") return state === "complete";
+  if(currentFilter === "unread") return state === "unread";
+  return true;
+}
+
+function setFilter(filter){
+  currentFilter = filter;
+  renderMap();
+}
+
+function renderMap(){
+  const map = document.getElementById("map");
+  map.querySelectorAll(".node").forEach(n=>n.remove());
+
+  const data = getData();
+
+  data.authors.forEach(author=>{
+    if(!visibleByFilter(author)) return;
+
+    const node = document.createElement("div");
+    node.className = "node " + authorState(author);
+    node.style.left = author.x + "%";
+    node.style.top = author.y + "%";
+    node.dataset.id = author.id;
+
+    const dot = document.createElement("div");
+    dot.className = "node-dot";
+
+    const name = document.createElement("div");
+    name.className = "node-name";
+    name.textContent = author.name;
+
+    const p = document.createElement("div");
+    p.className = "node-progress";
+    p.textContent = `${progress(author)}/3`;
+
+    node.append(dot,name,p);
+
+    node.addEventListener("click",()=>{
+      if(dragState && dragState.moved) return;
+      openAuthor(author.id);
+    });
+
+    node.addEventListener("pointerdown",e=>startDrag(e, author.id, node));
+
+    map.appendChild(node);
+  });
+}
+
+function startDrag(e,id,node){
+  const map = document.getElementById("map");
+  node.setPointerCapture(e.pointerId);
+
+  dragState = {
+    id,
+    node,
+    pointerId:e.pointerId,
+    startX:e.clientX,
+    startY:e.clientY,
+    moved:false
+  };
+
+  const move = ev=>{
+    if(!dragState) return;
+
+    const dx = Math.abs(ev.clientX-dragState.startX);
+    const dy = Math.abs(ev.clientY-dragState.startY);
+    if(dx+dy > 5) dragState.moved = true;
+
+    if(!dragState.moved) return;
+
+    const rect = map.getBoundingClientRect();
+    let x = (ev.clientX - rect.left) / rect.width * 100;
+    let y = (ev.clientY - rect.top) / rect.height * 100;
+
+    x = Math.max(4,Math.min(96,x));
+    y = Math.max(5,Math.min(95,y));
+
+    node.style.left = x + "%";
+    node.style.top = y + "%";
+
+    const data = getData();
+    const author = data.authors.find(a=>a.id===id);
+    if(author){
+      author.x = Math.round(x*10)/10;
+      author.y = Math.round(y*10)/10;
+      saveData(data);
+    }
+  };
+
+  const up = ev=>{
+    node.removeEventListener("pointermove",move);
+    node.removeEventListener("pointerup",up);
+    node.removeEventListener("pointercancel",up);
+    setTimeout(()=>{dragState=null},0);
+  };
+
+  node.addEventListener("pointermove",move);
+  node.addEventListener("pointerup",up);
+  node.addEventListener("pointercancel",up);
+}
+
+function openAuthor(id){
+  currentAuthorId = id;
+  renderAuthorSheet();
+  document.getElementById("authorOverlay").classList.add("open");
+}
+
+function closeAuthor(){
+  document.getElementById("authorOverlay").classList.remove("open");
+  currentAuthorId = null;
+  renderMap();
+}
+
+function overlayClose(e){
+  if(e.target.id === "authorOverlay") closeAuthor();
+  if(e.target.id === "addOverlay") closeAddAuthor();
+}
+
+function renderAuthorSheet(){
+  const data = getData();
+  const author = data.authors.find(a=>a.id===currentAuthorId);
+  if(!author) return;
+
+  const p = progress(author);
+  const noteLocked = p < 3;
+
+  const sheet = document.getElementById("authorSheet");
+  sheet.innerHTML = `
+    <div class="sheet-head">
+      <div>
+        <div class="sheet-title">${escapeHtml(author.name)}</div>
+        <div class="sheet-progress">${p} / 3 ${p===3 ? "· COMPLETE" : ""}</div>
+      </div>
+      <button class="close" onclick="closeAuthor()">×</button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">3 BOOKS</div>
+      ${author.books.map((book,i)=>`
+        <div class="book-row">
+          <button class="book-check ${book.read ? "active" : ""}" onclick="toggleBook(${i})"></button>
+          <input
+            class="text-input"
+            value="${escapeAttr(book.title)}"
+            placeholder="책 제목"
+            onchange="updateBookTitle(${i}, this.value)">
+        </div>
+      `).join("")}
+    </div>
+
+    <div class="section">
+      <div class="section-title">AUTHOR NOTE</div>
+      ${noteLocked ? `<div class="locked">3/3을 완성하면 노트가 열린다.</div>` : ""}
+      <textarea
+        id="authorNote"
+        ${noteLocked ? "disabled" : ""}
+        placeholder="문체, 반복되는 테마, 인물/감정, 비슷하거나 반대되는 작가, 내 취향 등을 적어둬."
+        onchange="updateAuthorNote(this.value)">${escapeHtml(author.note || "")}</textarea>
+    </div>
+
+    <div class="section">
+      <div class="section-title">TAGS</div>
+      <input
+        class="tags"
+        value="${escapeAttr(author.tags || "")}"
+        placeholder="예: 일상 / 관계 / 상실 / 도시"
+        onchange="updateAuthorTags(this.value)">
+    </div>
+
+    <div class="section">
+      <div class="section-title">MAP POSITION</div>
+      <div class="position-grid">
+        <div>
+          <div class="position-label">서사적 ←→ 실험적</div>
+          <input class="range" type="range" min="4" max="96" step="1"
+                 value="${author.x}"
+                 oninput="updatePosition('x', this.value)">
+        </div>
+        <div>
+          <div class="position-label">사회 ↑↓ 개인</div>
+          <input class="range" type="range" min="5" max="95" step="1"
+                 value="${author.y}"
+                 oninput="updatePosition('y', this.value)">
+        </div>
+      </div>
+    </div>
+
+    <button class="danger" onclick="deleteAuthor()">DELETE AUTHOR</button>
+  `;
+}
+
+function toggleBook(index){
+  const data = getData();
+  const author = data.authors.find(a=>a.id===currentAuthorId);
+  if(!author) return;
+
+  author.books[index].read = !author.books[index].read;
+  saveData(data);
+  renderAuthorSheet();
+}
+
+function updateBookTitle(index,value){
+  const data = getData();
+  const author = data.authors.find(a=>a.id===currentAuthorId);
+  if(!author) return;
+  author.books[index].title = value;
+  saveData(data);
+}
+
+function updateAuthorNote(value){
+  const data = getData();
+  const author = data.authors.find(a=>a.id===currentAuthorId);
+  if(!author || progress(author)<3) return;
+  author.note = value;
+  saveData(data);
+}
+
+function updateAuthorTags(value){
+  const data = getData();
+  const author = data.authors.find(a=>a.id===currentAuthorId);
+  if(!author) return;
+  author.tags = value;
+  saveData(data);
+}
+
+function updatePosition(axis,value){
+  const data = getData();
+  const author = data.authors.find(a=>a.id===currentAuthorId);
+  if(!author) return;
+  author[axis] = Number(value);
+  saveData(data);
+  renderMap();
+}
+
+function deleteAuthor(){
+  if(!confirm("이 작가와 기록을 삭제할까?")) return;
+  const data = getData();
+  data.authors = data.authors.filter(a=>a.id!==currentAuthorId);
+  saveData(data);
+  closeAuthor();
+}
+
+function openAddAuthor(){
+  document.getElementById("newAuthorName").value="";
+  document.getElementById("newBook1").value="";
+  document.getElementById("newBook2").value="";
+  document.getElementById("newBook3").value="";
+  document.getElementById("addOverlay").classList.add("open");
+}
+
+function closeAddAuthor(){
+  document.getElementById("addOverlay").classList.remove("open");
+}
+
+function addAuthor(){
+  const name = document.getElementById("newAuthorName").value.trim();
+  if(!name){
+    alert("작가 이름을 입력해줘.");
+    return;
+  }
+
+  const data = getData();
+  data.authors.push({
+    id:slugify(name),
+    name,
+    x:50 + (Math.random()*18-9),
+    y:50 + (Math.random()*18-9),
+    books:[
+      {title:document.getElementById("newBook1").value.trim(),read:false},
+      {title:document.getElementById("newBook2").value.trim(),read:false},
+      {title:document.getElementById("newBook3").value.trim(),read:false}
+    ],
+    note:"",
+    tags:""
+  });
+
+  saveData(data);
+  closeAddAuthor();
+  renderMap();
+}
+
+function centerPreset(){
+  if(!confirm("현재 작가 위치를 기본 배치로 되돌릴까? 책/노트 기록은 유지돼.")) return;
+
+  const data = getData();
+  const preset = new Map(seedAuthors.map(a=>[a.name,{x:a.x,y:a.y}]));
+
+  data.authors.forEach(a=>{
+    const p = preset.get(a.name);
+    if(p){
+      a.x=p.x;
+      a.y=p.y;
+    }
+  });
+
+  saveData(data);
+  renderMap();
+}
+
+function backupBookMap(){
+  const backup = {
+    app:"book-map",
+    version:1,
+    createdAt:new Date().toISOString(),
+    data:getData()
+  };
+
+  const blob = new Blob(
+    [JSON.stringify(backup,null,2)],
+    {type:"application/json"}
+  );
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const now = new Date();
+  const date = [
+    now.getFullYear(),
+    String(now.getMonth()+1).padStart(2,"0"),
+    String(now.getDate()).padStart(2,"0")
+  ].join("-");
+
+  a.href=url;
+  a.download=`book-map-backup-${date}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function restoreBookMap(event){
+  const file = event.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e=>{
+    try{
+      const backup = JSON.parse(e.target.result);
+      if(
+        backup.app !== "book-map" ||
+        !backup.data ||
+        !Array.isArray(backup.data.authors)
+      ){
+        throw new Error("invalid");
+      }
+
+      if(!confirm("현재 BOOK MAP을 백업 파일로 교체할까?")){
+        event.target.value="";
+        return;
+      }
+
+      saveData(backup.data);
+      renderMap();
+      alert("RESTORE 완료.");
+    }catch(err){
+      alert("BOOK MAP 백업 파일을 읽을 수 없어.");
+    }
+    event.target.value="";
+  };
+  reader.readAsText(file);
+}
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+}
+
+function escapeAttr(value){
+  return escapeHtml(value)
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+renderMap();
+</script>
+</body>
+</html>
