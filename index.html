@@ -768,6 +768,145 @@ body.readonly .reset {
   font-size: 10px;
 }
 
+
+.practice-block.note-link {
+  cursor: pointer;
+}
+
+.practice-block.note-link:active {
+  opacity: 0.72;
+}
+
+.practice-note-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 11px;
+  color: #aaa;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.7px;
+}
+
+.practice-note-arrow {
+  color: #666;
+  font-size: 14px;
+}
+
+.golf-note-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(0,0,0,0.62);
+  z-index: 50;
+}
+
+.golf-note-overlay.open {
+  display: flex;
+}
+
+.golf-note-sheet {
+  width: min(100%, 520px);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 24px 22px 34px;
+  border: 1px solid #333;
+  border-bottom: 0;
+  border-radius: 18px 18px 0 0;
+  background: #171717;
+}
+
+.golf-note-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.golf-note-kicker {
+  color: #666;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+}
+
+.golf-note-title {
+  margin-top: 7px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.golf-note-close {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #888;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.golf-note-section {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #292929;
+}
+
+.golf-note-section-title {
+  margin-bottom: 10px;
+  color: #777;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.golf-note-main {
+  color: #e6e6e6;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.65;
+}
+
+.golf-note-text {
+  color: #aaa;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.golf-note-drill {
+  margin-top: 10px;
+  padding: 12px 13px;
+  border: 1px solid #2e2e2e;
+  border-radius: 9px;
+  background: #131313;
+}
+
+.golf-note-drill:first-child {
+  margin-top: 0;
+}
+
+.golf-note-drill-name {
+  color: #ddd;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.golf-note-drill-desc {
+  margin-top: 5px;
+  color: #777;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.golf-note-mantra {
+  margin-top: 9px;
+  color: #f0f0f0;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.55;
+}
+
 .practice-checks {
   display: flex;
   flex-wrap: wrap;
@@ -1632,34 +1771,6 @@ body.readonly .reset {
 
 
 
-<!-- CHECK PROGRESS -->
-
-<div class="sub-progress">
-
-  <div class="sub-progress-info">
-
-    <span id="golfCheckText">
-      0 / 28 CHECKS
-    </span>
-
-    <span id="golfPercent">
-      0%
-    </span>
-
-  </div>
-
-  <div class="progress-bg">
-
-    <div
-      class="progress-bar"
-      id="golfProgressBar">
-    </div>
-
-  </div>
-
-</div>
-
-
 
 <div
   class="practice-list"
@@ -1700,6 +1811,171 @@ body.readonly .reset {
 
 </div>
 
+
+
+
+<!-- =========================================================
+     RELEASE LESSON NOTE
+========================================================= -->
+
+<div
+  class="golf-note-overlay"
+  id="releaseNoteOverlay"
+  onclick="closeReleaseNoteFromOverlay(event)">
+
+  <div class="golf-note-sheet">
+
+    <div class="golf-note-head">
+
+      <div>
+        <div class="golf-note-kicker">
+          RECENT RELEASE LESSON NOTE
+        </div>
+
+        <div class="golf-note-title">
+          HIT & STOP & RELEASE
+        </div>
+      </div>
+
+      <button
+        class="golf-note-close"
+        onclick="closeReleaseNote()">
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="golf-note-section">
+
+      <div class="golf-note-section-title">
+        CORE FEEL
+      </div>
+
+      <div class="golf-note-main">
+        열려서 들어온 페이스가 임팩트 순간 빠르게 돌아 닫히며
+        ‘채지는’ 릴리즈를 느낀다.
+      </div>
+
+      <div class="golf-note-text" style="margin-top:9px;">
+        손을 끝까지 끌고 가는 게 아니라, 임팩트 구간에서 헤드가
+        빠르게 지나가게 두는 느낌. 힘을 일찍 쓰지 말고 잡아뒀다가
+        맞는 순간 쓰는 타이밍이 핵심.
+      </div>
+
+    </div>
+
+
+    <div class="golf-note-section">
+
+      <div class="golf-note-section-title">
+        DRILLS
+      </div>
+
+      <div class="golf-note-drill">
+        <div class="golf-note-drill-name">
+          1 · LEFT ARM ONLY
+        </div>
+        <div class="golf-note-drill-desc">
+          왼팔만으로 친다. 팔과 어깨에 힘을 주기보다 클럽이
+          내려와 지나가는 감각을 찾는다.
+        </div>
+      </div>
+
+      <div class="golf-note-drill">
+        <div class="golf-note-drill-name">
+          2 · P8 → RETURN
+        </div>
+        <div class="golf-note-drill-desc">
+          클럽을 P8 정도까지 보내고 다시 회수한다.
+          ‘보내기 → 회수하기’를 반복하면서 릴리즈 구간의 움직임을 익힌다.
+        </div>
+      </div>
+
+      <div class="golf-note-drill">
+        <div class="golf-note-drill-name">
+          3 · HIT → STOP → TURN
+        </div>
+        <div class="golf-note-drill-desc">
+          치고 바로 피니시로 흘러가지 않는다.
+          ‘치고 멈췄다가 도는 것’처럼 느껴질 정도로 과장해서
+          임팩트 타이밍과 이후 회전을 분리한다.
+        </div>
+      </div>
+
+      <div class="golf-note-drill">
+        <div class="golf-note-drill-name">
+          4 · LEFT LEG · TANG TANG
+        </div>
+        <div class="golf-note-drill-desc">
+          왼발을 받으며 왼다리가 펴지는 타이밍에 클럽을
+          ‘탕, 탕’ 떨어뜨린다. 왼다리의 익스텐션과 임팩트가
+          같이 터지는 느낌을 찾는다.
+        </div>
+      </div>
+
+      <div class="golf-note-drill">
+        <div class="golf-note-drill-name">
+          5 · SEND IT LEFT
+        </div>
+        <div class="golf-note-drill-desc">
+          과도한 인-아웃 궤도를 줄이기 위해 처음에는 타깃보다
+          충분히 왼쪽으로 보낸다는 느낌으로 연습한다.
+        </div>
+      </div>
+
+      <div class="golf-note-drill">
+        <div class="golf-note-drill-name">
+          6 · STAND FARTHER
+        </div>
+        <div class="golf-note-drill-desc">
+          생각보다 공에서 조금 더 멀리 선다.
+          클럽이 만드는 훌라후프 같은 원·아크가 공에 자연스럽게
+          닿는 공간을 만든다.
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="golf-note-section">
+
+      <div class="golf-note-section-title">
+        POWER TIMING
+      </div>
+
+      <div class="golf-note-text">
+        야구에서 공을 기다리며 힘을 잡아놓았다가 맞는 순간 치는 느낌.
+        다운스윙 초반부터 세게 쓰지 않는다.
+      </div>
+
+      <div class="golf-note-mantra">
+        잡아둔다 → 왼발/왼다리 → RELEASE → HIT
+      </div>
+
+    </div>
+
+
+    <div class="golf-note-section">
+
+      <div class="golf-note-section-title">
+        TENSION
+      </div>
+
+      <div class="golf-note-text">
+        왼쪽 어깨를 중심으로 한 ‘왼쪽 덩어리’에 힘을 주지 않는다.
+        최대한 힘을 빼고 툭 내려놓아야 클럽이 릴리즈될 공간이 생긴다.
+      </div>
+
+      <div class="golf-note-mantra">
+        LEFT SIDE SOFT · DROP IT
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 
 <script>
@@ -1802,22 +2078,22 @@ const golfRoutines = [
 
   {
     key: "hitstop",
-    name: "HIT & STOP",
+    name: "HIT & STOP & RELEASE",
     duration: 12 * 60,
     cue:
-      "Pull. Left leg. Hit. Stop.",
+      "Drop. Release. Hit. Stop. Turn.",
     announcement:
-      "Next routine. Hit and Stop starts."
+      "Next routine. Hit and Stop and Release starts."
   },
 
   {
     key: "headleft",
-    name: "HEAD + LEFT SIDE",
+    name: "HEAD + LEFT EXTENSION",
     duration: 10 * 60,
     cue:
-      "Head back. Pressure left. Turn.",
+      "Head stays. Left leg extends. Turn.",
     announcement:
-      "Next routine. Head and Left Side starts."
+      "Next routine. Head and Left Extension starts."
   },
 
   {
@@ -1850,8 +2126,6 @@ const totalGolfSeconds =
     0
   );
 
-
-const totalGolfChecks = 28;
 
 let selectedGolfSession = 1;
 
@@ -4541,72 +4815,57 @@ function renderGolfPractice() {
 
 
   list.appendChild(
-    createGolfCounterBlock(
+    createGolfRoutineCard(
       "00",
       "WARM UP",
       "5 MIN",
       "54° → IRON · EASY HALF SWING",
-      "약 10구",
-      "warmup",
-      1,
-      session.warmup
+      "몸을 풀고 오늘의 리듬과 컨택을 찾기"
     )
   );
 
 
   list.appendChild(
-    createGolfCounterBlock(
+    createGolfRoutineCard(
       "01",
       "BACKSWING STABILITY",
       "10 MIN",
       "NO SWAY · RIGHT KNEE · SHOULDER TURN",
-      "5회 공 없이 → 약 15구",
-      "backswing",
-      3,
-      session.backswing
+      "오른쪽으로 밀리지 않고 회전하기"
     )
   );
 
 
   list.appendChild(
-    createGolfCounterBlock(
+    createGolfRoutineCard(
       "02",
-      "HIT & STOP",
+      "HIT & STOP & RELEASE",
       "12 MIN",
-      "PULL → LEFT LEG → HIT → STOP",
-      "50% · 60% · 70% · 80%",
-      "hitstop",
-      4,
-      session.hitstop
+      "DROP → RELEASE → HIT → STOP → TURN",
+      "최근 릴리즈 원포인트 레슨 노트 보기",
+      true
     )
   );
 
 
   list.appendChild(
-    createGolfCounterBlock(
+    createGolfRoutineCard(
       "03",
-      "HEAD + LEFT SIDE",
+      "HEAD + LEFT EXTENSION",
       "10 MIN",
-      "HEAD BACK · LEFT PRESSURE · TURN",
-      "약 15구 · 70%",
-      "headleft",
-      3,
-      session.headleft
+      "HEAD STAYS · LEFT LEG EXTENDS · TURN",
+      "머리는 튀어나가지 않고 왼다리는 임팩트 구간에서 펴지기"
     )
   );
 
 
   list.appendChild(
-    createGolfDistanceBlock(
-      session
-    )
+    createGolfDistanceBlock()
   );
 
 
   list.appendChild(
-    createGolfRandomBlock(
-      session
-    )
+    createGolfRandomBlock()
   );
 
 
@@ -4619,15 +4878,13 @@ function renderGolfPractice() {
 
 
 
-function createGolfCounterBlock(
+function createGolfRoutineCard(
   number,
   title,
   time,
   cue,
   subtext,
-  key,
-  max,
-  current
+  openNote = false
 ) {
 
   const block =
@@ -4638,7 +4895,13 @@ function createGolfCounterBlock(
 
 
   block.className =
-    "practice-block";
+    "practice-block"
+    +
+    (
+      openNote
+        ? " note-link"
+        : ""
+    );
 
 
   block.innerHTML = `
@@ -4667,119 +4930,33 @@ function createGolfCounterBlock(
       ${subtext}
     </div>
 
+    ${
+      openNote
+        ? `
+          <div class="practice-note-link">
+            LESSON NOTE
+            <span class="practice-note-arrow">›</span>
+          </div>
+        `
+        : ""
+    }
+
   `;
 
 
-  const checks =
-    document
-      .createElement(
-        "div"
-      );
-
-
-  checks.className =
-    "practice-checks";
-
-
-  for (
-    let i = 0;
-    i < max;
-    i++
+  if (
+    openNote
   ) {
 
-    const dot =
-      document
-        .createElement(
-          "button"
-        );
-
-
-    dot.className =
-      "practice-dot";
-
-
-    if (
-      i < current
-    ) {
-
-      dot
-        .classList
-        .add(
-          "active"
-        );
-
-    }
-
-
-    dot.addEventListener(
+    block.addEventListener(
       "click",
-      () => {
-
-        updateGolfCounter(
-          key,
-          i
-        );
-
-      }
-    );
-
-
-    checks.appendChild(
-      dot
+      openReleaseNote
     );
 
   }
 
 
-  block.appendChild(
-    checks
-  );
-
-
   return block;
-
-}
-
-
-
-function updateGolfCounter(
-  key,
-  index
-) {
-
-  const week =
-    getGolfWeekData();
-
-
-  const session =
-    week.sessions[
-      selectedGolfSession
-    ];
-
-
-  const current =
-    Number(
-      session[key]
-      || 0
-    );
-
-
-  session[key] =
-    index < current
-      ? index
-      : index + 1;
-
-
-  session.completed =
-    false;
-
-
-  saveGolfWeekData(
-    week
-  );
-
-
-  renderGolfPractice();
 
 }
 
@@ -4789,20 +4966,7 @@ function updateGolfCounter(
    DISTANCE CONTROL
 ========================================================= */
 
-function createGolfDistanceBlock(
-  session
-) {
-
-  const block =
-    document
-      .createElement(
-        "div"
-      );
-
-
-  block.className =
-    "practice-block";
-
+function createGolfDistanceBlock() {
 
   const actualClubs =
     selectedGolfSession === 1
@@ -4812,546 +4976,92 @@ function createGolfDistanceBlock(
       : "TODAY · 54° / 9 IRON / 7 IRON";
 
 
-  block.innerHTML = `
-
-    <div class="practice-number">
-      04
-    </div>
-
-    <div class="practice-title-row">
-
-      <div class="practice-title">
-        DISTANCE CONTROL
-      </div>
-
-      <div class="practice-time">
-        15 MIN
-      </div>
-
-    </div>
-
-    <div class="practice-cue">
-      CARRY FIRST · SAME RHYTHM
-    </div>
-
-    <div class="practice-subtext">
-      ${actualClubs}
-    </div>
-
-  `;
-
-
-  const clubChecks =
-    document
-      .createElement(
-        "div"
-      );
-
-
-  clubChecks.className =
-    "practice-checks";
-
-
-  const labels = [
-
-    "54°",
-    "PW / 9 IRON",
-    "8 / 7 IRON"
-
-  ];
-
-
-  labels
-    .forEach(
-      (
-        label,
-        index
-      ) => {
-
-        clubChecks
-          .appendChild(
-            createLabelledDot(
-              label,
-              session
-                .clubs[index],
-              () => {
-
-                toggleGolfArray(
-                  "clubs",
-                  index
-                );
-
-              }
-            )
-          );
-
-      }
-    );
-
-
-  block.appendChild(
-    clubChecks
+  return createGolfRoutineCard(
+    "04",
+    "DISTANCE CONTROL",
+    "15 MIN",
+    "54° · PW / 9 IRON · 8 / 7 IRON",
+    `${actualClubs} · 54° CARRY 50 / 60 / 70 / 80m`
   );
-
-
-
-  const wedgeTitle =
-    document
-      .createElement(
-        "div"
-      );
-
-
-  wedgeTitle.className =
-    "practice-subtext";
-
-
-  wedgeTitle.style.marginTop =
-    "20px";
-
-
-  wedgeTitle.textContent =
-    "54° CARRY";
-
-
-  block.appendChild(
-    wedgeTitle
-  );
-
-
-  const wedgeChecks =
-    document
-      .createElement(
-        "div"
-      );
-
-
-  wedgeChecks.className =
-    "practice-checks";
-
-
-  [
-    "50m",
-    "60m",
-    "70m",
-    "80m"
-  ]
-    .forEach(
-      (
-        label,
-        index
-      ) => {
-
-        wedgeChecks
-          .appendChild(
-            createLabelledDot(
-              label,
-              session
-                .wedgeDistances[
-                  index
-                ],
-              () => {
-
-                toggleGolfArray(
-                  "wedgeDistances",
-                  index
-                );
-
-              }
-            )
-          );
-
-      }
-    );
-
-
-  block.appendChild(
-    wedgeChecks
-  );
-
-
-  return block;
 
 }
 
 
 
-function createLabelledDot(
-  label,
-  active,
-  clickHandler
+/* =========================================================
+   RANDOM TEST
+========================================================= */
+
+function createGolfRandomBlock() {
+
+  return createGolfRoutineCard(
+    "05",
+    "RANDOM TEST",
+    "8 MIN",
+    "ONE BALL ONLY · NO RETRY",
+    "목표 거리를 랜덤으로 정하고 한 번만 치기 · 캐리 ±10m를 기준으로 감각 확인"
+  );
+
+}
+
+
+
+/* =========================================================
+   GOLF ROUTINE NOTE
+========================================================= */
+
+function openReleaseNote() {
+
+  document
+    .getElementById(
+      "releaseNoteOverlay"
+    )
+    .classList
+    .add(
+      "open"
+    );
+
+}
+
+
+
+function closeReleaseNote() {
+
+  document
+    .getElementById(
+      "releaseNoteOverlay"
+    )
+    .classList
+    .remove(
+      "open"
+    );
+
+}
+
+
+
+function closeReleaseNoteFromOverlay(
+  event
 ) {
 
-  const item =
-    document
-      .createElement(
-        "div"
-      );
-
-
-  item.className =
-    "practice-check-item";
-
-
-  const dot =
-    document
-      .createElement(
-        "button"
-      );
-
-
-  dot.className =
-    "practice-dot";
-
-
   if (
-    active
+    event.target.id ===
+    "releaseNoteOverlay"
   ) {
 
-    dot
-      .classList
-      .add(
-        "active"
-      );
+    closeReleaseNote();
 
   }
 
-
-  dot.addEventListener(
-    "click",
-    clickHandler
-  );
-
-
-  const labelEl =
-    document
-      .createElement(
-        "div"
-      );
-
-
-  labelEl.className =
-    "practice-check-label";
-
-
-  labelEl.textContent =
-    label;
-
-
-  item.appendChild(
-    dot
-  );
-
-
-  item.appendChild(
-    labelEl
-  );
-
-
-  return item;
-
-}
-
-
-
-function toggleGolfArray(
-  key,
-  index
-) {
-
-  const week =
-    getGolfWeekData();
-
-
-  const session =
-    week.sessions[
-      selectedGolfSession
-    ];
-
-
-  session[key][index] =
-    !session[key][index];
-
-
-  session.completed =
-    false;
-
-
-  saveGolfWeekData(
-    week
-  );
-
-
-  renderGolfPractice();
-
 }
 
 
 
 /* =========================================================
-   RANDOM
+   GOLF FINISH STATE
 ========================================================= */
 
-function createGolfRandomBlock(
-  session
-) {
-
-  const block =
-    document
-      .createElement(
-        "div"
-      );
-
-
-  block.className =
-    "practice-block";
-
-
-  block.innerHTML = `
-
-    <div class="practice-number">
-      05
-    </div>
-
-    <div class="practice-title-row">
-
-      <div class="practice-title">
-        RANDOM TEST
-      </div>
-
-      <div class="practice-time">
-        8 MIN
-      </div>
-
-    </div>
-
-    <div class="practice-cue">
-      ONE BALL ONLY · NO RETRY
-    </div>
-
-    <div class="practice-subtext">
-      목표 캐리 ±10m = 성공
-    </div>
-
-  `;
-
-
-  const grid =
-    document
-      .createElement(
-        "div"
-      );
-
-
-  grid.className =
-    "random-grid";
-
-
-  session.random
-    .forEach(
-      (
-        status,
-        index
-      ) => {
-
-        const item =
-          document
-            .createElement(
-              "div"
-            );
-
-
-        item.className =
-          "random-item";
-
-
-        const button =
-          document
-            .createElement(
-              "button"
-            );
-
-
-        button.className =
-          "random-button";
-
-
-        if (
-          status === 1
-        ) {
-
-          button.classList.add(
-            "success"
-          );
-
-
-          button.textContent =
-            "●";
-
-        }
-
-        else if (
-          status === 2
-        ) {
-
-          button.classList.add(
-            "fail"
-          );
-
-
-          button.textContent =
-            "×";
-
-        }
-
-        else {
-
-          button.textContent =
-            "○";
-
-        }
-
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            const week =
-              getGolfWeekData();
-
-
-            const current =
-              week
-                .sessions[
-                  selectedGolfSession
-                ]
-                .random[index];
-
-
-            week
-              .sessions[
-                selectedGolfSession
-              ]
-              .random[index] =
-
-              current === 0
-                ? 1
-                :
-                current === 1
-                  ? 2
-                  : 0;
-
-
-            week
-              .sessions[
-                selectedGolfSession
-              ]
-              .completed =
-              false;
-
-
-            saveGolfWeekData(
-              week
-            );
-
-
-            renderGolfPractice();
-
-          }
-        );
-
-
-        const label =
-          document
-            .createElement(
-              "div"
-            );
-
-
-        label.className =
-          "random-label";
-
-
-        label.textContent =
-          index + 1;
-
-
-        item.appendChild(
-          button
-        );
-
-
-        item.appendChild(
-          label
-        );
-
-
-        grid.appendChild(
-          item
-        );
-
-      }
-    );
-
-
-  const success =
-    session.random
-      .filter(
-        x => x === 1
-      )
-      .length;
-
-
-  const tested =
-    session.random
-      .filter(
-        x => x !== 0
-      )
-      .length;
-
-
-  const score =
-    document
-      .createElement(
-        "div"
-      );
-
-
-  score.className =
-    "random-score";
-
-
-  score.textContent =
-    tested === 0
-
-      ? "— / 10"
-
-      :
-
-      `${success} / ${tested} SUCCESS`;
-
-
-  block.appendChild(
-    grid
-  );
-
-
-  block.appendChild(
-    score
-  );
-
-
-  return block;
-
-}
-
-
-
-/* =========================================================
-   GOLF CHECK PROGRESS
-========================================================= */
-
-function getGolfCompletedChecks() {
+function updateGolfProgress() {
 
   const session =
     getGolfWeekData()
@@ -5360,86 +5070,12 @@ function getGolfCompletedChecks() {
       ];
 
 
-  return (
-
-    session.warmup
-
-    +
-
-    session.backswing
-
-    +
-
-    session.hitstop
-
-    +
-
-    session.headleft
-
-    +
-
-    session.clubs
-      .filter(Boolean)
-      .length
-
-    +
-
-    session.wedgeDistances
-      .filter(Boolean)
-      .length
-
-    +
-
-    session.random
-      .filter(
-        x => x !== 0
-      )
-      .length
-
-  );
-
-}
-
-
-
-function updateGolfProgress() {
-
-  const done =
-    getGolfCompletedChecks();
-
-
-  const percent =
-    Math.round(
-      done
-      /
-      totalGolfChecks
-      *
-      100
+  const coachComplete =
+    !!(
+      session.coach
+      &&
+      session.coach.completed
     );
-
-
-  document
-    .getElementById(
-      "golfCheckText"
-    )
-    .textContent =
-    `${done} / ${totalGolfChecks} CHECKS`;
-
-
-  document
-    .getElementById(
-      "golfPercent"
-    )
-    .textContent =
-    `${percent}%`;
-
-
-  document
-    .getElementById(
-      "golfProgressBar"
-    )
-    .style.width =
-    `${percent}%`;
 
 
   document
@@ -5447,15 +5083,7 @@ function updateGolfProgress() {
       "finishGolfButton"
     )
     .disabled =
-    done !==
-    totalGolfChecks;
-
-
-  const session =
-    getGolfWeekData()
-      .sessions[
-        selectedGolfSession
-      ];
+    !coachComplete;
 
 
   document
@@ -5927,6 +5555,8 @@ function advanceGolfRoutine() {
 
 
     renderGolfCoach();
+
+    updateGolfProgress();
 
 
     return;
@@ -6403,10 +6033,17 @@ function renderGolfCoach() {
 
 function finishGolfPractice() {
 
+  const currentSession =
+    getGolfWeekData()
+      .sessions[
+        selectedGolfSession
+      ];
+
+
   if (
-    getGolfCompletedChecks()
-    !==
-    totalGolfChecks
+    !currentSession.coach
+    ||
+    !currentSession.coach.completed
   ) {
     return;
   }
@@ -6588,7 +6225,7 @@ function backupData() {
       "weekly-counter",
 
     version:
-      7,
+      8,
 
     createdAt:
       new Date()
